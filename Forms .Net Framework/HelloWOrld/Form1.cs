@@ -16,5 +16,13 @@ namespace HelloWOrld
         {
             InitializeComponent();
         }
+        private void btnColor_Click(object sender, EventArgs e)
+        {
+            if(BackColor == Color.Red) {
+                BackColor = Color.Pink;
+            }else{
+                BackColor = Color.Red;
+            }
+        }
     }
 }
