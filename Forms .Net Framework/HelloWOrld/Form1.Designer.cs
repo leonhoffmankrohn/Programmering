@@ -33,9 +33,9 @@
             // 
             // btnColor
             // 
-            this.btnColor.Location = new System.Drawing.Point(296, 129);
+            this.btnColor.Location = new System.Drawing.Point(251, 322);
             this.btnColor.Name = "btnColor";
-            this.btnColor.Size = new System.Drawing.Size(75, 23);
+            this.btnColor.Size = new System.Drawing.Size(152, 70);
             this.btnColor.TabIndex = 0;
             this.btnColor.Text = "Color";
             this.btnColor.UseVisualStyleBackColor = true;
