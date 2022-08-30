@@ -24,5 +24,24 @@ namespace HelloWOrld
                 BackColor = Color.Red;
             }
         }
+
+        private void btnGreen_Click(object sender, EventArgs e)
+        {
+            btnGreen.BackColor = Color.Green;
+            btnGreen.Enabled = false;
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            btnGreen.BackColor = Color.White;
+            BackColor = Color.White;
+            btnGreen.Enabled = true;
+            obj.Location = new Point(100, 100);
+        }
+
+        private void btnRun_Click(object sender, EventArgs e)
+        {
+            obj.Location = new Point(obj.Location.X + 10, 100);
+        }
     }
 }
