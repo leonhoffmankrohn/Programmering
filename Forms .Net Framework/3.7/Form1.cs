@@ -20,6 +20,7 @@ namespace _3._7
         private void btnKör_Click(object sender, EventArgs e)
         {
             lblSvar.Text = tbxTecken.Text + " har koden: " + (int)tbxTecken.Text[0];
+
         }
     }
 }
