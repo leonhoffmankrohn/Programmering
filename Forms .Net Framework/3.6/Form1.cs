@@ -16,5 +16,11 @@ namespace _3._6
         {
             InitializeComponent();
         }
+
+        private void btnKör_Click(object sender, EventArgs e)
+        {
+            string initals = tbxFörnamn.Text[0].ToString() + "." + tbxEfternamn.Text[0].ToString();
+            lblSvar.Text = tbxFörnamn.Text + " " + tbxEfternamn.Text + " har initialerna " + initals + ".";
+        }
     }
 }
