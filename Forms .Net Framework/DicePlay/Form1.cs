@@ -57,7 +57,6 @@ namespace DicePlay
                 lblThrows.Text = runs.ToString();   //Keep track of thrown dices
 
                 //throws and generates a random number between 0 and [setDice]
-                int
 
             }
         }

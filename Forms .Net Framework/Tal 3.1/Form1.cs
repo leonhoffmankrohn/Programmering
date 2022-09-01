@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CookieClicker
+namespace Tal_3._1
 {
     public partial class Form1 : Form
     {
@@ -17,14 +17,12 @@ namespace CookieClicker
             InitializeComponent();
         }
 
-        private void btnBake_Click(object sender, EventArgs e)
+        private void btnKör_Click(object sender, EventArgs e)
         {
-            int x = int.Parse(lblCounter.Text);
-            x += 1;
-            lblCounter.Text = x.ToString();
+            tbxTal.Text = (int.Parse(tbxTal.Text)*int.Parse(tbxTal.Text)).ToString();
         }
 
-        private void btnDouble_Click(object sender, EventArgs e)
+        private void tbxTal_TextChanged(object sender, EventArgs e)
         {
 
         }

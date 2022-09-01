@@ -12,6 +12,7 @@ namespace HelloWOrld
 {
     public partial class Form1 : Form
     {
+        bool x = false;
         public Form1()
         {
             InitializeComponent();
@@ -41,7 +42,34 @@ namespace HelloWOrld
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            obj.Location = new Point(obj.Location.X + 10, 100);
+            // obj.Location = new Point(obj.Location.X + 10, 100);
+        }
+
+        private void Form1_Activated(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnRun_MouseDown(object sender, MouseEventArgs e)
+        {
+            x = true;
+            Timer timer = new Timer();
+            while (x) {
+
+                obj.Location = new Point(obj.Location.X + 1, 100);
+            }
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnRun_MouseUp(object sender, MouseEventArgs e)
+        {
+            x = false;
+            MessageBox.Show("Up");
         }
     }
 }

@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnColor = new System.Windows.Forms.Button();
             this.btnGreen = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
             this.obj = new System.Windows.Forms.Button();
             this.btnRun = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // btnColor
@@ -70,7 +72,7 @@
             this.obj.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.obj.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.obj.ForeColor = System.Drawing.SystemColors.Window;
-            this.obj.Location = new System.Drawing.Point(100, 100);
+            this.obj.Location = new System.Drawing.Point(81, 74);
             this.obj.Name = "obj";
             this.obj.Size = new System.Drawing.Size(43, 43);
             this.obj.TabIndex = 3;
@@ -87,6 +89,12 @@
             this.btnRun.Text = "RUN";
             this.btnRun.UseVisualStyleBackColor = false;
             this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
+            this.btnRun.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnRun_MouseDown);
+            this.btnRun.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnRun_MouseUp);
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Form1
             // 
@@ -97,6 +105,7 @@
             this.Controls.Add(this.btnGreen);
             this.Controls.Add(this.btnColor);
             this.Name = "Form1";
+            this.Activated += new System.EventHandler(this.Form1_Activated);
             this.ResumeLayout(false);
 
         }
@@ -113,6 +122,7 @@
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Button obj;
         private System.Windows.Forms.Button btnRun;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

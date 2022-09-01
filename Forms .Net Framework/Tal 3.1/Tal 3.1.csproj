@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{ACFFAD51-DE53-41C2-AFAD-AD4B3743B5C7}</ProjectGuid>
+    <ProjectGuid>{41A38B4F-A81D-4884-AD18-6184B8F581A5}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>CookieClicker</RootNamespace>
-    <AssemblyName>CookieClicker</AssemblyName>
+    <RootNamespace>Tal_3._1</RootNamespace>
+    <AssemblyName>Tal 3.1</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
