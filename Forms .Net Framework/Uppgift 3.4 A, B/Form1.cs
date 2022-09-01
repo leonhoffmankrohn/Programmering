@@ -21,11 +21,11 @@ namespace Uppgift_3._4_A__B
         {
             int antal100 = int.Parse(tbxUttag.Text) / 100; // Får fram tot. uttaget avrundat ner till närmaste hundra
             int antal500 = antal100 / 5;
-            antal500 = antal500 * 100;
-            antal100 = antal100 - antal500;
+            antal100 = antal100 - antal500 * 5; // Lite matte
+            antal500 = antal500 * 500;
             antal100 = antal100 * 100; 
 
-            lbl100.Text = "Uttag i 100-sedlar: " + antal100 + " kr";
+            lbl100.Text = "Uttag i 100-sedlar: " + antal100 + " kr"; // Uppdaterar text för lbl100 & lb500
             lbl500.Text = "Uttag i 500-sedlar: " + antal500 + " kr";
         }
     }
