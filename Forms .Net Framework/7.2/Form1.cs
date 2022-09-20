@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace _7._1
+namespace _7._2
 {
     public partial class Form1 : Form
     {
@@ -17,22 +17,23 @@ namespace _7._1
             InitializeComponent();
         }
 
-        private void tbxLiter_TextChanged(object sender, EventArgs e)
-        {
-            lblSvar.Text = "";
-        }
-
         private void btnOk_Click(object sender, EventArgs e)
         {
-            double liter = double.Parse(tbxLiter.Text);
-            double kvar = 50 - liter;
-            if (double.Parse(tbxLiter.Text) < 10)
+            int ålder = int.Parse(tbxÅlder.Text);/*
+            if (ålder < 65 && ålder > 15) {
+                lblSvar.Text = "Resan kostar 20 kronor";
+            }
+            else{
+                lblSvar.Text = "Resan kostar 10 kronor";
+            }*/
+            if (ålder >= 65 || ålder <= 15)
             {
-                lblSvar.Text = "Tanka " + kvar.ToString() + " liter. Det kostar " + kvar * 14.50 + " kr.";
+                lblSvar.Text = "Resan kostar 10 kronor";
             }
             else {
-                lblSvar.Text = "Du kan köra vidare";
+                lblSvar.Text = "Resan kostar 20 kronor";
             }
+
         }
     }
 }
