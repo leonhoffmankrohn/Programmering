@@ -32,7 +32,7 @@ namespace GissaMittTal
 
             btnStartaSpelet.Enabled = false;
             gbxSpeldata.Enabled = false;
-            gbxSpeldata.Enabled = true;
+            gbxSpelet.Enabled = true;
 
             lblDatornsTal.Text = "??";
             antalGissningar = 0;
@@ -51,12 +51,31 @@ namespace GissaMittTal
                 btnSpelaIgen.Enabled = true;
 
                 lblDatornsTal.Text = datornsTal.ToString();
-                tbxMinaResultat.AppendText(antalGissningar + " försök\n");
+                tbxMinaResultat.AppendText(antalGissningar + " försök\r\n");
             }
             else if (gissatTal < datornsTal)
             {
-                lblRe
+                lblResultat.Text = "För lågt. Försök igen.";
             }
+            else
+            {
+                lblResultat.Text = "För högt. Försök igen.";
+            }
+        }
+
+        private void btnSpelaIgen_Click(object sender, EventArgs e)
+        {
+            string störstaTal = lbxStörstaTalet.SelectedItem.ToString();
+            int störst = int.Parse(störstaTal);
+            Random slump = new Random();
+            datornsTal = slump.Next(1, störst + 1);
+
+            gbxSpelet.Enabled = true;
+            btnSpelaIgen.Enabled = false;
+            antalGissningar = 0;
+            tbxGissa.Text = "";
+            lblResultat.Text = "";
+            lblDatornsTal.Text = "??";
         }
     }
 }
