@@ -132,7 +132,7 @@ namespace StenSaxPåse
             {
                 nrSpelarVinster++;
             }
-            else if (datornsVal.Equals("sax"))
+            else if (datornsVal.Equals("Sax"))
             {
                 nrDatorVinster++;
             }
