@@ -152,7 +152,7 @@
             this.tbxRad1.Location = new System.Drawing.Point(62, 22);
             this.tbxRad1.Multiline = true;
             this.tbxRad1.Name = "tbxRad1";
-            this.tbxRad1.Size = new System.Drawing.Size(33, 86);
+            this.tbxRad1.Size = new System.Drawing.Size(33, 103);
             this.tbxRad1.TabIndex = 11;
             // 
             // tbxRad2
@@ -160,7 +160,7 @@
             this.tbxRad2.Location = new System.Drawing.Point(101, 22);
             this.tbxRad2.Multiline = true;
             this.tbxRad2.Name = "tbxRad2";
-            this.tbxRad2.Size = new System.Drawing.Size(33, 86);
+            this.tbxRad2.Size = new System.Drawing.Size(33, 103);
             this.tbxRad2.TabIndex = 12;
             // 
             // tbxVal
@@ -179,6 +179,7 @@
             this.btnGenerera.TabIndex = 14;
             this.btnGenerera.Text = "Generera";
             this.btnGenerera.UseVisualStyleBackColor = true;
+            this.btnGenerera.Click += new System.EventHandler(this.btnGenerera_Click);
             // 
             // btnVälj
             // 
@@ -188,6 +189,7 @@
             this.btnVälj.TabIndex = 15;
             this.btnVälj.Text = "Välj";
             this.btnVälj.UseVisualStyleBackColor = true;
+            this.btnVälj.Click += new System.EventHandler(this.btnVälj_Click);
             // 
             // lbxMeny
             // 
@@ -202,7 +204,7 @@
             this.tbxRad3.Location = new System.Drawing.Point(139, 22);
             this.tbxRad3.Multiline = true;
             this.tbxRad3.Name = "tbxRad3";
-            this.tbxRad3.Size = new System.Drawing.Size(33, 86);
+            this.tbxRad3.Size = new System.Drawing.Size(33, 103);
             this.tbxRad3.TabIndex = 17;
             // 
             // Form1
