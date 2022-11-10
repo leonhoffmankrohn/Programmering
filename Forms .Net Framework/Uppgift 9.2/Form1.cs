@@ -27,7 +27,8 @@ namespace Uppgift_9._2
             long senaste = 1;
             long nästSenaste = 1;
 
-            for (int i = 0; i < 100; i++) { //Kör hundra ggr
+            for (int i = 0; i < 100; i++) 
+            { //Kör hundra ggr
                 //addera nästsenaste och senaste värdet och skriv ut det i tbx
                 tbxFibonacciserien.Text += nya.ToString() + " ";
                 nya = senaste + nästSenaste;
