@@ -23,7 +23,8 @@ namespace Uppgift_9._1
             int Tid = int.Parse(tbxTid.Text);
             int antalBakterier = int.Parse(tbxStartantal.Text);
 
-            for (int i = 0; i < Tid; i++) {
+            for (int i = 0; i < Tid; i++) 
+            {
                 antalBakterier *= 2;
             }
             tbxSlutantal.Text = antalBakterier.ToString();
