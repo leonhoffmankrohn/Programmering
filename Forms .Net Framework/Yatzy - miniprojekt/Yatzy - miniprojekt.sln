@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yatzy - miniprojekt", "Yatzy - miniprojekt.csproj", "{BA6F2136-AB4E-468F-8732-7A1FC558AA5E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BA6F2136-AB4E-468F-8732-7A1FC558AA5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA6F2136-AB4E-468F-8732-7A1FC558AA5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA6F2136-AB4E-468F-8732-7A1FC558AA5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA6F2136-AB4E-468F-8732-7A1FC558AA5E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C867AD95-A0EA-47E1-83E1-8A6CE7E76F69}
+	EndGlobalSection
+EndGlobal
