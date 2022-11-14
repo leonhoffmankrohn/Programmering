@@ -17,6 +17,7 @@ namespace Yatzy___miniprojektet
         Image[] tärning = { diceGUI.d0, diceGUI.d1, diceGUI.d2, diceGUI.d3, diceGUI.d4, diceGUI.d5, diceGUI.d6 };
         bool[] behåll = new bool[5];
         int[] prickar = new int[5];
+        int[] poäng = new int[16];
         int antalSlag = 0;
         public Yatzy()
         {
@@ -27,7 +28,15 @@ namespace Yatzy___miniprojektet
             pc4.Image = tärning[0];
             pc5.Image = tärning[0];
         }
+        int HurMånga(int siffra) {
+            int x = 0;
+            for (int i = 0; i < prickar.Length; i++)
+            {
+                x += (prickar[i] == siffra) ? 1 : 0;
+            }
 
+            return x;
+        }
         private void pc1_Click(object sender, EventArgs e)
         {
             if (pc1.BorderStyle == BorderStyle.None && pc1.Image != tärning[0])
@@ -123,13 +132,32 @@ namespace Yatzy___miniprojektet
 
         private void btnVälj_Click(object sender, EventArgs e)
         {
-            string selected = lbxAlternativ.SelectedItems.ToString();
-            if (selected == "Ettor:") { lbxSumma.Items[0].Equals(69); }
-            if (selected == "Tvåor:") { }
-            if (selected == "Treor:") { }
-            if (selected == "Fyror:") { }
-            if (selected == "Femor:") { }
-            if (selected == "Sexor:") { }
+            int indexet = lbxAlternativ.SelectedIndex;
+            switch (lbxAlternativ.SelectedItem.ToString())
+            {
+                case "Ettor:":
+                    lbxSumma.Items[indexet] = poäng[indexet] = HurMånga(1) * 1;
+                    break;
+                case "Tvåor:":
+                    lbxSumma.Items[indexet] = poäng[indexet] = HurMånga(2) * 2;
+                    break;
+                case "Treor:":
+                    lbxSumma.Items[indexet] = poäng[indexet] = HurMånga(3) * 3;
+                    break;
+                case "Fyror:":
+                    lbxSumma.Items[indexet] = poäng[indexet] = HurMånga(4) * 4;
+                    break;
+                case "Femor:":
+                    lbxSumma.Items[indexet] = poäng[indexet] = HurMånga(5) * 5;
+                    break;
+                case "Sexor:":
+                    lbxSumma.Items[indexet] = poäng[indexet] = HurMånga(6) * 6;
+                    break;
+                default:
+                    Console.WriteLine("Something went wrong there buddy!");
+                    break;
+            }
+            Console.WriteLine(poäng[indexet]);
         }
     }
 }
