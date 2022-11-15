@@ -28,11 +28,11 @@ namespace Yatzy___miniprojektet
             pc4.Image = tärning[0];
             pc5.Image = tärning[0];
         }
-        int HurMånga(int siffra) {
+        int Summera(int indexet) {
             int x = 0;
             for (int i = 0; i < prickar.Length; i++)
             {
-                x += (prickar[i] == siffra) ? 1 : 0;
+                x += (indexet + 1 == prickar[indexet]) ? indexet + 1 : 0;
             }
 
             return x;
@@ -47,6 +47,7 @@ namespace Yatzy___miniprojektet
             }else
             {
                 pc1.BorderStyle = BorderStyle.None;
+                behåll[0] = false;
             }
         }
 
@@ -61,6 +62,7 @@ namespace Yatzy___miniprojektet
             else
             {
                 pc2.BorderStyle = BorderStyle.None;
+                behåll[1] = false;
             }
         }
 
@@ -74,6 +76,7 @@ namespace Yatzy___miniprojektet
             }
             else
             {
+                behåll[2] = false;
                 pc3.BorderStyle = BorderStyle.None;
             }
         }
@@ -88,6 +91,7 @@ namespace Yatzy___miniprojektet
             }
             else
             {
+                behåll[3] = false;
                 pc4.BorderStyle = BorderStyle.None;
             }
         }
@@ -103,6 +107,7 @@ namespace Yatzy___miniprojektet
             else
             {
                 pc5.BorderStyle = BorderStyle.None;
+                behåll[4] = false;
             }
         }
 
@@ -133,31 +138,15 @@ namespace Yatzy___miniprojektet
         private void btnVälj_Click(object sender, EventArgs e)
         {
             int indexet = lbxAlternativ.SelectedIndex;
-            switch (lbxAlternativ.SelectedItem.ToString())
+            string x = lbxAlternativ.SelectedItem.ToString();
+            if (x == "Yatzy:")
             {
-                case "Ettor:":
-                    lbxSumma.Items[indexet] = poäng[indexet] = HurMånga(1) * 1;
-                    break;
-                case "Tvåor:":
-                    lbxSumma.Items[indexet] = poäng[indexet] = HurMånga(2) * 2;
-                    break;
-                case "Treor:":
-                    lbxSumma.Items[indexet] = poäng[indexet] = HurMånga(3) * 3;
-                    break;
-                case "Fyror:":
-                    lbxSumma.Items[indexet] = poäng[indexet] = HurMånga(4) * 4;
-                    break;
-                case "Femor:":
-                    lbxSumma.Items[indexet] = poäng[indexet] = HurMånga(5) * 5;
-                    break;
-                case "Sexor:":
-                    lbxSumma.Items[indexet] = poäng[indexet] = HurMånga(6) * 6;
-                    break;
-                default:
-                    Console.WriteLine("Something went wrong there buddy!");
-                    break;
+                lbxSumma.Items[indexet] = poäng[indexet] = 50;
             }
-            Console.WriteLine(poäng[indexet]);
+            else
+            {
+                lbxSumma.Items[indexet] = poäng[indexet] = Summera(indexet);
+            }
         }
     }
 }
