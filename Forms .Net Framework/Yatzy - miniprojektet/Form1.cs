@@ -32,7 +32,7 @@ namespace Yatzy___miniprojektet
             int x = 0;
             for (int i = 0; i < prickar.Length; i++)
             {
-                x += (indexet + 1 == prickar[indexet]) ? indexet + 1 : 0;
+                x += (indexet < 6 &&indexet + 1 == prickar[indexet]) ? indexet + 1 : 0;
             }
 
             return x;
@@ -113,18 +113,18 @@ namespace Yatzy___miniprojektet
 
         private void btnSlag_Click(object sender, EventArgs e)
         {
+            PictureBox[] synligTärning = { pc1, pc2, pc3, pc4, pc5};
             if (antalSlag < 3)
             {
                 for (int i = 0; i < prickar.Length; i++) {
                     if (!behåll[i]) prickar[i] = generator.Next(1, 6);
                 }
 
-                pc1.Image = tärning[prickar[0]];
-                pc2.Image = tärning[prickar[1]];
-                pc3.Image = tärning[prickar[2]];
-                pc4.Image = tärning[prickar[3]];
-                pc5.Image = tärning[prickar[4]];
-
+                // Rendera rätt bild för rätt tärning
+                for (int i = 0; i < synligTärning.Length; i++)
+                {
+                    synligTärning[i].Image = tärning[prickar[i]];
+                }
                 antalSlag++;
 
                 if (antalSlag == 3)
@@ -146,6 +146,13 @@ namespace Yatzy___miniprojektet
             else
             {
                 lbxSumma.Items[indexet] = poäng[indexet] = Summera(indexet);
+            }
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                { 
+                    
+                }
             }
         }
     }

@@ -23,9 +23,9 @@ namespace Uppgift_9._2
             tbxFibonacciserien.Text = "1 ";
 
             //Definera nästsenaste och senaste värdet (int)
-            long nya = 1;
-            long senaste = 1;
-            long nästSenaste = 1;
+            double nya = 1;
+            double senaste = 1;
+            double nästSenaste = 1;
 
             for (int i = 0; i < 100; i++) 
             { //Kör hundra ggr
