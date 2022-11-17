@@ -89,17 +89,18 @@
             // 
             // lblResultat
             // 
-            this.lblResultat.AutoSize = true;
             this.lblResultat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblResultat.Location = new System.Drawing.Point(267, 223);
+            this.lblResultat.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblResultat.Location = new System.Drawing.Point(130, 121);
             this.lblResultat.Name = "lblResultat";
-            this.lblResultat.Size = new System.Drawing.Size(66, 15);
+            this.lblResultat.Size = new System.Drawing.Size(421, 36);
             this.lblResultat.TabIndex = 5;
             this.lblResultat.Text = "RESULTAT";
+            this.lblResultat.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnKasta
             // 
-            this.btnKasta.Location = new System.Drawing.Point(267, 182);
+            this.btnKasta.Location = new System.Drawing.Point(302, 180);
             this.btnKasta.Name = "btnKasta";
             this.btnKasta.Size = new System.Drawing.Size(75, 23);
             this.btnKasta.TabIndex = 6;
@@ -111,7 +112,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.ClientSize = new System.Drawing.Size(674, 262);
             this.Controls.Add(this.btnKasta);
             this.Controls.Add(this.lblResultat);
             this.Controls.Add(this.pc5);
@@ -127,7 +129,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pc4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pc5)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
