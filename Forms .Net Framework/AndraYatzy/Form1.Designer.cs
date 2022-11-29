@@ -45,6 +45,7 @@
             this.btnStäng = new System.Windows.Forms.Button();
             this.btnRestart = new System.Windows.Forms.Button();
             this.lbxAndraFörsök = new System.Windows.Forms.ListBox();
+            this.lblOmgångar = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pc1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pc5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pc4)).BeginInit();
@@ -194,6 +195,7 @@
             // 
             // gbxResultat
             // 
+            this.gbxResultat.Controls.Add(this.lblOmgångar);
             this.gbxResultat.Controls.Add(this.lbxValdRes);
             this.gbxResultat.Controls.Add(this.lbxMöjligRes);
             this.gbxResultat.Controls.Add(this.lbxVälj);
@@ -244,7 +246,7 @@
             this.gbxYatzy.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.gbxYatzy.Location = new System.Drawing.Point(0, 24);
             this.gbxYatzy.Name = "gbxYatzy";
-            this.gbxYatzy.Size = new System.Drawing.Size(268, 363);
+            this.gbxYatzy.Size = new System.Drawing.Size(268, 377);
             this.gbxYatzy.TabIndex = 12;
             this.gbxYatzy.TabStop = false;
             // 
@@ -256,7 +258,7 @@
             this.lblTotala.ForeColor = System.Drawing.SystemColors.ControlText;
             this.lblTotala.Location = new System.Drawing.Point(0, 24);
             this.lblTotala.Name = "lblTotala";
-            this.lblTotala.Size = new System.Drawing.Size(268, 393);
+            this.lblTotala.Size = new System.Drawing.Size(268, 407);
             this.lblTotala.TabIndex = 9;
             this.lblTotala.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblTotala.Visible = false;
@@ -264,7 +266,7 @@
             // btnStäng
             // 
             this.btnStäng.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnStäng.Location = new System.Drawing.Point(0, 387);
+            this.btnStäng.Location = new System.Drawing.Point(0, 401);
             this.btnStäng.Name = "btnStäng";
             this.btnStäng.Size = new System.Drawing.Size(268, 30);
             this.btnStäng.TabIndex = 13;
@@ -294,15 +296,23 @@
             this.lbxAndraFörsök.Location = new System.Drawing.Point(268, 0);
             this.lbxAndraFörsök.Name = "lbxAndraFörsök";
             this.lbxAndraFörsök.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbxAndraFörsök.Size = new System.Drawing.Size(63, 417);
+            this.lbxAndraFörsök.Size = new System.Drawing.Size(63, 431);
             this.lbxAndraFörsök.TabIndex = 15;
             this.lbxAndraFörsök.Visible = false;
+            // 
+            // lblOmgångar
+            // 
+            this.lblOmgångar.Location = new System.Drawing.Point(37, 373);
+            this.lblOmgångar.Name = "lblOmgångar";
+            this.lblOmgångar.Size = new System.Drawing.Size(103, 15);
+            this.lblOmgångar.TabIndex = 16;
+            this.lblOmgångar.Text = "Omgångar kvar: 14";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(331, 417);
+            this.ClientSize = new System.Drawing.Size(331, 431);
             this.Controls.Add(this.gbxYatzy);
             this.Controls.Add(this.btnStäng);
             this.Controls.Add(this.lblTotala);
@@ -340,6 +350,7 @@
         private System.Windows.Forms.Button btnStäng;
         private System.Windows.Forms.Button btnRestart;
         private System.Windows.Forms.ListBox lbxAndraFörsök;
+        private System.Windows.Forms.Label lblOmgångar;
     }
 }
 

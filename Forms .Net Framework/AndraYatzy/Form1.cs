@@ -131,6 +131,7 @@ namespace AndraYatzy
                 btnVälj.Enabled = false;
                 gbxResultat.Enabled = false;
 
+                // Nollställer värdena och grafiken för tärningarna
                 PictureBox[] ramar = { pc1, pc2, pc3, pc4, pc5 };
                 for (int i = 0; i < slag.Length; i++)
                 {
@@ -165,6 +166,8 @@ namespace AndraYatzy
                         lbxValdRes.Items[i] = 0;
                     }
                 }
+
+                lblOmgångar.Text = "Omgångar kvar: " + (14 - speladeSpel);
             }
             else // Varnar om man inte valt ett resultat
             {
@@ -185,6 +188,7 @@ namespace AndraYatzy
             lbxAndraFörsök.Visible = false;
 
             speladeSpel = 0;
+            lblOmgångar.Text = "Omgångar kvar: 14";
         }
 
         private void btnStäng_Click(object sender, EventArgs e)
