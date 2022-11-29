@@ -30,12 +30,14 @@ namespace AndraYatzy
 
         private void btnSlå_Click(object sender, EventArgs e)
         {
+            PictureBox[] ramar = { pc1, pc2, pc3, pc4, pc5 };
             if (kastKvar > 0) // Kollar först om vi har något kast kvar för att kasta
             {
                 // Slår tärningarna som inte vi har valt att behålla
                 for (int i = 0; i < 5; i++) 
                 {
                     if (!behåll[i]) slag[i] = generator.Next(1, 7);
+                    ramar[i].Image = grafik[slag[i]];
                 }
                 kastKvar--;
                 prbarKastkvar.PerformStep();
@@ -97,13 +99,6 @@ namespace AndraYatzy
                 {
                     lbxMöjligRes.Items[i] = resultatVärden[i];
                 }
-            }
-
-            // Uppdaterar grafiken
-            PictureBox[] ramar = { pc1, pc2, pc3, pc4, pc5 };
-            for (int i = 0; i < slag.Length; i++)
-            {
-                ramar[i].Image = grafik[slag[i]];
             }
         }
         private void btnVälj_Click(object sender, EventArgs e)

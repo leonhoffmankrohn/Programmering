@@ -38,6 +38,7 @@
             this.lbxMöjligRes = new System.Windows.Forms.ListBox();
             this.lbxValdRes = new System.Windows.Forms.ListBox();
             this.gbxResultat = new System.Windows.Forms.GroupBox();
+            this.lblOmgångar = new System.Windows.Forms.Label();
             this.btnVälj = new System.Windows.Forms.Button();
             this.prbarKastkvar = new System.Windows.Forms.ProgressBar();
             this.gbxYatzy = new System.Windows.Forms.GroupBox();
@@ -45,7 +46,6 @@
             this.btnStäng = new System.Windows.Forms.Button();
             this.btnRestart = new System.Windows.Forms.Button();
             this.lbxAndraFörsök = new System.Windows.Forms.ListBox();
-            this.lblOmgångar = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pc1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pc5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pc4)).BeginInit();
@@ -207,6 +207,14 @@
             this.gbxResultat.TabStop = false;
             this.gbxResultat.Text = "Resultaten";
             // 
+            // lblOmgångar
+            // 
+            this.lblOmgångar.Location = new System.Drawing.Point(37, 373);
+            this.lblOmgångar.Name = "lblOmgångar";
+            this.lblOmgångar.Size = new System.Drawing.Size(103, 15);
+            this.lblOmgångar.TabIndex = 16;
+            this.lblOmgångar.Text = "Omgångar kvar: 14";
+            // 
             // btnVälj
             // 
             this.btnVälj.Enabled = false;
@@ -299,14 +307,6 @@
             this.lbxAndraFörsök.Size = new System.Drawing.Size(63, 431);
             this.lbxAndraFörsök.TabIndex = 15;
             this.lbxAndraFörsök.Visible = false;
-            // 
-            // lblOmgångar
-            // 
-            this.lblOmgångar.Location = new System.Drawing.Point(37, 373);
-            this.lblOmgångar.Name = "lblOmgångar";
-            this.lblOmgångar.Size = new System.Drawing.Size(103, 15);
-            this.lblOmgångar.TabIndex = 16;
-            this.lblOmgångar.Text = "Omgångar kvar: 14";
             // 
             // Form1
             // 
