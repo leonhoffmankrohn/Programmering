@@ -16,6 +16,7 @@ namespace AndraYatzy
         public Form1()
         {
             InitializeComponent();
+            tabAllt.SelectedTab = tabPYatzy;
         }
 
         // Varsitt index är en tärning
@@ -27,6 +28,7 @@ namespace AndraYatzy
         int speladeSpel = 13;
         int[] resultatVärden = new int[14]; // ettor, tvåor, treor, fyror, femor, sexor, par, två-par, triss, kåk, liten-stege, stor-stege, yatzy
         int[] tagnaSvar = new int[14]; // ""--""
+        bool dator = false;
 
         private void btnSlå_Click(object sender, EventArgs e)
         {
@@ -53,10 +55,10 @@ namespace AndraYatzy
             for (int i = 0; i < resultatVärden.Length; i++) resultatVärden[i] = 0;
 
 
-            /* !!!### FIXA SÅ ATT VARJE POÄNG HAR ETT INDEX SOM MOTSVARAR EN LISTBOX-ITEM ###!!! */
+            // Visar bara resultat om personen har slagit 3 ggr
             if (visaResultat)
             {
-
+                // Du kan inte slå mer men du får välja och använda resultatrutan
                 btnSlå.Enabled = false;
                 gbxResultat.Enabled = true;
                 btnVälj.Enabled = true;
@@ -89,6 +91,8 @@ namespace AndraYatzy
                     
                 }
 
+                // Utanför loopen eftersom de inte beror direkt på antalet lika eller nuvarande sida på tärningen.
+                // Detta till hänsyn till prestanda för att skapa vana till större projekt
                 if (!slag.Contains(1) && antalPar == 0) resultatVärden[11] = 20; // Stor stege
                 else if(!slag.Contains(6) && antalPar == 0) resultatVärden[10] = 15; // Liten stege
                 if (antalPar == 2 && resultatVärden[8] != 0) resultatVärden[9] = resultatVärden[7] - 2 * resultatVärden[8] / 3 + resultatVärden[8]; // Kåk.
@@ -140,14 +144,8 @@ namespace AndraYatzy
                 speladeSpel++;
                 if (speladeSpel == 14)
                 {
-                    //      Ändra visible på allt till false
-                    gbxYatzy.Visible = false;
-
-                    // Visa resultat
-                    lblTotala.Visible = true;
-                    btnRestart.Visible = true;
-                    btnStäng.Visible = true;
-                    lbxAndraFörsök.Visible = true;
+                    dator = true;
+                    tabAllt.SelectTab(1);
 
                     // Visa grön skärm och resultat
                     int resultat = tagnaSvar.Sum();
@@ -171,18 +169,20 @@ namespace AndraYatzy
             }
         }
 
+        private void tabAllt_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            //Tillåter inte att spelaren byter tabb
+            e.Cancel = (speladeSpel == 14 && dator) ? false : true;
+            dator = false;
+        }
+
         private void btnRestart_Click(object sender, EventArgs e)
         {
             //      Ändra visible på allt till true
-            gbxYatzy.Visible = true;
-
-            // Tar bort resultat
-            lblTotala.Visible = false;
-            btnRestart.Visible = false;
-            btnStäng.Visible = false;
-            lbxAndraFörsök.Visible = false;
-
+            dator = true;
+            tabAllt.SelectTab(0);
             speladeSpel = 0;
+
             lblOmgångar.Text = "Omgångar kvar: 14";
         }
 

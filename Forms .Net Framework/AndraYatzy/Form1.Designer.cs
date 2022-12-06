@@ -41,24 +41,28 @@
             this.lblOmgångar = new System.Windows.Forms.Label();
             this.btnVälj = new System.Windows.Forms.Button();
             this.prbarKastkvar = new System.Windows.Forms.ProgressBar();
-            this.gbxYatzy = new System.Windows.Forms.GroupBox();
             this.lblTotala = new System.Windows.Forms.Label();
             this.btnStäng = new System.Windows.Forms.Button();
             this.btnRestart = new System.Windows.Forms.Button();
             this.lbxAndraFörsök = new System.Windows.Forms.ListBox();
+            this.tabAllt = new System.Windows.Forms.TabControl();
+            this.tabPYatzy = new System.Windows.Forms.TabPage();
+            this.tabPResultat = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.pc1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pc5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pc4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pc3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pc2)).BeginInit();
             this.gbxResultat.SuspendLayout();
-            this.gbxYatzy.SuspendLayout();
+            this.tabAllt.SuspendLayout();
+            this.tabPYatzy.SuspendLayout();
+            this.tabPResultat.SuspendLayout();
             this.SuspendLayout();
             // 
             // pc1
             // 
             this.pc1.Image = global::AndraYatzy.Tärningsgrafik.d0;
-            this.pc1.Location = new System.Drawing.Point(42, 243);
+            this.pc1.Location = new System.Drawing.Point(33, 243);
             this.pc1.Name = "pc1";
             this.pc1.Size = new System.Drawing.Size(50, 50);
             this.pc1.TabIndex = 0;
@@ -68,7 +72,7 @@
             // pc5
             // 
             this.pc5.Image = global::AndraYatzy.Tärningsgrafik.d0;
-            this.pc5.Location = new System.Drawing.Point(42, 19);
+            this.pc5.Location = new System.Drawing.Point(33, 19);
             this.pc5.Name = "pc5";
             this.pc5.Size = new System.Drawing.Size(50, 50);
             this.pc5.TabIndex = 1;
@@ -78,7 +82,7 @@
             // pc4
             // 
             this.pc4.Image = global::AndraYatzy.Tärningsgrafik.d0;
-            this.pc4.Location = new System.Drawing.Point(42, 75);
+            this.pc4.Location = new System.Drawing.Point(33, 75);
             this.pc4.Name = "pc4";
             this.pc4.Size = new System.Drawing.Size(50, 50);
             this.pc4.TabIndex = 2;
@@ -88,7 +92,7 @@
             // pc3
             // 
             this.pc3.Image = global::AndraYatzy.Tärningsgrafik.d0;
-            this.pc3.Location = new System.Drawing.Point(42, 131);
+            this.pc3.Location = new System.Drawing.Point(33, 131);
             this.pc3.Name = "pc3";
             this.pc3.Size = new System.Drawing.Size(50, 50);
             this.pc3.TabIndex = 3;
@@ -98,7 +102,7 @@
             // pc2
             // 
             this.pc2.Image = global::AndraYatzy.Tärningsgrafik.d0;
-            this.pc2.Location = new System.Drawing.Point(42, 187);
+            this.pc2.Location = new System.Drawing.Point(33, 187);
             this.pc2.Name = "pc2";
             this.pc2.Size = new System.Drawing.Size(50, 50);
             this.pc2.TabIndex = 4;
@@ -107,7 +111,7 @@
             // 
             // btnSlå
             // 
-            this.btnSlå.Location = new System.Drawing.Point(17, 313);
+            this.btnSlå.Location = new System.Drawing.Point(8, 313);
             this.btnSlå.Name = "btnSlå";
             this.btnSlå.Size = new System.Drawing.Size(75, 44);
             this.btnSlå.TabIndex = 5;
@@ -200,7 +204,7 @@
             this.gbxResultat.Controls.Add(this.lbxMöjligRes);
             this.gbxResultat.Controls.Add(this.lbxVälj);
             this.gbxResultat.Enabled = false;
-            this.gbxResultat.Location = new System.Drawing.Point(98, 19);
+            this.gbxResultat.Location = new System.Drawing.Point(89, 19);
             this.gbxResultat.Name = "gbxResultat";
             this.gbxResultat.Size = new System.Drawing.Size(226, 391);
             this.gbxResultat.TabIndex = 9;
@@ -218,7 +222,7 @@
             // btnVälj
             // 
             this.btnVälj.Enabled = false;
-            this.btnVälj.Location = new System.Drawing.Point(17, 363);
+            this.btnVälj.Location = new System.Drawing.Point(8, 363);
             this.btnVälj.Name = "btnVälj";
             this.btnVälj.Size = new System.Drawing.Size(75, 44);
             this.btnVälj.TabIndex = 10;
@@ -230,7 +234,7 @@
             // 
             this.prbarKastkvar.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.prbarKastkvar.ForeColor = System.Drawing.Color.Lime;
-            this.prbarKastkvar.Location = new System.Drawing.Point(17, 347);
+            this.prbarKastkvar.Location = new System.Drawing.Point(8, 347);
             this.prbarKastkvar.Maximum = 3;
             this.prbarKastkvar.Name = "prbarKastkvar";
             this.prbarKastkvar.Size = new System.Drawing.Size(75, 10);
@@ -239,60 +243,38 @@
             this.prbarKastkvar.TabIndex = 11;
             this.prbarKastkvar.Value = 3;
             // 
-            // gbxYatzy
-            // 
-            this.gbxYatzy.Controls.Add(this.gbxResultat);
-            this.gbxYatzy.Controls.Add(this.btnVälj);
-            this.gbxYatzy.Controls.Add(this.prbarKastkvar);
-            this.gbxYatzy.Controls.Add(this.pc2);
-            this.gbxYatzy.Controls.Add(this.pc1);
-            this.gbxYatzy.Controls.Add(this.pc3);
-            this.gbxYatzy.Controls.Add(this.pc5);
-            this.gbxYatzy.Controls.Add(this.pc4);
-            this.gbxYatzy.Controls.Add(this.btnSlå);
-            this.gbxYatzy.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbxYatzy.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.gbxYatzy.Location = new System.Drawing.Point(0, 24);
-            this.gbxYatzy.Name = "gbxYatzy";
-            this.gbxYatzy.Size = new System.Drawing.Size(268, 377);
-            this.gbxYatzy.TabIndex = 12;
-            this.gbxYatzy.TabStop = false;
-            // 
             // lblTotala
             // 
             this.lblTotala.BackColor = System.Drawing.Color.MediumSeaGreen;
             this.lblTotala.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblTotala.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotala.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblTotala.Location = new System.Drawing.Point(0, 24);
+            this.lblTotala.Location = new System.Drawing.Point(3, 27);
             this.lblTotala.Name = "lblTotala";
-            this.lblTotala.Size = new System.Drawing.Size(268, 407);
+            this.lblTotala.Size = new System.Drawing.Size(247, 354);
             this.lblTotala.TabIndex = 9;
             this.lblTotala.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblTotala.Visible = false;
             // 
             // btnStäng
             // 
             this.btnStäng.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnStäng.Location = new System.Drawing.Point(0, 401);
+            this.btnStäng.Location = new System.Drawing.Point(3, 381);
             this.btnStäng.Name = "btnStäng";
-            this.btnStäng.Size = new System.Drawing.Size(268, 30);
+            this.btnStäng.Size = new System.Drawing.Size(320, 30);
             this.btnStäng.TabIndex = 13;
             this.btnStäng.Text = "Lämna spelet";
             this.btnStäng.UseVisualStyleBackColor = true;
-            this.btnStäng.Visible = false;
             this.btnStäng.Click += new System.EventHandler(this.btnStäng_Click);
             // 
             // btnRestart
             // 
             this.btnRestart.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnRestart.Location = new System.Drawing.Point(0, 0);
+            this.btnRestart.Location = new System.Drawing.Point(3, 3);
             this.btnRestart.Name = "btnRestart";
-            this.btnRestart.Size = new System.Drawing.Size(268, 24);
+            this.btnRestart.Size = new System.Drawing.Size(320, 24);
             this.btnRestart.TabIndex = 14;
             this.btnRestart.Text = "Starta om spel!";
             this.btnRestart.UseVisualStyleBackColor = true;
-            this.btnRestart.Visible = false;
             this.btnRestart.Click += new System.EventHandler(this.btnRestart_Click);
             // 
             // lbxAndraFörsök
@@ -301,23 +283,69 @@
             this.lbxAndraFörsök.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbxAndraFörsök.FormattingEnabled = true;
             this.lbxAndraFörsök.ItemHeight = 20;
-            this.lbxAndraFörsök.Location = new System.Drawing.Point(268, 0);
+            this.lbxAndraFörsök.Location = new System.Drawing.Point(250, 27);
             this.lbxAndraFörsök.Name = "lbxAndraFörsök";
             this.lbxAndraFörsök.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbxAndraFörsök.Size = new System.Drawing.Size(63, 431);
+            this.lbxAndraFörsök.Size = new System.Drawing.Size(73, 354);
             this.lbxAndraFörsök.TabIndex = 15;
-            this.lbxAndraFörsök.Visible = false;
+            // 
+            // tabAllt
+            // 
+            this.tabAllt.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
+            this.tabAllt.Controls.Add(this.tabPYatzy);
+            this.tabAllt.Controls.Add(this.tabPResultat);
+            this.tabAllt.Cursor = System.Windows.Forms.Cursors.Default;
+            this.tabAllt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabAllt.Location = new System.Drawing.Point(0, 0);
+            this.tabAllt.Multiline = true;
+            this.tabAllt.Name = "tabAllt";
+            this.tabAllt.SelectedIndex = 0;
+            this.tabAllt.Size = new System.Drawing.Size(334, 443);
+            this.tabAllt.TabIndex = 16;
+            this.tabAllt.TabStop = false;
+            this.tabAllt.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabAllt_Selecting);
+            // 
+            // tabPYatzy
+            // 
+            this.tabPYatzy.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPYatzy.Controls.Add(this.gbxResultat);
+            this.tabPYatzy.Controls.Add(this.btnVälj);
+            this.tabPYatzy.Controls.Add(this.prbarKastkvar);
+            this.tabPYatzy.Controls.Add(this.pc4);
+            this.tabPYatzy.Controls.Add(this.pc2);
+            this.tabPYatzy.Controls.Add(this.pc5);
+            this.tabPYatzy.Controls.Add(this.pc1);
+            this.tabPYatzy.Controls.Add(this.pc3);
+            this.tabPYatzy.Controls.Add(this.btnSlå);
+            this.tabPYatzy.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.tabPYatzy.Location = new System.Drawing.Point(4, 25);
+            this.tabPYatzy.Name = "tabPYatzy";
+            this.tabPYatzy.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPYatzy.Size = new System.Drawing.Size(326, 414);
+            this.tabPYatzy.TabIndex = 0;
+            this.tabPYatzy.Text = "YATZY";
+            // 
+            // tabPResultat
+            // 
+            this.tabPResultat.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPResultat.Controls.Add(this.lblTotala);
+            this.tabPResultat.Controls.Add(this.lbxAndraFörsök);
+            this.tabPResultat.Controls.Add(this.btnRestart);
+            this.tabPResultat.Controls.Add(this.btnStäng);
+            this.tabPResultat.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.tabPResultat.Location = new System.Drawing.Point(4, 25);
+            this.tabPResultat.Name = "tabPResultat";
+            this.tabPResultat.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPResultat.Size = new System.Drawing.Size(326, 414);
+            this.tabPResultat.TabIndex = 1;
+            this.tabPResultat.Text = "RESULTAT";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(331, 431);
-            this.Controls.Add(this.gbxYatzy);
-            this.Controls.Add(this.btnStäng);
-            this.Controls.Add(this.lblTotala);
-            this.Controls.Add(this.btnRestart);
-            this.Controls.Add(this.lbxAndraFörsök);
+            this.ClientSize = new System.Drawing.Size(334, 443);
+            this.Controls.Add(this.tabAllt);
             this.Name = "Form1";
             this.Text = "Andra yatzy";
             ((System.ComponentModel.ISupportInitialize)(this.pc1)).EndInit();
@@ -326,7 +354,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.pc3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pc2)).EndInit();
             this.gbxResultat.ResumeLayout(false);
-            this.gbxYatzy.ResumeLayout(false);
+            this.tabAllt.ResumeLayout(false);
+            this.tabPYatzy.ResumeLayout(false);
+            this.tabPResultat.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -345,12 +375,14 @@
         private System.Windows.Forms.GroupBox gbxResultat;
         private System.Windows.Forms.Button btnVälj;
         private System.Windows.Forms.ProgressBar prbarKastkvar;
-        private System.Windows.Forms.GroupBox gbxYatzy;
         private System.Windows.Forms.Label lblTotala;
         private System.Windows.Forms.Button btnStäng;
         private System.Windows.Forms.Button btnRestart;
         private System.Windows.Forms.ListBox lbxAndraFörsök;
         private System.Windows.Forms.Label lblOmgångar;
+        private System.Windows.Forms.TabControl tabAllt;
+        private System.Windows.Forms.TabPage tabPYatzy;
+        private System.Windows.Forms.TabPage tabPResultat;
     }
 }
 
