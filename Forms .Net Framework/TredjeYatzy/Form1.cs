@@ -20,7 +20,7 @@ namespace TredjeYatzy
             PictureBox[] ramar = {pc1, pc2, pc3, pc4, pc5};
             for (int i = 0; i < ramar.Length; i++)
             {
-                ramar[i].Click += allPc_Click;
+                ramar[i].Click += (ee, ev) => allPcClick(i);
             }
         }
 
@@ -222,14 +222,15 @@ namespace TredjeYatzy
         }
 
         // Här kommer alla olika tärningar och hur vi sparar dem till nästa slag 
-        private void pc1_Click(object sender, EventArgs e) { ändraBehåll(0); }
+        private void pc1_Click(object sender, EventArgs e) { Console.WriteLine("Den här kördes också (1)"); }
         private void pc2_Click(object sender, EventArgs e) { ändraBehåll(1); }
         private void pc3_Click(object sender, EventArgs e) { ändraBehåll(2); }
         private void pc4_Click(object sender, EventArgs e) { ändraBehåll(3); }
         private void pc5_Click(object sender, EventArgs e) { ändraBehåll(4); }
 
-        private void allPc_Click(object sender, EventArgs e)
+        private void allPcClick(int i)
         {
+            ändraBehåll(i);
             //Fortsättning följer...
         }
     }
