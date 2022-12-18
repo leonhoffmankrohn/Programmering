@@ -17,11 +17,6 @@ namespace TredjeYatzy
         {
             InitializeComponent();
             tabAllt.SelectedTab = tabPYatzy;
-            PictureBox[] ramar = {pc1, pc2, pc3, pc4, pc5};
-            for (int i = 0; i < ramar.Length; i++)
-            {
-                ramar[i].Click += (ee, ev) => allPcClick(i);
-            }
         }
 
         // Varsitt index är en tärning
@@ -48,11 +43,7 @@ namespace TredjeYatzy
             
         }
 
-        /*ändra behåll bool för indexet 1-5 
-         * 
-         */
-
-        void kastaTärningar() 
+        void kastaTärningar() // Kastar våra tärningar
         {
             PictureBox[] ramar = { pc1, pc2, pc3, pc4, pc5 };
             
@@ -69,9 +60,10 @@ namespace TredjeYatzy
             }
         }
 
-        void beräknaResultat()
+        void beräknaResultat() // Beräknar resultat
         {
             int antalPar = 0;
+
             // Du kan inte slå mer men du får välja och använda resultatrutan
             btnSlå.Enabled = false;
             gbxResultat.Enabled = true;
@@ -111,7 +103,7 @@ namespace TredjeYatzy
             if (antalPar == 2 && resultatVärden[8] != 0) resultatVärden[9] = resultatVärden[7] - 2 * resultatVärden[8] / 3 + resultatVärden[8]; // Kåk.
         }
 
-        private void btnSlå_Click(object sender, EventArgs e)
+        private void btnSlå_Click(object sender, EventArgs e) // Vad som händer när vi tycker på slåknappen
         {
             // Kastar tärningarna
             kastaTärningar();
@@ -124,7 +116,7 @@ namespace TredjeYatzy
 
 
             // Visar bara resultat om personen har slagit 3 ggr
-            if (visaResultat)
+            if (kastKvar==0)
             {
                 beräknaResultat();
 
@@ -135,7 +127,8 @@ namespace TredjeYatzy
                 }
             }
         }
-        private void btnVälj_Click(object sender, EventArgs e)
+
+        private void btnVälj_Click(object sender, EventArgs e) // Vad som händer när vi tycker på väljknappen
         {
             if (lbxVälj.SelectedIndex != -1 && int.Parse(lbxMöjligRes.Items[lbxVälj.SelectedIndex].ToString()) != 0)
             {
@@ -199,14 +192,13 @@ namespace TredjeYatzy
             }
         }
 
-        private void tabAllt_Selecting(object sender, TabControlCancelEventArgs e)
+        private void tabAllt_Selecting(object sender, TabControlCancelEventArgs e) // Tillåter inte att spelaren byter tabb 
         {
-            //Tillåter inte att spelaren byter tabb
             e.Cancel = (speladeSpel == 14 && dator) ? false : true;
             dator = false;
         }
 
-        private void btnRestart_Click(object sender, EventArgs e)
+        private void btnRestart_Click(object sender, EventArgs e) // Startat om spelet
         {
             //      Ändra visible på allt till true
             dator = true;
@@ -216,22 +208,16 @@ namespace TredjeYatzy
             lblOmgångar.Text = "Omgångar kvar: 14";
         }
 
-        private void btnStäng_Click(object sender, EventArgs e)
+        private void btnStäng_Click(object sender, EventArgs e) // Flyktväg
         {
             Close();
         }
 
         // Här kommer alla olika tärningar och hur vi sparar dem till nästa slag 
-        private void pc1_Click(object sender, EventArgs e) { Console.WriteLine("Den här kördes också (1)"); }
+        private void pc1_Click(object sender, EventArgs e) { ändraBehåll(0); }
         private void pc2_Click(object sender, EventArgs e) { ändraBehåll(1); }
         private void pc3_Click(object sender, EventArgs e) { ändraBehåll(2); }
         private void pc4_Click(object sender, EventArgs e) { ändraBehåll(3); }
         private void pc5_Click(object sender, EventArgs e) { ändraBehåll(4); }
-
-        private void allPcClick(int i)
-        {
-            ändraBehåll(i);
-            //Fortsättning följer...
-        }
     }
 }

@@ -10,22 +10,27 @@
 
 Random generator = new Random();
 
-void sqrt(double input) 
+while (true)
 {
-    double x0 = generator.Next(-100, 100) + generator.NextDouble();
-    Console.WriteLine(x0);
-    double x1 = 1;
-    while (x0 != x1)
-    { 
-        x0 = x1;
-        double fx = x0*x0-input;
-        double fk = 2 * x0;
-        x1 = x0 - (fx / fk);
-        Console.WriteLine(x1.ToString());
+    void sqrt(double input)
+    {
+        double x0 = generator.Next(-100, 100) + generator.NextDouble();
+        Console.WriteLine(x0);
+        double x1 = 1;
+        int iterations = 0;
+        while (x0 != x1 || iterations < 100)
+        {
+            x0 = x1;
+            double fx = x0 * x0 - input;
+            double fk = 2 * x0;
+            x1 = x0 - (fx / fk);
+            Console.WriteLine(x1.ToString());
+            iterations++;
+        }
+        Console.WriteLine("\r\n" + x0 * x0);
+
     }
-    Console.WriteLine("\r\n" + x0 * x0);
+    string input = Console.ReadLine();
 
+    sqrt(double.Parse(input));
 }
-string input = Console.ReadLine();
-
-sqrt(double.Parse(input));
