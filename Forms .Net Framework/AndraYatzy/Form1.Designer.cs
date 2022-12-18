@@ -38,6 +38,8 @@
             this.lbxMöjligRes = new System.Windows.Forms.ListBox();
             this.lbxValdRes = new System.Windows.Forms.ListBox();
             this.gbxResultat = new System.Windows.Forms.GroupBox();
+            this.lblPoäng = new System.Windows.Forms.Label();
+            this.lblVälj = new System.Windows.Forms.Label();
             this.lblOmgångar = new System.Windows.Forms.Label();
             this.btnVälj = new System.Windows.Forms.Button();
             this.prbarKastkvar = new System.Windows.Forms.ProgressBar();
@@ -48,8 +50,6 @@
             this.tabAllt = new System.Windows.Forms.TabControl();
             this.tabPYatzy = new System.Windows.Forms.TabPage();
             this.tabPResultat = new System.Windows.Forms.TabPage();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pc1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pc5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pc4)).BeginInit();
@@ -201,8 +201,8 @@
             // 
             // gbxResultat
             // 
-            this.gbxResultat.Controls.Add(this.label2);
-            this.gbxResultat.Controls.Add(this.label1);
+            this.gbxResultat.Controls.Add(this.lblPoäng);
+            this.gbxResultat.Controls.Add(this.lblVälj);
             this.gbxResultat.Controls.Add(this.lblOmgångar);
             this.gbxResultat.Controls.Add(this.lbxValdRes);
             this.gbxResultat.Controls.Add(this.lbxMöjligRes);
@@ -214,6 +214,24 @@
             this.gbxResultat.TabIndex = 9;
             this.gbxResultat.TabStop = false;
             this.gbxResultat.Text = "Resultaten";
+            // 
+            // lblPoäng
+            // 
+            this.lblPoäng.AutoSize = true;
+            this.lblPoäng.Location = new System.Drawing.Point(167, 0);
+            this.lblPoäng.Name = "lblPoäng";
+            this.lblPoäng.Size = new System.Drawing.Size(38, 13);
+            this.lblPoäng.TabIndex = 18;
+            this.lblPoäng.Text = "Poäng";
+            // 
+            // lblVälj
+            // 
+            this.lblVälj.AutoSize = true;
+            this.lblVälj.Location = new System.Drawing.Point(131, 0);
+            this.lblVälj.Name = "lblVälj";
+            this.lblVälj.Size = new System.Drawing.Size(24, 13);
+            this.lblVälj.TabIndex = 17;
+            this.lblVälj.Text = "Välj";
             // 
             // lblOmgångar
             // 
@@ -344,24 +362,6 @@
             this.tabPResultat.TabIndex = 1;
             this.tabPResultat.Text = "RESULTAT";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(131, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(24, 13);
-            this.label1.TabIndex = 17;
-            this.label1.Text = "Välj";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(167, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 13);
-            this.label2.TabIndex = 18;
-            this.label2.Text = "Poäng";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -406,8 +406,8 @@
         private System.Windows.Forms.TabControl tabAllt;
         private System.Windows.Forms.TabPage tabPYatzy;
         private System.Windows.Forms.TabPage tabPResultat;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblPoäng;
+        private System.Windows.Forms.Label lblVälj;
     }
 }
 
