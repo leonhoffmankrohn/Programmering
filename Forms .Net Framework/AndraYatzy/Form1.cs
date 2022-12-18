@@ -25,7 +25,7 @@ namespace AndraYatzy
         int[] slag = new int[5];
         Random generator = new Random();
         int kastKvar = 3;
-        int speladeSpel = 13;
+        int speladeSpel = 0; // Ändra den här för att spela kortare respektive längre rundor
         int[] resultatVärden = new int[14]; // ettor, tvåor, treor, fyror, femor, sexor, par, två-par, triss, kåk, liten-stege, stor-stege, yatzy
         int[] tagnaSvar = new int[14]; // ""--""
         bool dator = false;
@@ -186,7 +186,7 @@ namespace AndraYatzy
             lblOmgångar.Text = "Omgångar kvar: 14";
         }
 
-        private void btnStäng_Click(object sender, EventArgs e)
+        private void btnStäng_Click(object sender, EventArgs e) // Farväl
         {
             Close();
         }
