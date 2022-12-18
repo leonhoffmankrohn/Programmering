@@ -48,6 +48,8 @@
             this.tabAllt = new System.Windows.Forms.TabControl();
             this.tabPYatzy = new System.Windows.Forms.TabPage();
             this.tabPResultat = new System.Windows.Forms.TabPage();
+            this.lblVälj = new System.Windows.Forms.Label();
+            this.lblPoäng = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pc1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pc5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pc4)).BeginInit();
@@ -199,6 +201,8 @@
             // 
             // gbxResultat
             // 
+            this.gbxResultat.Controls.Add(this.lblPoäng);
+            this.gbxResultat.Controls.Add(this.lblVälj);
             this.gbxResultat.Controls.Add(this.lblOmgångar);
             this.gbxResultat.Controls.Add(this.lbxValdRes);
             this.gbxResultat.Controls.Add(this.lbxMöjligRes);
@@ -340,6 +344,24 @@
             this.tabPResultat.TabIndex = 1;
             this.tabPResultat.Text = "RESULTAT";
             // 
+            // lblVälj
+            // 
+            this.lblVälj.AutoSize = true;
+            this.lblVälj.Location = new System.Drawing.Point(129, 0);
+            this.lblVälj.Name = "lblVälj";
+            this.lblVälj.Size = new System.Drawing.Size(24, 13);
+            this.lblVälj.TabIndex = 17;
+            this.lblVälj.Text = "Välj";
+            // 
+            // lblPoäng
+            // 
+            this.lblPoäng.AutoSize = true;
+            this.lblPoäng.Location = new System.Drawing.Point(173, 0);
+            this.lblPoäng.Name = "lblPoäng";
+            this.lblPoäng.Size = new System.Drawing.Size(38, 13);
+            this.lblPoäng.TabIndex = 18;
+            this.lblPoäng.Text = "Poäng";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -354,6 +376,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pc3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pc2)).EndInit();
             this.gbxResultat.ResumeLayout(false);
+            this.gbxResultat.PerformLayout();
             this.tabAllt.ResumeLayout(false);
             this.tabPYatzy.ResumeLayout(false);
             this.tabPResultat.ResumeLayout(false);
@@ -383,6 +406,8 @@
         private System.Windows.Forms.TabControl tabAllt;
         private System.Windows.Forms.TabPage tabPYatzy;
         private System.Windows.Forms.TabPage tabPResultat;
+        private System.Windows.Forms.Label lblPoäng;
+        private System.Windows.Forms.Label lblVälj;
     }
 }
 
