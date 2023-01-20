@@ -16,17 +16,15 @@ namespace Övning_Metoder1
         {
             InitializeComponent();
         }
-        int tal1;
-        int tal2;
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            tal1 = int.Parse(tbxTal1.Text);
-            tal2 = int.Parse(tbxTal2.Text);
+            int tal1 = int.Parse(tbxTal1.Text);
+            int tal2 = int.Parse(tbxTal2.Text);
 
-            Addition();
+            Addition(tal1, tal2);
         }
 
-        void Addition() {
+        void Addition(int tal1, int tal2) {
             int summa = tal1 + tal2;
             lblResultat.Text = "Resultat: " + summa;
         }
