@@ -19,17 +19,17 @@ namespace Övning_Metoder1
         private void btnAdd_Click(object sender, EventArgs e)
         {
             int[] tal = HämtaData();
-            lblResultat.Text = "Resultat: " + Beräkna(tal[0], tal[1], '+');
+            SkrivUt(Beräkna(tal[0], tal[1], '+'));
         }
 
         private void btnMulti_Click(object sender, EventArgs e)
         {
             int[] tal = HämtaData();
-            lblResultat.Text = "Resultat: " + Beräkna(tal[0], tal[1], '*');
+            SkrivUt(Beräkna(tal[0], tal[1], '*'));
         }
 
-        void Skrivut(string utdata) {
-            Break;
+        void SkrivUt(int utdata) {
+            lblResultat.Text = "Resultat: " + utdata;
         }
 
 
