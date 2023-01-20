@@ -21,12 +21,12 @@ namespace Övning_Metoder1
             int tal1 = int.Parse(tbxTal1.Text);
             int tal2 = int.Parse(tbxTal2.Text);
 
-            Addition(tal1, tal2);
+            lblResultat.Text = "Resultat: " + Addition(tal1, tal2);
         }
 
-        void Addition(int tal1, int tal2) {
+        int Addition(int tal1, int tal2) {
             int summa = tal1 + tal2;
-            lblResultat.Text = "Resultat: " + summa;
+            return summa;
         }
 
     }
