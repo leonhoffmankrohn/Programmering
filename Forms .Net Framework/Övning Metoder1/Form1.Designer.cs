@@ -34,6 +34,7 @@
             this.tbxTal1 = new System.Windows.Forms.TextBox();
             this.tbxTal2 = new System.Windows.Forms.TextBox();
             this.btnAdd = new System.Windows.Forms.Button();
+            this.btnMulti = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblTal1
@@ -79,7 +80,7 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(158, 241);
+            this.btnAdd.Location = new System.Drawing.Point(108, 225);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 5;
@@ -87,11 +88,22 @@
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
+            // btnMulti
+            // 
+            this.btnMulti.Location = new System.Drawing.Point(235, 225);
+            this.btnMulti.Name = "btnMulti";
+            this.btnMulti.Size = new System.Drawing.Size(89, 23);
+            this.btnMulti.TabIndex = 6;
+            this.btnMulti.Text = "Multiplikation";
+            this.btnMulti.UseVisualStyleBackColor = true;
+            this.btnMulti.Click += new System.EventHandler(this.btnMulti_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(458, 408);
+            this.Controls.Add(this.btnMulti);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.tbxTal2);
             this.Controls.Add(this.tbxTal1);
@@ -113,6 +125,7 @@
         private System.Windows.Forms.TextBox tbxTal1;
         private System.Windows.Forms.TextBox tbxTal2;
         private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.Button btnMulti;
     }
 }
 

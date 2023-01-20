@@ -21,13 +21,26 @@ namespace Övning_Metoder1
             int tal1 = int.Parse(tbxTal1.Text);
             int tal2 = int.Parse(tbxTal2.Text);
 
-            lblResultat.Text = "Resultat: " + Addition(tal1, tal2);
+            lblResultat.Text = "Resultat: " + Beräkna(tal1, tal2, '+');
         }
 
-        int Addition(int tal1, int tal2) {
-            int summa = tal1 + tal2;
-            return summa;
+        private void btnMulti_Click(object sender, EventArgs e)
+        {
+            int tal1 = int.Parse(tbxTal1.Text);
+            int tal2 = int.Parse(tbxTal2.Text);
+
+            lblResultat.Text = "Resultat: " + Beräkna(tal1, tal2, '*');
         }
 
+        int Beräkna(int tal1, int tal2, char räknesätt) {
+            switch (räknesätt) {
+                case '+':
+                    return tal1 + tal2;
+                case '*':
+                    return tal1 * tal2;
+                default:
+                    return 0;
+            }
+        }
     }
 }
