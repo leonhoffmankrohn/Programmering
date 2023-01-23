@@ -35,6 +35,7 @@
             this.tbxTal2 = new System.Windows.Forms.TextBox();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnMulti = new System.Windows.Forms.Button();
+            this.btnSub = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblTal1
@@ -90,7 +91,7 @@
             // 
             // btnMulti
             // 
-            this.btnMulti.Location = new System.Drawing.Point(235, 225);
+            this.btnMulti.Location = new System.Drawing.Point(189, 225);
             this.btnMulti.Name = "btnMulti";
             this.btnMulti.Size = new System.Drawing.Size(89, 23);
             this.btnMulti.TabIndex = 6;
@@ -98,11 +99,22 @@
             this.btnMulti.UseVisualStyleBackColor = true;
             this.btnMulti.Click += new System.EventHandler(this.btnMulti_Click);
             // 
+            // btnSub
+            // 
+            this.btnSub.Location = new System.Drawing.Point(108, 254);
+            this.btnSub.Name = "btnSub";
+            this.btnSub.Size = new System.Drawing.Size(75, 23);
+            this.btnSub.TabIndex = 7;
+            this.btnSub.Text = "Subtrahera";
+            this.btnSub.UseVisualStyleBackColor = true;
+            this.btnSub.Click += new System.EventHandler(this.btnSub_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(458, 408);
+            this.Controls.Add(this.btnSub);
             this.Controls.Add(this.btnMulti);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.tbxTal2);
@@ -126,6 +138,7 @@
         private System.Windows.Forms.TextBox tbxTal2;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnMulti;
+        private System.Windows.Forms.Button btnSub;
     }
 }
 

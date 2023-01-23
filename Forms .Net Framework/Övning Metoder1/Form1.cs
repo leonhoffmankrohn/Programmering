@@ -27,6 +27,11 @@ namespace Övning_Metoder1
             int[] tal = HämtaData();
             SkrivUt(Beräkna(tal[0], tal[1], '*'));
         }
+        private void btnSub_Click(object sender, EventArgs e)
+        {
+            int[] tal = HämtaData();
+            SkrivUt(Beräkna(tal[0], tal[1], '-'));
+        }
 
         void SkrivUt(int utdata) {
             lblResultat.Text = "Resultat: " + utdata;
@@ -44,9 +49,12 @@ namespace Övning_Metoder1
                     return tal1 + tal2;
                 case '*':
                     return tal1 * tal2;
+                case '-':
+                    return tal1 - tal2;
                 default:
                     return 0;
             }
         }
+
     }
 }
