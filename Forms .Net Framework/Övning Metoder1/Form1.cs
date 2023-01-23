@@ -32,6 +32,11 @@ namespace Övning_Metoder1
             int[] tal = HämtaData();
             SkrivUt(Beräkna(tal[0], tal[1], '-'));
         }
+        private void btnAddOchDubbla_Click(object sender, EventArgs e)
+        {
+            int[] tal = HämtaData();
+            SkrivUt(2 * Beräkna(tal[0], tal[1], '+'));
+        }
 
         void SkrivUt(int utdata) {
             lblResultat.Text = "Resultat: " + utdata;
