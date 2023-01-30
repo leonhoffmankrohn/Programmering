@@ -14,14 +14,14 @@ namespace Bankautomat
 
             // Metoder del 3:
 
-            /*  TA BORT DENNA RAD NÄR DU SKA SKRIVA Avbryt OCH VisaSaldo
+            
             
             if (metod == Metod.Avbryt)
                 avbryt = uppgift.Avbryt();
             else if (metod == Metod.Saldo)
                 msg = uppgift.VisaSaldo(läge);
 
-            */  // OCH DENNA RAD (hint, använd CTRL+X)
+            
 
 
             /* TA BORT DENNA RAD NÄR DU SKA BÖRJA MED SAMLINGAR

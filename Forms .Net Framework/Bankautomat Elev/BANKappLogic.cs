@@ -33,7 +33,47 @@ namespace Bankautomat
             }
         }
         public bool Bekräfta(Läge läge, out string msg) {
-            if ((läge == Läge.Inloggning) && (inmatat.Length == 4))
+            switch (läge) {
+                case Läge.Inloggning:
+                    if (inmatat.Length == 4 && KontrolleraPinkod(int.Parse(inmatat)))
+                    {
+                        inmatat = "";
+                        msg = "PIN ok";
+                        return true;
+                    }
+                    else
+                    {
+                        inmatat = "";
+                        msg = "Felaktig PIN";
+                        return false;
+                    }
+                case Läge.Insättning:
+                    {
+                        Insättning(int.Parse(inmatat));
+                        msg = "Insättning: " + inmatat + "kr";
+                        inmatat = "";
+                        return true;
+                    }
+                case Läge.Uttag:
+                    {
+                        bool lyckat = Uttag(int.Parse(inmatat));
+                        if (lyckat)
+                        {
+                            msg = "Uttag: " + inmatat + "kr";
+                            return true;
+                        }
+                        else
+                        {
+                            msg = "Otillräckligt saldo";
+                            return false;
+                        }
+                    }
+                default:
+                    msg = "";
+                    return true;
+
+            }
+            /*if ((läge == Läge.Inloggning) && (inmatat.Length == 4))
             {
                 if (KontrolleraPinkod(int.Parse(inmatat)))
                 {
@@ -46,14 +86,14 @@ namespace Bankautomat
                     msg = "";
                     return true;
                 }
-                else if (läge == Läge.Insättning)
+            else if (läge == Läge.Insättning)
                 {
                     Insättning(int.Parse(inmatat));
                     msg = "Insättning: " + inmatat + "kr";
                     inmatat = "";
                     return true;
                 }
-                else if (läge == Läge.Uttag)
+            else if (läge == Läge.Uttag)
                 {
                     bool lyckat = Uttag(int.Parse(inmatat));
                     if (lyckat)
@@ -67,20 +107,25 @@ namespace Bankautomat
                         return false;
                     }
                 }
+                else 
+                { 
+                    msg = ""; 
+                    return true; 
+                }
             }
             else
             {
                 inmatat = "";
                 msg = "Felaktig PIN";
                 return false;
-            }
+            }*/
             
         }
         private void Insättning(int värde) {
             saldo += värde;
         }
         private bool Uttag(int värde) {
-            if (saldo > värde)
+            if (saldo >= värde)
             {
                 saldo -= värde;
                 return true;
@@ -89,6 +134,18 @@ namespace Bankautomat
         }
         private bool KontrolleraPinkod(int inmatat) {
             return (inmatat == 1234 || inmatat == 9876 || inmatat == 1337) ? true : false;
+        }
+        public string VisaSaldo(Läge läge) {
+            return (läge == Läge.Inloggning) ? "" : "Saldo: " + saldo + "kr";
+        }
+        public bool Avbryt() {
+            if (MessageBox.Show("Är du säker?", "Avsluta", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                saldo = 0;
+                inmatat = "";
+                return true;
+            }
+            else return false;
         }
     }
 }
