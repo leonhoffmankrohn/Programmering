@@ -18,7 +18,12 @@ namespace Bankautomat
             {
                 inmatat = inmatat.Remove(inmatat.Length - 1);
             }
-            else if (läge != Läge.Inloggning) 
+            else if (inmatning < 0) 
+            {
+                inmatat = "";
+                inmatning = 0; 
+            }
+            else if (läge != Läge.Inloggning)
             {
                 inmatat += (inmatning == 0 && inmatat == "") ? "" : inmatning.ToString();
             }
@@ -49,17 +54,26 @@ namespace Bankautomat
                     }
                 case Läge.Insättning:
                     {
-                        Insättning(int.Parse(inmatat));
-                        msg = "Insättning: " + inmatat + "kr";
-                        inmatat = "";
-                        return true;
+                        if (inmatat != "")
+                        {
+                            Insättning(int.Parse(inmatat));
+                            msg = "Insättning: " + inmatat + "kr";
+                            inmatat = "";
+                            return true;
+                        }
+                        else { msg = ""; return true; }
                     }
                 case Läge.Uttag:
                     {
-                        bool lyckat = Uttag(int.Parse(inmatat));
-                        if (lyckat)
+                        if (inmatat == "") 
+                        {
+                            msg = "";
+                            return true;
+                        }
+                        else if (Uttag(int.Parse(inmatat)))
                         {
                             msg = "Uttag: " + inmatat + "kr";
+                            inmatat = "";
                             return true;
                         }
                         else
