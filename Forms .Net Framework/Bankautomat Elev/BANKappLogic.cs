@@ -13,12 +13,15 @@ namespace Bankautomat
         public string HämtaInmatat() {
             return inmatat;
         }
+
+        // Körs för varje interaktion, med _inmatning_ och _läge_ anser vi vad som ska hända
         public void Inmatning(Läge läge, int inmatning) {
+
             if (inmatning < 0 && inmatat.Length > 0)
             {
                 inmatat = inmatat.Remove(inmatat.Length - 1);
             }
-            else if (inmatning < 0) 
+            else if (inmatning < 0)
             {
                 inmatat = "";
                 inmatning = 0; 
@@ -31,12 +34,9 @@ namespace Bankautomat
             {
                 inmatat += inmatning.ToString();
             }
-            else if (inmatat.Length == 4)
-            {
-                // Kom tillbaka hit sen
-
-            }
         }
+
+        // Här bekräftar(bool) vi att det vi vill göra kan göras rätt till de olika lägena och skickar ut ett meddelande i msg.
         public bool Bekräfta(Läge läge, out string msg) {
             switch (läge) {
                 case Läge.Inloggning:
@@ -87,57 +87,16 @@ namespace Bankautomat
                     return true;
 
             }
-            /*if ((läge == Läge.Inloggning) && (inmatat.Length == 4))
-            {
-                if (KontrolleraPinkod(int.Parse(inmatat)))
-                {
-                    inmatat = "";
-                    msg = "PIN ok";
-                    return true;
-                }
-                else if (inmatat == "")
-                {
-                    msg = "";
-                    return true;
-                }
-            else if (läge == Läge.Insättning)
-                {
-                    Insättning(int.Parse(inmatat));
-                    msg = "Insättning: " + inmatat + "kr";
-                    inmatat = "";
-                    return true;
-                }
-            else if (läge == Läge.Uttag)
-                {
-                    bool lyckat = Uttag(int.Parse(inmatat));
-                    if (lyckat)
-                    {
-                        msg = "Uttag: " + inmatat + "kr";
-                        return true;
-                    }
-                    else
-                    {
-                        msg = "Otillräckligt saldo";
-                        return false;
-                    }
-                }
-                else 
-                { 
-                    msg = ""; 
-                    return true; 
-                }
-            }
-            else
-            {
-                inmatat = "";
-                msg = "Felaktig PIN";
-                return false;
-            }*/
+
             
         }
+
+        // Bara lägger till värde till vårat saldo
         private void Insättning(int värde) {
             saldo += värde;
         }
+
+        // Om vi har tillräckligt saldo så tar vi bort värde
         private bool Uttag(int värde) {
             if (saldo >= värde)
             {
@@ -146,13 +105,20 @@ namespace Bankautomat
             }
             else return false;
         }
+
+        // Returnerar true om inmatat stämmer med någon av pinkoderna
         private bool KontrolleraPinkod(int inmatat) {
             return (inmatat == 1234 || inmatat == 9876 || inmatat == 1337) ? true : false;
         }
+
+        // Visar saldo om läget inte är inloggning
         public string VisaSaldo(Läge läge) {
             return (läge == Läge.Inloggning) ? "" : "Saldo: " + saldo + "kr";
         }
+
+        //Nollställer applikationen om användaren svarar ja på att avsluta.
         public bool Avbryt() {
+
             if (MessageBox.Show("Är du säker?", "Avsluta", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 saldo = 0;
