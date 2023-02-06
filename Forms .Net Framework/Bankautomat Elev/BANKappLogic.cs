@@ -8,8 +8,10 @@ namespace Bankautomat
         //  Medlemsvariabler
         string inmatat = "";
         int saldo = 0;
+        public List<string> historikInfo = new List<string>();
 
         //  Metoder
+        //Denna metod hämtar inmatat
         public string HämtaInmatat() {
             return inmatat;
         }
