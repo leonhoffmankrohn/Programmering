@@ -8,6 +8,7 @@ namespace Bankautomat
         //  Medlemsvariabler
         string inmatat = "";
         int saldo = 0;
+        
         public List<string> historikInfo = new List<string>();
 
         //  Metoder
@@ -60,6 +61,7 @@ namespace Bankautomat
                         {
                             Insättning(int.Parse(inmatat));
                             msg = "Insättning: " + inmatat + "kr";
+                            SparaInfo(msg);
                             inmatat = "";
                             return true;
                         }
@@ -75,6 +77,7 @@ namespace Bankautomat
                         else if (Uttag(int.Parse(inmatat)))
                         {
                             msg = "Uttag: " + inmatat + "kr";
+                            SparaInfo(msg);
                             inmatat = "";
                             return true;
                         }
@@ -129,5 +132,35 @@ namespace Bankautomat
             }
             else return false;
         }
+
+        public int HämtaHistorikInfoCount() {
+            return historikInfo.Count;
+        }
+
+        private void SparaInfo(string Info) { 
+            historikInfo.Add(Info);
+        }
+
+        public void VisaHistorik(ListBox lbHistorik) {
+            lbHistorik.Items.Clear();
+            for (int i = 0; i < historikInfo.Count; i++)
+            {
+                lbHistorik.Items.Add(historikInfo[i]);
+            }
+        }
+        public void TaBortEnstaka(ListBox lbHistorik) {
+            if (lbHistorik.SelectedIndices.Count != 0) {
+                historikInfo.RemoveAt(lbHistorik.SelectedIndex);
+                VisaHistorik(lbHistorik);
+            }
+        }
+        public void TaBortAlla(ListBox lbHistorik) { 
+            historikInfo = new List<string>(); 
+            VisaHistorik(lbHistorik);
+        }
+        public void RensaListbox(ListBox lbHistorik) {
+            lbHistorik.Items.Clear();
+        }
+
     }
 }
