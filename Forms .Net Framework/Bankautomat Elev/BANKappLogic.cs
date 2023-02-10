@@ -133,14 +133,17 @@ namespace Bankautomat
             else return false;
         }
 
+        // Returnerar längden på medlemsvariablen historikInfo
         public int HämtaHistorikInfoCount() {
             return historikInfo.Count;
         }
 
+        // Denna metod ska ta in en sträng och lägga till den i medlemsvariabeln historikInfo.
         private void SparaInfo(string Info) { 
             historikInfo.Add(Info);
         }
 
+        // Denna metod skriver ut historiken.
         public void VisaHistorik(ListBox lbHistorik) {
             lbHistorik.Items.Clear();
             for (int i = 0; i < historikInfo.Count; i++)
@@ -148,16 +151,22 @@ namespace Bankautomat
                 lbHistorik.Items.Add(historikInfo[i]);
             }
         }
+
+        // Metoden ska ta bort det som är markerat i listboxen
         public void TaBortEnstaka(ListBox lbHistorik) {
             if (lbHistorik.SelectedIndices.Count != 0) {
                 historikInfo.RemoveAt(lbHistorik.SelectedIndex);
                 VisaHistorik(lbHistorik);
             }
         }
+
+        // Metoden ska nollställa historikInfo.
         public void TaBortAlla(ListBox lbHistorik) { 
             historikInfo = new List<string>(); 
             VisaHistorik(lbHistorik);
         }
+
+        // tillåta att andra delar av programmet ska kunna rensa listboxen.
         public void RensaListbox(ListBox lbHistorik) {
             lbHistorik.Items.Clear();
         }
