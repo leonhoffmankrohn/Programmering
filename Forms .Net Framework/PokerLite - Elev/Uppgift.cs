@@ -28,15 +28,30 @@ namespace PokerLite
              */
 
             //  Initiera kön "kortlek" med nyckelordet "new" 
+            kortlek = new Queue<string>();
 
             //  Köa alla kort från listan "allaKort" till "kortlek" (använd for-loop)
+            for (int i = 0; i < allaKort.Count; i++)
+            { 
+                kortlek.Enqueue(allaKort[i]);
+            }
 
             //  Initiera arrayerna "handSpelare1" och "handSpelare2" med 5 i längd och ge sedan
             //  varje index innehållet "empty" (en tom hand)
+            handSpelare1 = new string[5];
+            handSpelare2 = new string[5];
+            for (int i = 0; i < 5; i++) 
+            {
+                handSpelare1[i] = "empty";
+                handSpelare2[i] = "empty";
+            }
 
             //  Initiera kön "slängHög" och stacken "öppnaKort".
+            slängHög = new Queue<string>();
+            öppnaKort = new Stack<string>();
 
             //  Lägg ett kort från kortleken på stacken "öppnaKort"
+            öppnaKort.Push(kortlek.Dequeue());
 
             DraNyaKort();
             spelaresTur = 1;
@@ -66,6 +81,7 @@ namespace PokerLite
                     if (handSpelare1[i] == "empty")
                     {
                         //  Ersätt det tomma kortet med ett kort från kortleken
+                        handSpelare1[i] = kortlek.Dequeue();
                     }
                 }
                 else if (spelaresTur == 2)
@@ -73,12 +89,14 @@ namespace PokerLite
                     if (handSpelare2[i] == "empty")
                     {
                         //  Ersätt det tomma kortet med ett kort från kortleken
+                        handSpelare2[i] = kortlek.Dequeue();
                     }
                 }
                 else
                 {
-
                     //  Ge båda spelarna ett nytt kort från kortleken på aktuellt index
+                    handSpelare1[i] = kortlek.Dequeue();
+                    handSpelare2[i] = kortlek.Dequeue();
                 }
 
             }
@@ -97,12 +115,16 @@ namespace PokerLite
             if (spelaresTur == 1 && kort != "empty")
             {
                 //  Lägg till kortet (från parametern ovan) i slänghögen
+                slängHög.Enqueue(kort);
                 //  Ta sedan bort det ur handen på Spelare 1 genom att lägg till "empty" på parametern "index"s position
+                handSpelare1[index] = "empty";
             }
             else if (spelaresTur == 2 && kort != "empty")
             {
                 //  Lägg till kortet (från parametern ovan) i slänghögen
+                slängHög.Enqueue(kort);
                 //  Ta sedan bort det ur handen på Spelare 2 genom att lägg till "empty" på parametern "index"s position
+                handSpelare2[index] = "empty";
             }
 
         }
@@ -131,6 +153,7 @@ namespace PokerLite
                     if (handSpelare1[i] == "empty")
                     {
                         //  Ge Spelare 1 ett kort från "öppnaKort"-stacken (på aktuellt index). 
+                        handSpelare1[i] = öppnaKort.Pop();
                         fannsTomt = true;
                         break;
                     }
@@ -143,6 +166,7 @@ namespace PokerLite
                     if (handSpelare2[i] == "empty")
                     {
                         //  Ge Spelare 2 ett kort från "öppnaKort"-stacken (på aktuellt index). 
+                        handSpelare2[i] = öppnaKort.Pop();
                         fannsTomt = true;
                         break;
                     }
@@ -152,6 +176,7 @@ namespace PokerLite
             if (öppnaKort.Count == 0)
             {
                 //  Flytta ett kort från kortleken till "öppnaKort"
+                öppnaKort.Push(kortlek.Dequeue());
             }
 
             return fannsTomt;
@@ -160,12 +185,16 @@ namespace PokerLite
 
         public void SlängdaTillÖppna()
         {
-            
+
             /*
              * När en runda är färdig ska alla kort som spelaren slängt hamna bland de öppna korten.
              */
-            
+
             //    Loopa igenom slänghögen och flytta dem till öppnakort-stacken.
+            for (int i = 0; i < slängHög.Count; i++) 
+            {
+                öppnaKort.Push(slängHög.Dequeue());
+            }
             
         }
     }
