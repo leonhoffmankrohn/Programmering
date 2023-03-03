@@ -18,6 +18,7 @@ namespace Filmregister
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    ///
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -25,6 +26,18 @@ namespace Filmregister
             InitializeComponent();
         }
 
-        Film.
+        //Initierar några variabler
+        List<Film> filmbibliotek = new List<Film>();
+
+        // Här rensar vi listboxen och uppdaterar med ny information
+        private void UppdateraGrafik() 
+        { 
+            lbxRegister.Items.Clear();
+            for (int i = 0; i < filmbibliotek.Count; i++)
+            {
+                
+            }
+        }
+
     }
 }

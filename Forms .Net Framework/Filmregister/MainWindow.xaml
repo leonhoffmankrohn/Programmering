@@ -7,6 +7,32 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <ListBox x:Name="lbxRegister" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="516,40,17,146" RenderTransformOrigin="0.5,0.5">
+            <ListBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="-7.381"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="-28.288"/>
+                </TransformGroup>
+            </ListBox.RenderTransform>
+        </ListBox>
+        <Label Content="Filmregistret" HorizontalAlignment="Left" Margin="22,19,0,0" VerticalAlignment="Top" FontSize="22" Width="137"/>
+        <Button x:Name="btnLäggtill" Content="Lägg till" HorizontalAlignment="Left" Margin="185,217,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tbxNamn" HorizontalAlignment="Left" Margin="111,84,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbxÅrgång" HorizontalAlignment="Left" Margin="111,152,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbxVinst" HorizontalAlignment="Left" Margin="111,189,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="lblNamn" Content="Namn:&#xD;&#xA;" HorizontalAlignment="Left" Margin="53,80,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblGenre" Content="Genre:" HorizontalAlignment="Left" Margin="53,116,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblÅrgång" Content="Årgång:" HorizontalAlignment="Left" Margin="50,148,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblVinst" Content="Vinst:" HorizontalAlignment="Left" Margin="59,185,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cbxGenre" HorizontalAlignment="Left" Margin="111,116,0,0" VerticalAlignment="Top" Width="120">
+            <ListBoxItem Content="Skräck"/>
+            <ListBoxItem Content="Romantik"/>
+            <ListBoxItem Content="Komedi"/>
+            <ListBoxItem Content="Action"/>
+            <ListBoxItem Content="Drama"/>
+        </ComboBox>
 
     </Grid>
 </Window>
