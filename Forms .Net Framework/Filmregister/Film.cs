@@ -12,8 +12,7 @@ namespace Filmregister
             Filmregistret ska ta in film och dens namn i konstruktör.
             Man ska kunna visa årgång, skådespelare, genre, regissör och revenue.
         */
-        List<string> skådespelare = new List<string> {""};
-        // Skådespelare, årgång, regissör, vinst, namn
+        // årgång, regissör, vinst, namn, genre
 
         public string Namn { get; }
         public int Årgång { get; }
@@ -23,18 +22,14 @@ namespace Filmregister
 
 
 
-        public Film(string _namn, int _årgång = 0, string _regissör = "okänd", string _genre = "okänd", int _vinst = 0)
+        public string Film(string _namn, int _årgång = 0, string _regissör = "okänd", string _genre = "okänd", int _vinst = 0)
         {
             Namn = _namn;
             Årgång = _årgång;
             Regissör = _regissör;
             Genre = _genre;
             Vinst = _vinst;
-        }
-
-        public string Hämtasträng()
-        { 
-            
+            return "Namn: " + Namn + " Genre: " + Genre + " Årgång: " + Årgång + " Regissör: " + Regissör + " Vinst: " + Vinst;
         }
     }
 }
