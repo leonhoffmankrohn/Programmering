@@ -22,13 +22,18 @@ namespace Filmregister
 
 
 
-        public string Film(string _namn, int _årgång = 0, string _regissör = "okänd", string _genre = "okänd", int _vinst = 0)
+        public Film(string _namn, int _årgång = 0, string _regissör = "okänd", string _genre = "okänd", int _vinst = 0)
         {
             Namn = _namn;
             Årgång = _årgång;
             Regissör = _regissör;
             Genre = _genre;
             Vinst = _vinst;
+            //return "Namn: " + Namn + " Genre: " + Genre + " Årgång: " + Årgång + " Regissör: " + Regissör + " Vinst: " + Vinst;
+        }
+
+        public string Sträng()
+        { 
             return "Namn: " + Namn + " Genre: " + Genre + " Årgång: " + Årgång + " Regissör: " + Regissör + " Vinst: " + Vinst;
         }
     }

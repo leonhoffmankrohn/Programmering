@@ -18,7 +18,7 @@
             </ListBox.RenderTransform>
         </ListBox>
         <Label Content="Filmregistret" HorizontalAlignment="Left" Margin="22,19,0,0" VerticalAlignment="Top" FontSize="22" Width="137"/>
-        <Button x:Name="btnLäggtill" Content="Lägg till" HorizontalAlignment="Left" Margin="185,217,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnLäggtill" Content="Lägg till" HorizontalAlignment="Left" Margin="185,263,0,0" VerticalAlignment="Top" Click="btnLäggtill_Click"/>
         <TextBox x:Name="tbxNamn" HorizontalAlignment="Left" Margin="111,84,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="tbxÅrgång" HorizontalAlignment="Left" Margin="111,152,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="tbxVinst" HorizontalAlignment="Left" Margin="111,189,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
@@ -33,6 +33,9 @@
             <ListBoxItem Content="Action"/>
             <ListBoxItem Content="Drama"/>
         </ComboBox>
+        <Label x:Name="lblRegissör" Content="Regissör:" HorizontalAlignment="Left" Margin="40,216,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tbxRegissör" HorizontalAlignment="Left" Margin="111,224,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btnTabort" Content="Tabort" HorizontalAlignment="Left" Margin="682,361,0,0" VerticalAlignment="Top" Click="btnTabort_Click"/>
 
     </Grid>
 </Window>
