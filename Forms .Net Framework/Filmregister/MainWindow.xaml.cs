@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -29,11 +30,13 @@ namespace Filmregister
         }
 
         //Initierar några variabler
-        List<Film> filmbibliotek = new List<Film>();
+        int index = -1;
+        List<Film> filmbibliotek = new();
 
         // Här rensar vi listboxen och uppdaterar med ny information
         private void UppdateraGrafik(List<Film> lista, ListBox grafiskLista) 
-        { 
+        {
+            index = 0;
             grafiskLista.Items.Clear();
             for (int i = 0; i < lista.Count; i++)
             {
@@ -44,6 +47,7 @@ namespace Filmregister
         // Här tar vi bort en film från regisstret
         private bool Tabort(List<Film> lista, ListBox grafiskLista) 
         {
+            Console.WriteLine(grafiskLista.SelectedIndex);
             int index = grafiskLista.SelectedIndex;
             if (index != -1)
             {
@@ -61,21 +65,23 @@ namespace Filmregister
         // Här gör vi en ny film med skriven data
         private void LäggTill() 
         {
-                string namn = tbxNamn.Text;
-                string årgång = tbxÅrgång.Text;
-                string regissör = tbxRegissör.Text;
-                string genre = cbxGenre.ToString();
-                string vinst = tbxVinst.Text;
-            if (namn == "" || årgång == "" || regissör == "" || genre == "" || vinst == "" || int.TryParse(årgång) || int.TryParse(vinst))
+            string namn = tbxNamn.Text;
+            string regissör = tbxRegissör.Text;
+            string genre = cbxGenre.Text;
+            bool klar = int.TryParse(tbxÅrgång.Text, out int årgång);
+            bool klarat = int.TryParse(tbxVinst.Text, out int vinst);
+
+            if (namn == "" || regissör == "" || genre == "" || !(klarat && klar))
             {
-                MessageBox.Show("Nja, nu har du glömt att skriva in något...");
+                MessageBox.Show("Nja, nu har du glömt att skriva in något... \n eller skrivit in fel...");
             }
-            else
+            else if (index == -1)
             {
-                Film film = new Film(namn, int.Parse(årgång), regissör, genre, int.Parse(vinst));
+                Film film = new(namn, årgång, regissör, genre, vinst);
                 filmbibliotek.Add(film);
-                UppdateraGrafik(filmbibliotek, lbxRegister);
             }
+            UppdateraGrafik(filmbibliotek, lbxRegister);
+            index = 0;
         }
 
         private void btnLäggtill_Click(object sender, RoutedEventArgs e)
@@ -86,6 +92,16 @@ namespace Filmregister
         private void btnTabort_Click(object sender, RoutedEventArgs e)
         {
             Tabort(filmbibliotek, lbxRegister);
+        }
+
+        private void btnRedigera_Click(object sender, RoutedEventArgs e)
+        {
+            filmbibliotek[index].Redigera(tbxNamn, cbxGenre, tbxÅrgång, tbxRegissör, tbxVinst);
+        }
+
+        private void lbxRegister_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            index = lbxRegister.SelectedIndex;
         }
     }
 }

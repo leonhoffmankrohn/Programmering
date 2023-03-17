@@ -5,9 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Filmregister"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="317" Width="800">
     <Grid>
-        <ListBox x:Name="lbxRegister" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="516,40,17,146" RenderTransformOrigin="0.5,0.5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="16*"/>
+            <ColumnDefinition Width="9*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox x:Name="lbxRegister" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="284,40,3,53" RenderTransformOrigin="0.5,0.5" SelectionChanged="lbxRegister_SelectionChanged" Grid.ColumnSpan="2">
             <ListBox.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -35,7 +39,8 @@
         </ComboBox>
         <Label x:Name="lblRegissör" Content="Regissör:" HorizontalAlignment="Left" Margin="40,216,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="tbxRegissör" HorizontalAlignment="Left" Margin="111,224,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="btnTabort" Content="Tabort" HorizontalAlignment="Left" Margin="682,361,0,0" VerticalAlignment="Top" Click="btnTabort_Click"/>
+        <Button x:Name="btnTabort" Content="Tabort" HorizontalAlignment="Left" Margin="149,263,0,0" VerticalAlignment="Top" Click="btnTabort_Click" Grid.Column="1"/>
+        <Button x:Name="btnRedigera" Content="Redigera" HorizontalAlignment="Left" Margin="93,263,0,0" VerticalAlignment="Top" Click="btnRedigera_Click" Grid.Column="1"/>
 
     </Grid>
 </Window>

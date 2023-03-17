@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Filmregister
 {
@@ -35,6 +36,14 @@ namespace Filmregister
         public string Sträng()
         { 
             return "Namn: " + Namn + " Genre: " + Genre + " Årgång: " + Årgång + " Regissör: " + Regissör + " Vinst: " + Vinst;
+        }
+        public void Redigera(TextBox namn, ComboBox genre, TextBox årgång, TextBox regissör, TextBox vinst)
+        {
+            namn.Text = Namn;
+            genre.SelectedIndex = -1;
+            årgång.Text = Årgång.ToString();
+            regissör.Text = Regissör;
+            vinst.Text = Vinst.ToString();
         }
     }
 }
