@@ -32,18 +32,18 @@ namespace Filmregister
             Vinst = _vinst;
             //return "Namn: " + Namn + " Genre: " + Genre + " Årgång: " + Årgång + " Regissör: " + Regissör + " Vinst: " + Vinst;
         }
-
-        public string Sträng()
-        { 
-            return "Namn: " + Namn + " Genre: " + Genre + " Årgång: " + Årgång + " Regissör: " + Regissör + " Vinst: " + Vinst;
-        }
         public void Redigera(TextBox namn, ComboBox genre, TextBox årgång, TextBox regissör, TextBox vinst)
         {
             namn.Text = Namn;
-            genre.SelectedIndex = -1;
+            genre.Text = Genre;
             årgång.Text = Årgång.ToString();
             regissör.Text = Regissör;
             vinst.Text = Vinst.ToString();
+        }
+
+        public override string ToString()
+        {
+            return "Namn: " + Namn + " Genre: " + Genre + " Årgång: " + Årgång + " Regissör: " + Regissör + " Vinst: " + Vinst;
         }
     }
 }

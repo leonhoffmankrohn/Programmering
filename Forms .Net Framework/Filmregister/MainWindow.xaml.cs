@@ -36,11 +36,10 @@ namespace Filmregister
         // Här rensar vi listboxen och uppdaterar med ny information
         private void UppdateraGrafik(List<Film> lista, ListBox grafiskLista) 
         {
-            index = 0;
             grafiskLista.Items.Clear();
             for (int i = 0; i < lista.Count; i++)
             {
-                grafiskLista.Items.Add(lista[i].Sträng());
+                grafiskLista.Items.Add(lista[i].ToString());
             }
         }
 
@@ -80,8 +79,12 @@ namespace Filmregister
                 Film film = new(namn, årgång, regissör, genre, vinst);
                 filmbibliotek.Add(film);
             }
+            else
+            {
+                filmbibliotek[index] = new(namn, årgång, regissör, genre, vinst);
+                index = -1;
+            }
             UppdateraGrafik(filmbibliotek, lbxRegister);
-            index = 0;
         }
 
         private void btnLäggtill_Click(object sender, RoutedEventArgs e)
@@ -96,12 +99,8 @@ namespace Filmregister
 
         private void btnRedigera_Click(object sender, RoutedEventArgs e)
         {
-            filmbibliotek[index].Redigera(tbxNamn, cbxGenre, tbxÅrgång, tbxRegissör, tbxVinst);
-        }
-
-        private void lbxRegister_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
             index = lbxRegister.SelectedIndex;
+            filmbibliotek[index].Redigera(tbxNamn, cbxGenre, tbxÅrgång, tbxRegissör, tbxVinst);
         }
     }
 }
