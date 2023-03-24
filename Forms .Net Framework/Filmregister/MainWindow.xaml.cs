@@ -43,7 +43,7 @@ namespace Filmregister
             }
         }
 
-        // Här tar vi bort en film från regisstret
+        // Här tar vi bort en film från regisstret 
         private bool Tabort(List<Film> lista, ListBox grafiskLista) 
         {
             Console.WriteLine(grafiskLista.SelectedIndex);

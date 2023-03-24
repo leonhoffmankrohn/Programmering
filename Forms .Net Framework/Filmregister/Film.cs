@@ -30,7 +30,6 @@ namespace Filmregister
             Regissör = _regissör;
             Genre = _genre;
             Vinst = _vinst;
-            //return "Namn: " + Namn + " Genre: " + Genre + " Årgång: " + Årgång + " Regissör: " + Regissör + " Vinst: " + Vinst;
         }
         public void Redigera(TextBox namn, ComboBox genre, TextBox årgång, TextBox regissör, TextBox vinst)
         {
