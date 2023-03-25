@@ -11,6 +11,10 @@
             <ColumnDefinition Width="16*"/>
             <ColumnDefinition Width="9*"/>
         </Grid.ColumnDefinitions>
+        <GroupBox Header="Endast för film:" Margin="15,226,273,70"/>
+        <GroupBox Header="Endast för film:" Margin="15,134,273,162"/>
+        <GroupBox x:Name="gbxFilm" Header="Endast för film:" Margin="15,134,273,162"/>
+
         <ListBox x:Name="lbxRegister" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="289,40,-2,132" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
             <ListBox.RenderTransform>
                 <TransformGroup>
@@ -22,12 +26,10 @@
             </ListBox.RenderTransform>
         </ListBox>
         <Label Content="Filmregistret" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Top" FontSize="22" Width="137"/>
-        <Button x:Name="btnLäggtill" Content="Spara" HorizontalAlignment="Left" Margin="233,298,0,0" VerticalAlignment="Top" Click="btnLäggtill_Click"/>
+        <Button x:Name="btnLäggtill" Content="Spara" HorizontalAlignment="Left" Margin="198,323,0,0" VerticalAlignment="Top" Click="btnLäggtill_Click"/>
         <TextBox x:Name="tbxNamn" HorizontalAlignment="Left" Margin="88,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="Okänd"/>
-        <TextBox x:Name="tbxÅrgång" HorizontalAlignment="Left" Margin="88,139,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
-        <Label x:Name="lblNamn" Content="Namn:&#xD;&#xA;" HorizontalAlignment="Left" Margin="30,67,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblNamn" Content="Namn:&#xA;" HorizontalAlignment="Left" Margin="30,67,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblGenre" Content="Genre:" HorizontalAlignment="Left" Margin="30,103,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblÅrgång" Content="Årgång:" HorizontalAlignment="Left" Margin="28,135,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="cbxGenre" HorizontalAlignment="Left" Margin="88,103,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0">
             <ListBoxItem Content="Skräck"/>
             <ListBoxItem Content="Romantik"/>
@@ -35,13 +37,31 @@
             <ListBoxItem Content="Action"/>
             <ListBoxItem Content="Drama"/>
         </ComboBox>
-        <Button x:Name="btnTabort" Content="Tabort" HorizontalAlignment="Left" Margin="149,263,0,0" VerticalAlignment="Top" Click="btnTabort_Click" Grid.Column="1"/>
-        <Button x:Name="btnRedigera" Content="Redigera" HorizontalAlignment="Left" Margin="93,263,0,0" VerticalAlignment="Top" Click="btnRedigera_Click" Grid.Column="1"/>
-        <RadioButton x:Name="filmRBtn" Content="Film" HorizontalAlignment="Left" Margin="95,44,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="serieRBtn" Content="Serie" HorizontalAlignment="Left" Margin="148,44,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblSpeltid" Content="Speltid:" HorizontalAlignment="Left" Margin="20,186,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="tbxSpeltid" HorizontalAlignment="Left" Margin="73,190,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
-        <GroupBox Header="Endast för film:" Margin="0,166,288,130"/>
+        <Button x:Name="btnTabort" Content="Tabort" HorizontalAlignment="Left" Margin="200,263,0,0" VerticalAlignment="Top" Click="btnTabort_Click" Grid.Column="1"/>
+        <Button x:Name="btnRedigera" Content="Redigera" HorizontalAlignment="Left" Margin="144,263,0,0" VerticalAlignment="Top" Click="btnRedigera_Click" Grid.Column="1"/>
+        <RadioButton x:Name="rbnFilm" Content="Film" HorizontalAlignment="Left" Margin="95,44,0,0" VerticalAlignment="Top" IsChecked="True" Click="rbnFilm_Click"/>
+        <RadioButton x:Name="rbnSerie" Content="Serie" HorizontalAlignment="Left" Margin="148,44,0,0" VerticalAlignment="Top" Click="rbnSerie_Click"/>
+        <Label x:Name="lblSpeltid" Content="Speltid:" HorizontalAlignment="Left" Margin="35,154,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tbxSpeltid" HorizontalAlignment="Left" Margin="88,158,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
+        <Label x:Name="lblFilmtyp" Content="Filmtyp:" HorizontalAlignment="Left" Margin="34,177,0,0" VerticalAlignment="Top"/>
+        <GroupBox x:Name="gbxSerie" Header="Endast för serie:" Margin="15,226,273,70" IsEnabled="False"/>
+        <Label x:Name="lblSäsonger" Content="Säsonger" HorizontalAlignment="Left" Margin="35,246,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tbxSäsonger" HorizontalAlignment="Left" Margin="88,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
+        <Label x:Name="lblSerietyp" Content="Serietyp:" HorizontalAlignment="Left" Margin="34,269,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cbxFilmtyp" HorizontalAlignment="Left" Margin="88,180,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0">
+            <ListBoxItem Content="Noire"/>
+            <ListBoxItem Content="Western"/>
+            <ListBoxItem Content="Glitch"/>
+            <ListBoxItem Content="Hollywood"/>
+            <ListBoxItem Content="Bollywood"/>
+        </ComboBox>
+        <ComboBox x:Name="cbxSerietyp" HorizontalAlignment="Left" Margin="88,273,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0">
+            <ListBoxItem Content="Anime"/>
+            <ListBoxItem Content="Continous"/>
+            <ListBoxItem Content="Loner"/>
+            <ListBoxItem Content="TV-Show"/>
+            <ListBoxItem Content="Film-serie"/>
+        </ComboBox>
 
     </Grid>
 </Window>

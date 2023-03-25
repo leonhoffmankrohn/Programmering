@@ -31,10 +31,10 @@ namespace Filmregister
 
         //Initierar några variabler
         int index = -1;
-        List<Film> filmbibliotek = new();
+        List<Media> mediebiblioteket = new();
 
         // Här rensar vi listboxen och uppdaterar med ny information
-        private void UppdateraGrafik(List<Film> lista, ListBox grafiskLista) 
+        private void UppdateraGrafik(List<Media> lista, ListBox grafiskLista) 
         {
             grafiskLista.Items.Clear();
             for (int i = 0; i < lista.Count; i++)
@@ -44,7 +44,7 @@ namespace Filmregister
         }
 
         // Här tar vi bort en film från regisstret 
-        private bool Tabort(List<Film> lista, ListBox grafiskLista) 
+        private bool Tabort(List<Media> lista, ListBox grafiskLista) 
         {
             Console.WriteLine(grafiskLista.SelectedIndex);
             int index = grafiskLista.SelectedIndex;
@@ -65,26 +65,20 @@ namespace Filmregister
         private void LäggTill() 
         {
             string namn = tbxNamn.Text;
-            string regissör = tbxRegissör.Text;
             string genre = cbxGenre.Text;
-            bool klar = int.TryParse(tbxÅrgång.Text, out int årgång);
-            bool klarat = int.TryParse(tbxVinst.Text, out int vinst);
 
-            if (namn == "" || regissör == "" || genre == "" || !(klarat && klar))
+            if (gbxFilm.IsEnabled && int.TryParse(tbxSpeltid.Text, out int speltid))
             {
-                MessageBox.Show("Nja, nu har du glömt att skriva in något... \n eller skrivit in fel...");
+                string filmtyp = cbxFilmtyp.Text;
+                mediebiblioteket.Add(new Film(namn, genre, speltid, filmtyp));
             }
-            else if (index == -1)
+            else if (int.TryParse(tbxSäsonger.Text, out int säsonger))
             {
-                Film film = new(namn, årgång, regissör, genre, vinst);
-                filmbibliotek.Add(film);
+                string serietyp = cbxSerietyp.Text;
+                mediebiblioteket.Add(new Serie(namn, genre, säsonger, serietyp));
             }
-            else
-            {
-                filmbibliotek[index] = new(namn, årgång, regissör, genre, vinst);
-                index = -1;
-            }
-            UppdateraGrafik(filmbibliotek, lbxRegister);
+
+            UppdateraGrafik(mediebiblioteket, lbxRegister);
         }
 
         private void btnLäggtill_Click(object sender, RoutedEventArgs e)
@@ -94,13 +88,31 @@ namespace Filmregister
 
         private void btnTabort_Click(object sender, RoutedEventArgs e)
         {
-            Tabort(filmbibliotek, lbxRegister);
+            Tabort(mediebiblioteket, lbxRegister);
         }
 
         private void btnRedigera_Click(object sender, RoutedEventArgs e)
         {
             index = lbxRegister.SelectedIndex;
-            filmbibliotek[index].Redigera(tbxNamn, cbxGenre, tbxÅrgång, tbxRegissör, tbxVinst);
+            //filmbibliotek[index].Redigera(tbxNamn, cbxGenre, tbxÅrgång, tbxRegissör, tbxVinst);
+        }
+
+        private void rbnSerie_Click(object sender, RoutedEventArgs e)
+        {
+            if ((bool)rbnSerie.IsChecked)
+            {
+                gbxFilm.Visibility = Visibility.Collapsed;
+                gbxSerie.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void rbnFilm_Click(object sender, RoutedEventArgs e)
+        {
+            if ((bool)rbnFilm.IsChecked)
+            {
+                gbxFilm.Visibility = Visibility.Visible;
+                gbxSerie.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }
