@@ -43,6 +43,28 @@ namespace Filmregister
             }
         }
 
+        // Här gör vi en ny film/serie med skriven data och sparar i en medielista(mediebiblioteket)
+        private void LäggTill() 
+        {
+            string namn = tbxNamn.Text;
+            string genre = cbxGenre.Text;
+            bool film = (bool)rbnFilm.IsChecked;
+
+            if (film && int.TryParse(tbxSpeltid.Text, out int speltid))
+            {
+                string filmtyp = cbxFilmtyp.Text;
+                mediebiblioteket.Add(new Film(namn, genre, speltid, filmtyp));
+            }
+            else if (!film && int.TryParse(tbxSäsonger.Text, out int säsonger))
+            {
+                string serietyp = cbxSerietyp.Text;
+                mediebiblioteket.Add(new Serie(namn, genre, säsonger, serietyp));
+            }
+            else MessageBox.Show("Använd endast siffror vid angivelse av speltid och säsonger.");
+
+            UppdateraGrafik(mediebiblioteket, lbxRegister);
+        }
+
         // Här tar vi bort en film från regisstret 
         private bool Tabort(List<Media> lista, ListBox grafiskLista) 
         {
@@ -61,35 +83,14 @@ namespace Filmregister
             }
         }
 
-        // Här gör vi en ny film med skriven data
-        private void LäggTill() 
+        private void Redigera(int index, TextBox antal, ComboBox typ)
         {
-            string namn = tbxNamn.Text;
-            string genre = cbxGenre.Text;
-
-            if (gbxFilm.IsEnabled && int.TryParse(tbxSpeltid.Text, out int speltid))
-            {
-                string filmtyp = cbxFilmtyp.Text;
-                mediebiblioteket.Add(new Film(namn, genre, speltid, filmtyp));
-            }
-            else if (int.TryParse(tbxSäsonger.Text, out int säsonger))
-            {
-                string serietyp = cbxSerietyp.Text;
-                mediebiblioteket.Add(new Serie(namn, genre, säsonger, serietyp));
-            }
-
-            UppdateraGrafik(mediebiblioteket, lbxRegister);
+            Media medie = mediebiblioteket[index];
+            tbxNamn.Text = medie.Namn;
+            cbxGenre.Text = medie.Genre;
+            antal.Text = medie.Antal;
         }
 
-        private void btnLäggtill_Click(object sender, RoutedEventArgs e)
-        {
-            LäggTill();
-        }
-
-        private void btnTabort_Click(object sender, RoutedEventArgs e)
-        {
-            Tabort(mediebiblioteket, lbxRegister);
-        }
 
         private void btnRedigera_Click(object sender, RoutedEventArgs e)
         {
@@ -99,20 +100,27 @@ namespace Filmregister
 
         private void rbnSerie_Click(object sender, RoutedEventArgs e)
         {
-            if ((bool)rbnSerie.IsChecked)
-            {
-                gbxFilm.Visibility = Visibility.Collapsed;
-                gbxSerie.Visibility = Visibility.Visible;
-            }
+            tbxSpeltid.IsEnabled = false;
+            tbxSäsonger.IsEnabled = true;
+            cbxFilmtyp.IsEnabled = false;
+            cbxSerietyp.IsEnabled = true;
         }
 
         private void rbnFilm_Click(object sender, RoutedEventArgs e)
         {
-            if ((bool)rbnFilm.IsChecked)
-            {
-                gbxFilm.Visibility = Visibility.Visible;
-                gbxSerie.Visibility = Visibility.Collapsed;
-            }
+            tbxSpeltid.IsEnabled = true;
+            tbxSäsonger.IsEnabled = false;
+            cbxFilmtyp.IsEnabled = true;
+            cbxSerietyp.IsEnabled = false;
+        }
+        private void btnLäggtill_Click(object sender, RoutedEventArgs e)
+        {
+            LäggTill();
+        }
+
+        private void btnTabort_Click(object sender, RoutedEventArgs e)
+        {
+            Tabort(mediebiblioteket, lbxRegister);
         }
     }
 }
