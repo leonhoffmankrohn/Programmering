@@ -83,18 +83,21 @@ namespace Filmregister
             }
         }
 
-        private void Redigera(int index, TextBox antal, ComboBox typ)
+        private void Redigera(TextBox antal, ComboBox typ)
         {
             Media medie = mediebiblioteket[index];
+            string x = medie.GetType().ToString();
             tbxNamn.Text = medie.Namn;
             cbxGenre.Text = medie.Genre;
-            antal.Text = medie.Antal;
+            antal.Text = medie.Antal().ToString();
+            typ.Text = medie.Typ();
         }
 
 
         private void btnRedigera_Click(object sender, RoutedEventArgs e)
         {
             index = lbxRegister.SelectedIndex;
+            Redigera(tbxSpeltid, cbxFilmtyp);
             //filmbibliotek[index].Redigera(tbxNamn, cbxGenre, tbxÅrgång, tbxRegissör, tbxVinst);
         }
 
