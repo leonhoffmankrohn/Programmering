@@ -53,7 +53,7 @@ namespace AndraYatzy
             for (int i = 0; i < resultatVärden.Length; i++) resultatVärden[i] = 0;
 
 
-            // visar resultat bara efter slag är slut
+            /* !!!### FIXA SÅ ATT VARJE POÄNG HAR ETT INDEX SOM MOTSVARAR EN LISTBOX-ITEM ###!!! */
             if (visaResultat)
             {
 
