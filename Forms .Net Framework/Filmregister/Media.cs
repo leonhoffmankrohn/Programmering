@@ -32,8 +32,8 @@ namespace Filmregister
         int speltid;
         string filmtyp;
 
-        virtual public int Antal{ get { return speltid; } set { speltid = value; } }
-        virtual public string Typ { get { return filmtyp; } set { filmtyp = value; } }
+        public int Antal{ get { return speltid; } set { speltid = value; } }
+        public string Typ { get { return filmtyp; } set { filmtyp = value; } }
 
         public Film(string _namn, string _genre, int _speltid, string _filmtyp) : base(_namn, _genre)
         {
@@ -52,8 +52,8 @@ namespace Filmregister
         int säsonger;
         string serietyp;
 
-        override public int Antal { get { return säsonger; } set { säsonger = value; } }
-        override public string Typ { get { return serietyp; } set { serietyp = value; } }
+        public new int Antal { get { return säsonger; } set { säsonger = value; } }
+        public new string Typ { get { return serietyp; } set { serietyp = value; } }
 
         public Serie(string _namn, string _genre, int _säsonger, string _serietyp) : base(_namn, _genre)
         {
