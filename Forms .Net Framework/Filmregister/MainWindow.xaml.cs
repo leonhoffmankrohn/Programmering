@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -83,21 +84,30 @@ namespace Filmregister
             }
         }
 
-        private void Redigera(TextBox antal, ComboBox typ)
+        private void Redigera()
         {
             Media medie = mediebiblioteket[index];
             string x = medie.GetType().ToString();
+
+            if (x == "Filmregister.Film")
+            {
+                tbxSpeltid.Text = medie.Antal().ToString();
+                cbxFilmtyp.Text = medie.Typ().ToString();
+            }else
+            {
+                tbxSäsonger.Text = medie.Antal().ToString();
+                tbxSpeltid.Text = medie.Typ().ToString();
+            }
             tbxNamn.Text = medie.Namn;
             cbxGenre.Text = medie.Genre;
-            antal.Text = medie.Antal().ToString();
-            typ.Text = medie.Typ();
+            
         }
 
 
         private void btnRedigera_Click(object sender, RoutedEventArgs e)
         {
             index = lbxRegister.SelectedIndex;
-            Redigera(tbxSpeltid, cbxFilmtyp);
+            Redigera();
             //filmbibliotek[index].Redigera(tbxNamn, cbxGenre, tbxÅrgång, tbxRegissör, tbxVinst);
         }
 
