@@ -3,59 +3,72 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Filmregister
 {
     class Media
     {
+        TextBox namnBox;
+        ComboBox genreBox;
         string namn;
         string genre;
 
         public string Namn { get { return namn; } set { namn = value; } }
         public string Genre { get { return genre; } set { genre = value; } }
 
-        public Media (string _namn, string _genre)
+        public Media (TextBox _namnBox, ComboBox _genreBox)
         {
-            namn = _namn;
-            genre = _genre;
+            namnBox = _namnBox;
+            genreBox = _genreBox;
+            namn = namnBox.Text;
+            genre = genreBox.Text;
         }
-        public int Antal()
+        public virtual void Hämta()
         {
-            return 0;
-        }
-        public string Typ()
-        {
-            return "";
+            namnBox.Text = namn;
+            genreBox.Text = genre;
         }
         public override string ToString()
         {
             return "Namn: " + namn + " Genre: " + genre + " ";
         }
+        /*
+         * Ska man skicka in vid konstruktören vilka textbox och combobox som ska användas och sedan göra en metod som ställer dem ****
+         * 
+         * Ska man kolla utanför klasserna vilken typ av klass som är skapad och ändra text-, combobox utefter det
+         * 
+         * Ska man göra en variabel i klassen som bestämmer typen?
+         * 
+         * Ska man vid anropning av en metod i klassen ange vilken textbox som ska ändras, men hur håller man reda på det?
+         */
     }
     class Film : Media
     {
         int speltid;
         string filmtyp;
+        TextBox speltidBox;
+        ComboBox filmtypBox;
 
         public int Speltid{ get { return speltid; } set { speltid = value; } }
         public string Filmtyp { get { return filmtyp; } set { filmtyp = value; } }
 
-        public Film(string _namn, string _genre, int _speltid, string _filmtyp) : base(_namn, _genre)
+        public Film(TextBox _namnBox, ComboBox _genreBox, TextBox _speltidBox, ComboBox _filmtypBox) : base(_namnBox, _genreBox)
         {
-            speltid = _speltid;
-            filmtyp = _filmtyp;
+            speltidBox = _speltidBox;
+            filmtypBox = _filmtypBox;
+            speltid = int.Parse(speltidBox.Text);
+            filmtyp = filmtypBox.Text;
         }
-        public new int Antal()
+        public override void Hämta()
         {
-            return speltid;
-        }
-        public new string Typ()
-        {
-            return filmtyp;
+            base.Hämta();
+            speltidBox.Text = speltid.ToString();
+            filmtypBox.Text = filmtyp;
         }
         public override string ToString()
         {
-            return base.ToString() + "Speltid: " + speltid + " Filmtyp: " + filmtyp;
+            return "FILM: " + base.ToString() + "Speltid: " + speltid + " Filmtyp: " + filmtyp;
         }
 
     }
@@ -63,26 +76,28 @@ namespace Filmregister
     {
         int säsonger;
         string serietyp;
+        TextBox säsongerBox;
+        ComboBox serietypBox;
 
         public int Säsonger { get { return säsonger; } set { säsonger = value; } }
         public string Serietyp { get { return serietyp; } set { serietyp = value; } }
 
-        public Serie(string _namn, string _genre, int _säsonger, string _serietyp) : base(_namn, _genre)
+        public Serie(TextBox _namnBox, ComboBox _genreBox, TextBox _säsongerBox, ComboBox _serietypBox) : base(_namnBox, _genreBox)
         {
-            säsonger = _säsonger;
-            serietyp = _serietyp;
+            säsongerBox = _säsongerBox;
+            serietypBox = _serietypBox;
+            säsonger = int.Parse(säsongerBox.Text);
+            serietyp = serietypBox.Text;
         }
-        public new int Antal()
+        public override void Hämta()
         {
-            return säsonger;
-        }
-        public new string Typ()
-        {
-            return serietyp;
+            base.Hämta();
+            säsongerBox.Text = säsonger.ToString();
+            serietypBox.Text = serietyp;
         }
         public override string ToString()
         {
-            return base.ToString() + "Säsonger: " + säsonger + " Serietyp: " + serietyp;
+            return "SERIE: " + base.ToString() + "Säsonger: " + säsonger + " Serietyp: " + serietyp;
         }
     }
 }
