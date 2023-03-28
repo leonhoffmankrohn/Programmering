@@ -44,11 +44,13 @@ namespace Filmregister
                 grafiskLista.Items.Add(lista[i].ToString());
             }
             index = -1;
+            lbxRegister.SelectedIndex = -1;
         }
 
         // Här gör vi en ny film/serie med skriven data och sparar i en medielista(mediebiblioteket)
         private void LäggTill() 
         {
+            index = lbxRegister.SelectedIndex;
             bool film = (bool)rbnFilm.IsChecked;
             if (index == -1)
             {
@@ -85,6 +87,7 @@ namespace Filmregister
         // Här tar vi bort en film från regisstret 
         private bool Tabort(List<Media> lista, ListBox grafiskLista) 
         {
+            index = lbxRegister.SelectedIndex;
             if (index != -1)
             {
                 lista.RemoveAt(index);
@@ -101,11 +104,18 @@ namespace Filmregister
         // Hämtar all data som är sparad i klassen och placerar den rätt
         private void Redigera()
         {
-            Media medie = mediebiblioteket[index];
-            medie.Hämta();
+            index = lbxRegister.SelectedIndex;
+            if (index != -1)
+            {
+                Media medie = mediebiblioteket[index];
+                medie.Hämta();
+                if (medie.GetType().ToString() == "Filmregister.Film") FilmFokus();
+                else SerieFokus();
+            }
         }
         public void FilmFokus()
         {
+            rbnFilm.IsChecked = true;
             tbxSpeltid.IsEnabled = true;
             tbxSäsonger.IsEnabled = false;
             cbxFilmtyp.IsEnabled = true;
@@ -113,6 +123,7 @@ namespace Filmregister
         }
         public void SerieFokus()
         {
+            rbnSerie.IsChecked = true;
             tbxSpeltid.IsEnabled = false;
             tbxSäsonger.IsEnabled = true;
             cbxFilmtyp.IsEnabled = false;
@@ -121,9 +132,7 @@ namespace Filmregister
 
         private void btnRedigera_Click(object sender, RoutedEventArgs e)
         {
-            index = lbxRegister.SelectedIndex;
             Redigera();
-            //filmbibliotek[index].Redigera(tbxNamn, cbxGenre, tbxÅrgång, tbxRegissör, tbxVinst);
         }
 
         private void rbnSerie_Click(object sender, RoutedEventArgs e)

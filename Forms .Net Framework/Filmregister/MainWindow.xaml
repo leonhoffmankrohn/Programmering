@@ -35,7 +35,7 @@
             <ListBoxItem Content="Drama"/>
         </ComboBox>
         <Button x:Name="btnTabort" Content="Tabort" HorizontalAlignment="Left" Margin="200,263,0,0" VerticalAlignment="Top" Click="btnTabort_Click" Grid.Column="1"/>
-        <Button x:Name="btnRedigera" Content="Redigera" HorizontalAlignment="Left" Margin="144,263,0,0" VerticalAlignment="Top" Click="btnRedigera_Click" Grid.Column="1"/>
+        <Button x:Name="btnRedigera" Content="Hämta" HorizontalAlignment="Left" Margin="144,263,0,0" VerticalAlignment="Top" Click="btnRedigera_Click" Grid.Column="1"/>
         <RadioButton x:Name="rbnFilm" Content="Film" HorizontalAlignment="Left" Margin="95,44,0,0" VerticalAlignment="Top" IsChecked="True" Click="rbnFilm_Click"/>
         <RadioButton x:Name="rbnSerie" Content="Serie" HorizontalAlignment="Left" Margin="148,44,0,0" VerticalAlignment="Top" Click="rbnSerie_Click"/>
         <Label x:Name="lblSpeltid" Content="Speltid:" HorizontalAlignment="Left" Margin="35,132,0,0" VerticalAlignment="Top"/>
