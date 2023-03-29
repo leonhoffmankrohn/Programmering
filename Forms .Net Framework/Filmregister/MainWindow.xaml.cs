@@ -48,6 +48,7 @@ namespace Filmregister
         }
 
         // Här gör vi en ny film/serie med skriven data och sparar i en medielista(mediebiblioteket)
+        // Kollar också om vi har valt ett item i listboxen och uppdaterar den isf
         private void LäggTill() 
         {
             index = lbxRegister.SelectedIndex;
@@ -113,6 +114,8 @@ namespace Filmregister
                 else SerieFokus();
             }
         }
+
+        // Sätter fokus på filmfrågorna och sätter film som checkad radioknapp
         public void FilmFokus()
         {
             rbnFilm.IsChecked = true;
@@ -121,6 +124,8 @@ namespace Filmregister
             cbxFilmtyp.IsEnabled = true;
             cbxSerietyp.IsEnabled = false;
         }
+
+        // Sätter fokus på seriefrågorna och sätter film som checkad radioknapp
         public void SerieFokus()
         {
             rbnSerie.IsChecked = true;

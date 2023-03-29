@@ -33,15 +33,6 @@ namespace Filmregister
         {
             return "Namn: " + namn + " Genre: " + genre + " ";
         }
-        /*
-         * Ska man skicka in vid konstruktören vilka textbox och combobox som ska användas och sedan göra en metod som ställer dem ****
-         * 
-         * Ska man kolla utanför klasserna vilken typ av klass som är skapad och ändra text-, combobox utefter det
-         * 
-         * Ska man göra en variabel i klassen som bestämmer typen?
-         * 
-         * Ska man vid anropning av en metod i klassen ange vilken textbox som ska ändras, men hur håller man reda på det?
-         */
     }
     class Film : Media
     {
