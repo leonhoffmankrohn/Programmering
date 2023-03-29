@@ -31,7 +31,7 @@ namespace Filmregister
             InitializeComponent();
         }
 
-        //Initierar några variabler
+        //Initierar några användbara variabler
         int index = -1;
         List<Media> mediebiblioteket = new();
 
