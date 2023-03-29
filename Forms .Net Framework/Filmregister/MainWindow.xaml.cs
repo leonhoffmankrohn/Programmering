@@ -157,5 +157,10 @@ namespace Filmregister
         {
             Tabort(mediebiblioteket, lbxRegister);
         }
+
+        private void cbxFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
