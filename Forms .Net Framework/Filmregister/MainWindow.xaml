@@ -58,11 +58,12 @@
             <ListBoxItem Content="Film-serie"/>
         </ComboBox>
         <TextBox x:Name="tbxSäsonger" HorizontalAlignment="Left" Margin="88,194,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsEnabled="False"/>
-        <ComboBox x:Name="cbxFilter" HorizontalAlignment="Left" Margin="280,267,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" SelectionChanged="cbxFilter_SelectionChanged">
+        <ComboBox x:Name="cbxFilter" HorizontalAlignment="Left" Margin="280,267,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0">
             <ListBoxItem Content="Inget filter"/>
             <ListBoxItem Content="Filmfilter"/>
             <ListBoxItem Content="Seriefilter"/>
         </ComboBox>
+        <Button x:Name="btnFilterApply" Content="Tillämpa" HorizontalAlignment="Left" Margin="405,268,0,0" VerticalAlignment="Top" Click="btnFilterApply_Click"/>
 
     </Grid>
 </Window>

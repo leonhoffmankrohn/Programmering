@@ -35,14 +35,44 @@ namespace Filmregister
         int index = -1;
         List<Media> mediebiblioteket = new();
 
-        // Här rensar vi listboxen och uppdaterar med ny information
+        // Här rensar vi listboxen och uppdaterar med ny information, men också uppdaterar med filter numera
         private void UppdateraGrafik(List<Media> lista, ListBox grafiskLista) 
         {
             grafiskLista.Items.Clear();
-            for (int i = 0; i < lista.Count; i++)
-            {
-                grafiskLista.Items.Add(lista[i].ToString());
+            
+            string filter = cbxFilter.Text;
+            switch (filter) {
+                case "Inget filter":
+                        for (int i = 0; i < lista.Count; i++)
+                        {
+                            grafiskLista.Items.Add(lista[i].ToString());
+                        }
+                    break;
+
+                case "Filmfilter":
+                    for (int i = 0; i < lista.Count; i++)
+                    {
+                        if (lista[i].GetType().ToString() == "Filmregister.Film")
+                        {
+                            grafiskLista.Items.Add(lista[i].ToString());
+                        }
+                    }
+                    break;
+
+                case "Seriefilter":
+                    for (int i = 0; i < lista.Count; i++)
+                    {
+                        if (lista[i].GetType().ToString() == "Filmregister.Serie")
+                        {
+                            grafiskLista.Items.Add(lista[i].ToString());
+                        }
+                    }
+                    break;
+
+                default:
+                    break;
             }
+            
             index = -1;
             lbxRegister.SelectedIndex = -1;
         }
@@ -158,9 +188,9 @@ namespace Filmregister
             Tabort(mediebiblioteket, lbxRegister);
         }
 
-        private void cbxFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void btnFilterApply_Click(object sender, RoutedEventArgs e)
         {
-
+            UppdateraGrafik(mediebiblioteket, lbxRegister);
         }
     }
 }
