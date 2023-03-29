@@ -51,7 +51,6 @@ namespace Filmregister
         // Kollar också om vi har valt ett item i listboxen och uppdaterar den isf
         private void LäggTill() 
         {
-            index = lbxRegister.SelectedIndex;
             bool film = (bool)rbnFilm.IsChecked;
             if (index == -1)
             {
