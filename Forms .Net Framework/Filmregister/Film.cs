@@ -18,8 +18,8 @@ namespace Filmregister
         public string Namn { get; }
         public int Årgång { get; }
         public string Regissör { get; }
-        public string Genre { get; set; }
-        public int Vinst { get; set; }
+        public string Genre { get; }
+        public int Vinst { get; }
 
 
 
