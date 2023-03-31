@@ -1,0 +1,48 @@
+﻿<Window x:Class="HoffQuiz.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HoffQuiz"
+        mc:Ignorable="d"
+        Title="HoffQuiz
+        " Height="450" Width="820">
+    <Grid>
+        <TabControl x:Name="tbcScene">
+            <TabItem x:Name="tabStart" Header="START" IsSelected="True">
+                <Grid Background="#FFE5E5E5">
+                    <TabControl Margin="0,0,439,0">
+                        <TabItem Header="SIGN-UP" IsSelected="True">
+                            <Grid Background="#FFE5E5E5"/>
+                        </TabItem>
+                        <TabItem Header="LOGIN">
+                            <Grid Background="#FFE5E5E5"/>
+                        </TabItem>
+                    </TabControl>
+                    <ListView d:ItemsSource="{d:SampleData ItemCount=5}" Margin="355,0,0,0">
+                        <ListView.Effect>
+                            <BlurEffect/>
+                        </ListView.Effect>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem Header="QUIZ">
+                <Grid Background="#FFE5E5E5" Height="407">
+                    <Label x:Name="lblQuizName" Content="HoffTest" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="18"/>
+                    <StackPanel/>
+                    <GroupBox x:Name="gbxFråga" Header="GroupBox" Margin="53,53,53,53">
+                        <Label x:Name="lblFråga" Content="If you were ten years old, fifteen years ago, how old would you be now?" HorizontalAlignment="Center" Height="84" VerticalAlignment="Top" Width="566"/>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="CREATE QUIZ HERE"/>
+            <TabItem Header="Hoffman :: HS:350 HoffPoints" Margin="416,-3,-435,1" IsEnabled="False"/>
+        </TabControl>
+
+    </Grid>
+</Window>
