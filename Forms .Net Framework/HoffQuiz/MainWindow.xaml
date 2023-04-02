@@ -31,15 +31,14 @@
                     </ListView>
                 </Grid>
             </TabItem>
-            <TabItem Header="QUIZ" IsSelected="True">
+            <TabItem Header="QUIZ" IsSelected="True" Name="tabQuiz">
                 <ScrollViewer>
                     <Grid Background="#FFE5E5E5" Height="auto">
                         <Label x:Name="lblQuizName" Content="HoffTest" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="18"/>
-                        <TextBox x:Name="tbxTest" HorizontalAlignment="Left" Margin="333,118,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" UseLayoutRounding="False"/>
                     </Grid>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="CREATE QUIZ HERE" IsSelected="True" Height="20" VerticalAlignment="Top">
+            <TabItem Header="CREATE QUIZ HERE" Name="tabQuizCreate" IsSelected="True" Height="20" VerticalAlignment="Top" MouseDown="tabQuizCreate_MouseDown">
                 <Grid>
                 <ScrollViewer>
                     <Grid Background="#FFE5E5E5" Height="auto" Name="gridCreate">
