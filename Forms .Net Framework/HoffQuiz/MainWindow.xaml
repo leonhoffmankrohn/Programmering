@@ -31,16 +31,25 @@
                     </ListView>
                 </Grid>
             </TabItem>
-            <TabItem Header="QUIZ">
-                <Grid Background="#FFE5E5E5" Height="407">
-                    <Label x:Name="lblQuizName" Content="HoffTest" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="18"/>
-                    <StackPanel/>
-                    <GroupBox x:Name="gbxFråga" Header="GroupBox" Margin="53,53,53,53">
-                        <Label x:Name="lblFråga" Content="If you were ten years old, fifteen years ago, how old would you be now?" HorizontalAlignment="Center" Height="84" VerticalAlignment="Top" Width="566"/>
-                    </GroupBox>
+            <TabItem Header="QUIZ" IsSelected="True">
+                <ScrollViewer>
+                    <Grid Background="#FFE5E5E5" Height="auto">
+                        <Label x:Name="lblQuizName" Content="HoffTest" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="18"/>
+                        <TextBox x:Name="tbxTest" HorizontalAlignment="Left" Margin="333,118,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" UseLayoutRounding="False"/>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="CREATE QUIZ HERE" IsSelected="True" Height="20" VerticalAlignment="Top">
+                <Grid>
+                <ScrollViewer>
+                    <Grid Background="#FFE5E5E5" Height="auto" Name="gridCreate">
+                        <Label x:Name="lblCreate" Content="HoffCreate" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="18"/>
+                        <StackPanel x:Name="stackCreate"/>
+                    </Grid>
+                </ScrollViewer>
+                <Button x:Name="btnNew" Content="New" HorizontalAlignment="Left" Margin="20,351,0,0" VerticalAlignment="Top" Click="btnNew_Click" IsDefault="True"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="CREATE QUIZ HERE"/>
             <TabItem Header="Hoffman :: HS:350 HoffPoints" Margin="416,-3,-435,1" IsEnabled="False"/>
         </TabControl>
 
