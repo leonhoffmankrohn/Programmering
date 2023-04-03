@@ -40,13 +40,13 @@ namespace HoffQuiz
 
         private void btnNewSimQ_Click(object sender, RoutedEventArgs e)
         {
-            quizzes.Add(new Quiz());
 
             quizzes[creationIndex].NewSimQ(stackCreate);
         }
 
         private void btnNewMultQ_Click(object sender, RoutedEventArgs e)
         {
+            quizzes.Add(new Quiz());
             quizzes[creationIndex].NewMultQ(stackCreate);
         }
 
