@@ -26,7 +26,7 @@ namespace HoffQuiz
         }
         List<User> users = new List<User>();
         List<Quiz> quizzes = new List<Quiz>();
-        int creationIndex = -1;
+        int creationIndex = 0;
 
         private void UpdateCreationInterface()
         {
@@ -35,10 +35,13 @@ namespace HoffQuiz
         private void tabQuizCreate_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             quizzes.Add(new Quiz());
+            creationIndex++;
         }
 
         private void btnNewSimQ_Click(object sender, RoutedEventArgs e)
         {
+            quizzes.Add(new Quiz());
+
             quizzes[creationIndex].NewSimQ(stackCreate);
         }
 

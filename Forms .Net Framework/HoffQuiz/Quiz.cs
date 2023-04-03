@@ -38,9 +38,11 @@ namespace HoffQuiz
     {
         //Prompt
         //Definition
-
+        string id = "0000";
+        public string ID { get { return ID; } }
         public virtual void Initialize(StackPanel panel) { }
         public virtual void Save() { }
+        public virtual void Load() { }
     }
 
     class Simple : Question
