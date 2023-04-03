@@ -26,21 +26,36 @@ namespace HoffQuiz
         }
         List<User> users = new List<User>();
         List<Quiz> quizzes = new List<Quiz>();
+        int creationIndex = -1;
 
         private void UpdateCreationInterface()
         {
             
         }
-
-        private void btnNew_Click(object sender, RoutedEventArgs e)
+        private void tabQuizCreate_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            quizzes.Add(new Quiz("Hoff Test 1"));
-            quizzes[0].NewSimQ(stackCreate);
+            quizzes.Add(new Quiz());
         }
 
-        private void tabQuizCreate_MouseDown(object sender, MouseButtonEventArgs e)
+        private void btnNewSimQ_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("Hej");
+            quizzes[creationIndex].NewSimQ(stackCreate);
+        }
+
+        private void btnNewMultQ_Click(object sender, RoutedEventArgs e)
+        {
+            quizzes[creationIndex].NewMultQ(stackCreate);
+        }
+
+        private void btnNewPicQ_Click(object sender, RoutedEventArgs e)
+        {
+            quizzes[creationIndex].NewPicQ(stackCreate);
+        }
+
+        private void btnNewMathQ_Click(object sender, RoutedEventArgs e)
+        {
+            quizzes[creationIndex].NewMathQ(stackCreate);
+
         }
     }
 }

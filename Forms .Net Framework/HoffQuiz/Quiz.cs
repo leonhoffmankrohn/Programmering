@@ -12,27 +12,24 @@ namespace HoffQuiz
     {
         public List<Question> Questions = new();
 
-        public string Name { get; set; }
-
-        public Quiz(string _name)
+        public Quiz()
         {
-            Name = _name;
         }
         public void NewSimQ(StackPanel panel)
         {
             Questions.Add(new Simple(panel));
         }
-        public void NewMultQ()
+        public void NewMultQ(StackPanel panel)
         {
-            Questions.Add(new MultipleChoice());
+            Questions.Add(new MultipleChoice(panel));
         }
-        public void NewPicQ()
+        public void NewPicQ(StackPanel panel)
         {
-            Questions.Add(new PictureQ());
+            Questions.Add(new PictureQ(panel));
         }
-        public void NewMathQ()
+        public void NewMathQ(StackPanel panel)
         {
-            Questions.Add(new MathQ());
+            Questions.Add(new MathQ(panel));
         }
 
     }
@@ -62,7 +59,7 @@ namespace HoffQuiz
                 Padding = new Thickness(5),
                 Margin = new Thickness(0, 20, 0, 5),
                 Width = 500,
-                Text = "Här kan du skriva lite dittan och dattan, test",
+                Text = "Prompt",
                 HorizontalAlignment = HorizontalAlignment.Center
             };
             TextBox tbxDefinition = new TextBox
@@ -70,7 +67,7 @@ namespace HoffQuiz
                 Padding = new Thickness(5),
                 Margin = new Thickness(0, 5, 0, 20),
                 Width = 500,
-                Text = "Här kan du skriva lite dittan och dattan, test",
+                Text = "Definition",
                 HorizontalAlignment = HorizontalAlignment.Center
             };
             panel.Children.Add(tbxPrompt);
@@ -80,14 +77,23 @@ namespace HoffQuiz
     }
     class MultipleChoice : Question
     {
-
+        public MultipleChoice(StackPanel _panel)
+        {
+            Initialize(_panel);
+        }
     }
     class PictureQ : Question
     {
-
+        public PictureQ(StackPanel _panel)
+        {
+            Initialize(_panel);
+        }
     }
     class MathQ : Question
     {
-
+        public MathQ(StackPanel _panel)
+        {
+            Initialize(_panel);
+        }
     }
 }

@@ -38,15 +38,18 @@
                     </Grid>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="CREATE QUIZ HERE" Name="tabQuizCreate" IsSelected="True" Height="20" VerticalAlignment="Top" MouseDown="tabQuizCreate_MouseDown">
+            <TabItem Header="CREATE QUIZ HERE" Name="tabQuizCreate" IsSelected="True" Height="20" VerticalAlignment="Top" MouseLeftButtonDown="tabQuizCreate_MouseLeftButtonDown">
                 <Grid>
-                <ScrollViewer>
-                    <Grid Background="#FFE5E5E5" Height="auto" Name="gridCreate">
-                        <Label x:Name="lblCreate" Content="HoffCreate" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="18"/>
-                        <StackPanel x:Name="stackCreate"/>
-                    </Grid>
-                </ScrollViewer>
-                <Button x:Name="btnNew" Content="New" HorizontalAlignment="Left" Margin="20,351,0,0" VerticalAlignment="Top" Click="btnNew_Click" IsDefault="True"/>
+                    <ScrollViewer>
+                        <Grid Background="#FFE5E5E5" Height="auto" Name="gridCreate">
+                            <Label x:Name="lblCreate" Content="HoffCreate" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="18"/>
+                            <StackPanel x:Name="stackCreate"/>
+                        </Grid>
+                    </ScrollViewer>
+                    <Button x:Name="btnNewSimQ" Content="New Simple Question" HorizontalAlignment="Left" Margin="20,301,0,0" VerticalAlignment="Top" IsDefault="True" Click="btnNewSimQ_Click"/>
+                    <Button x:Name="btnNewMultQ" Content="New Multiple Choice" HorizontalAlignment="Left" Margin="20,323,0,0" VerticalAlignment="Top" Click="btnNewMultQ_Click" IsDefault="True"/>
+                    <Button x:Name="btnNewPicQ" Content="New Picture Question" HorizontalAlignment="Left" Margin="20,346,0,0" VerticalAlignment="Top" Click="btnNewPicQ_Click" IsDefault="True"/>
+                    <Button x:Name="btnNewMathQ" Content="New Math Question" HorizontalAlignment="Left" Margin="20,369,0,0" VerticalAlignment="Top" Click="btnNewMathQ_Click" IsDefault="True"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Hoffman :: HS:350 HoffPoints" Margin="416,-3,-435,1" IsEnabled="False"/>
