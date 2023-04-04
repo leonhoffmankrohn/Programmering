@@ -10,6 +10,7 @@ namespace HoffQuiz
 {
     class Quiz
     {
+        public string Name { set; get; }
         public List<Question> Questions = new();
 
         public Quiz()
@@ -57,8 +58,6 @@ namespace HoffQuiz
 
     class Simple : Question
     {
-        string prompt;
-        string definition;
         public override Control[] Controls { get; set; }
 
         public Simple()
@@ -86,6 +85,11 @@ namespace HoffQuiz
             
             return new Control[] { tbxPrompt, tbxDefinition };
         }
+        public override void Save()
+        {
+            
+        }
+
 
     }
     class MultipleChoice : Question

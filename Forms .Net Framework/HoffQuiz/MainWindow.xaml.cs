@@ -58,8 +58,6 @@ namespace HoffQuiz
         {
             quizzes[creationIndex].NewMathQ();
             UpdateCreationInterface();
-
-
         }
 
         private void btnNewQuiz_Click(object sender, RoutedEventArgs e)
@@ -71,8 +69,14 @@ namespace HoffQuiz
             btnNewMultQ.IsEnabled = true;
             btnNewPicQ.IsEnabled = true;
             btnNewMathQ.IsEnabled = true;
+            if (creationIndex > 0) btnPreviousQuiz.IsEnabled = true;
+        }
 
-
+        private void btnPreviousQuiz_Click(object sender, RoutedEventArgs e)
+        {
+            creationIndex--;
+            if (creationIndex == 0) btnPreviousQuiz.IsEnabled = false;
+            quizzes[creationIndex].Render(stackCreate);
         }
     }
 }
