@@ -23,10 +23,12 @@
                             <Grid Background="#FFE5E5E5"/>
                         </TabItem>
                     </TabControl>
-                    <ListView x:Name="lviewQuizzes" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="223,0,0,0" Grid.Column="1">
+                    <ListView x:Name="lviewQuizzes" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="282,0,0,0" Grid.Column="1" Width="400">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn/>
+                                <GridViewColumn Header="Quizname" Width="125" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                                <GridViewColumn Header="Number of questions" Width="150" DisplayMemberBinding="{Binding QuestionsCount}"></GridViewColumn>
+                                <GridViewColumn Header="By" Width="125" DisplayMemberBinding="{Binding Creator}"></GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -48,10 +50,10 @@
                     <ScrollViewer Grid.ColumnSpan="2">
                         <Grid Background="#FFE5E5E5" Height="auto" Name="gridCreate">
                             <StackPanel x:Name="stackCreate"/>
-                            <TextBox x:Name="tbxQuizName" HorizontalAlignment="Left" Margin="21,13,0,0" TextWrapping="Wrap" Text="Quizname" VerticalAlignment="Top" Width="168" BorderThickness="1,1,1,0" FontSize="18"/>
                         </Grid>
                     </ScrollViewer>
-                    <Button x:Name="btnPreviousQuiz" Content="Previous Quiz" HorizontalAlignment="Left" Margin="6,73,0,0" VerticalAlignment="Top" IsDefault="True" Grid.Column="1" Click="btnPreviousQuiz_Click"/>
+                    <TextBox x:Name="tbxQuizName" HorizontalAlignment="Left" Margin="7,18,0,0" TextWrapping="Wrap" Text="Quizname" VerticalAlignment="Top" Width="100" BorderThickness="1,1,1,0" FontSize="18" Grid.Column="1"/>
+                    <Button x:Name="btnPreviousQuiz" Content="Previous Quiz" HorizontalAlignment="Left" Margin="6,73,0,0" VerticalAlignment="Top" IsDefault="True" Grid.Column="1" Click="btnPreviousQuiz_Click" IsEnabled="False"/>
                     <Button x:Name="btnNewQuiz" Content="Create new QUIZ" HorizontalAlignment="Left" Margin="6,51,0,0" VerticalAlignment="Top" IsDefault="True" Click="btnNewQuiz_Click" Grid.Column="1"/>
                     <Button x:Name="btnNewSimQ" Content="New Simple Question" HorizontalAlignment="Left" Margin="6,301,0,0" VerticalAlignment="Top" IsDefault="True" Click="btnNewSimQ_Click" IsEnabled="False" Grid.Column="1"/>
                     <Button x:Name="btnNewMultQ" Content="New Multiple Choice" HorizontalAlignment="Left" Margin="6,323,0,0" VerticalAlignment="Top" Click="btnNewMultQ_Click" IsDefault="True" IsEnabled="False" Grid.Column="1"/>

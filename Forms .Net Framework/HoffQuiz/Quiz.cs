@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,11 +11,15 @@ namespace HoffQuiz
 {
     class Quiz
     {
-        public string Name { set; get; }
         public List<Question> Questions = new();
+        string creator = "SuperUser";
+        public string Name { set; get; }
+        public string QuestionsCount { get { return Questions.Count.ToString(); } }
+        public string Creator { get { return creator; } }
 
-        public Quiz()
+        public Quiz(string _name)
         {
+            Name = _name;
         }
         public void NewSimQ()
         {
@@ -52,8 +57,6 @@ namespace HoffQuiz
         //Definition
         public virtual Control[] Controls { get; set; }
         public virtual Control[] Initialize() { return new Control[] { new Control(), new Control() }; }
-        public virtual void Save() { }
-        public virtual void Load() { }
     }
 
     class Simple : Question
@@ -85,12 +88,6 @@ namespace HoffQuiz
             
             return new Control[] { tbxPrompt, tbxDefinition };
         }
-        public override void Save()
-        {
-            
-        }
-
-
     }
     class MultipleChoice : Question
     {

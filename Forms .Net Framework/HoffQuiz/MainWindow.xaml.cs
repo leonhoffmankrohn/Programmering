@@ -24,13 +24,19 @@ namespace HoffQuiz
         {
             InitializeComponent();
         }
-        List<User> users = new List<User>();
+        // List<User> users = new List<User>();
         List<Quiz> quizzes = new List<Quiz>();
         int creationIndex = -1;
 
         private void UpdateCreationInterface()
         {
             quizzes[creationIndex].Render(stackCreate);
+        }
+
+        private void UpdateQuizListView()
+        {
+            lviewQuizzes.ItemsSource = null;
+            lviewQuizzes.ItemsSource = quizzes;
         }
 
         private void btnNewSimQ_Click(object sender, RoutedEventArgs e)
@@ -62,7 +68,7 @@ namespace HoffQuiz
 
         private void btnNewQuiz_Click(object sender, RoutedEventArgs e)
         {
-            quizzes.Add(new Quiz());
+            quizzes.Add(new Quiz(tbxQuizName.Text));
             creationIndex++;
             quizzes[creationIndex].Render(stackCreate);
             btnNewSimQ.IsEnabled = true;
@@ -70,6 +76,7 @@ namespace HoffQuiz
             btnNewPicQ.IsEnabled = true;
             btnNewMathQ.IsEnabled = true;
             if (creationIndex > 0) btnPreviousQuiz.IsEnabled = true;
+            UpdateQuizListView();
         }
 
         private void btnPreviousQuiz_Click(object sender, RoutedEventArgs e)
