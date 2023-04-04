@@ -23,7 +23,7 @@
                             <Grid Background="#FFE5E5E5"/>
                         </TabItem>
                     </TabControl>
-                    <ListView x:Name="lviewQuizzes" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="282,0,0,0" Grid.Column="1" Width="400">
+                    <ListView x:Name="lviewQuizzes" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="282,0,0,51" Grid.Column="1" Width="400">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Quizname" Width="125" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
@@ -32,6 +32,8 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
+                    <Button x:Name="btnStartQuiz" Grid.Column="1" Content="Start Quiz" HorizontalAlignment="Left" Margin="616,375,0,0" VerticalAlignment="Top" Click="btnStartQuiz_Click"/>
+                    <Button x:Name="btnDeleteQuiz" Grid.Column="1" Content="Delete Selected" HorizontalAlignment="Left" Margin="525,375,0,0" VerticalAlignment="Top" Click="btnDeleteQuiz_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="QUIZ" IsSelected="True" Name="tabQuiz">

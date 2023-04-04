@@ -70,12 +70,12 @@ namespace HoffQuiz
         {
             quizzes.Add(new Quiz(tbxQuizName.Text));
             creationIndex++;
-            quizzes[creationIndex].Render(stackCreate);
             btnNewSimQ.IsEnabled = true;
             btnNewMultQ.IsEnabled = true;
             btnNewPicQ.IsEnabled = true;
             btnNewMathQ.IsEnabled = true;
             if (creationIndex > 0) btnPreviousQuiz.IsEnabled = true;
+            UpdateCreationInterface();
             UpdateQuizListView();
         }
 
@@ -84,6 +84,15 @@ namespace HoffQuiz
             creationIndex--;
             if (creationIndex == 0) btnPreviousQuiz.IsEnabled = false;
             quizzes[creationIndex].Render(stackCreate);
+        }
+
+        private void btnStartQuiz_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void btnDeleteQuiz_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
