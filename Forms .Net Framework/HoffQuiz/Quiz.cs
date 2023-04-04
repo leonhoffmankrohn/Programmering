@@ -15,28 +15,32 @@ namespace HoffQuiz
         public Quiz()
         {
         }
-        public void NewSimQ(StackPanel panel)
+        public void NewSimQ()
         {
-            Questions.Add(new Simple(panel));
+            Questions.Add(new Simple());
         }
-        public void NewMultQ(StackPanel panel)
+        public void NewMultQ()
         {
-            Questions.Add(new MultipleChoice(panel));
+            Questions.Add(new MultipleChoice());
         }
-        public void NewPicQ(StackPanel panel)
+        public void NewPicQ()
         {
-            Questions.Add(new PictureQ(panel));
+            Questions.Add(new PictureQ());
         }
-        public void NewMathQ(StackPanel panel)
+        public void NewMathQ()
         {
-            Questions.Add(new MathQ(panel));
+            Questions.Add(new MathQ());
         }
         
         public void Render(StackPanel panel)
         {
+            panel.Children.Clear();
             for (int i = 0; i < Questions.Count; i++)
             {
-                panel.Children.Add(Questions[i])
+                for (int j = 0; j < Questions[i].Controls.Count(); j++)
+                {
+                    panel.Children.Add(Questions[i].Controls[j]);
+                }
             }
         }
     }
@@ -45,7 +49,8 @@ namespace HoffQuiz
     {
         //Prompt
         //Definition
-        public virtual Control[] Initialize(StackPanel panel) { return new Control[] { new Control(), new Control() }; }
+        public virtual Control[] Controls { get; set; }
+        public virtual Control[] Initialize() { return new Control[] { new Control(), new Control() }; }
         public virtual void Save() { }
         public virtual void Load() { }
     }
@@ -54,13 +59,13 @@ namespace HoffQuiz
     {
         string prompt;
         string definition;
-        Control[] controls;
+        public override Control[] Controls { get; set; }
 
-        public Simple(StackPanel _panel)
+        public Simple()
         {
-            controls = Initialize(_panel);
+            Controls = Initialize();
         }
-        public override Control[] Initialize(StackPanel panel)
+        public override Control[] Initialize()
         {
             TextBox tbxPrompt = new TextBox
             {
@@ -78,19 +83,19 @@ namespace HoffQuiz
                 Text = "Definition",
                 HorizontalAlignment = HorizontalAlignment.Center
             };
-            panel.Children.Add(tbxPrompt);
-            panel.Children.Add(tbxDefinition);
-            return new Control[] { tbxPrompt, tbxPrompt };
+            
+            return new Control[] { tbxPrompt, tbxDefinition };
         }
 
     }
     class MultipleChoice : Question
     {
-        public MultipleChoice(StackPanel _panel)
+        public override Control[] Controls { get; set; }
+        public MultipleChoice()
         {
-            Initialize(_panel);
+            Controls = Initialize();
         }
-        public override void Initialize(StackPanel panel)
+        public override Control[] Initialize()
         {
             TextBox tbxPrompt = new TextBox
             {
@@ -124,29 +129,33 @@ namespace HoffQuiz
                 Text = "Choice 3",
                 HorizontalAlignment = HorizontalAlignment.Center
             };
-            panel.Children.Add(tbxPrompt);
-            panel.Children.Add(tbxDefinition1);
-            panel.Children.Add(tbxDefinition2);
-            panel.Children.Add(tbxDefinition3);
+            return new Control[] { tbxPrompt, tbxDefinition1, tbxDefinition2, tbxDefinition3 };
         }
     }
     class PictureQ : Question
     {
-        public PictureQ(StackPanel _panel)
+        public override Control[] Controls {get;set;}
+        public PictureQ()
         {
-            Initialize(_panel);
+            Initialize();
         }
-        public override void Initialize(StackPanel panel)
+        public override Control[] Initialize()
         {
+            return new Control[] { new Control(), new Control() };
         }
 
 
     }
     class MathQ : Question
     {
-        public MathQ(StackPanel _panel)
+        public override Control[] Controls { get; set; }
+        public MathQ()
         {
-            Initialize(_panel);
+            Initialize();
+        }
+        public override Control[] Initialize()
+        {
+            return new Control[] { new Control(), new Control() };
         }
     }
 }

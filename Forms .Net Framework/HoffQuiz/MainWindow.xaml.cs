@@ -26,38 +26,52 @@ namespace HoffQuiz
         }
         List<User> users = new List<User>();
         List<Quiz> quizzes = new List<Quiz>();
-        int creationIndex = 0;
+        int creationIndex = -1;
 
         private void UpdateCreationInterface()
         {
-            
-        }
-        private void tabQuizCreate_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            quizzes.Add(new Quiz());
-            creationIndex++;
+            quizzes[creationIndex].Render(stackCreate);
         }
 
         private void btnNewSimQ_Click(object sender, RoutedEventArgs e)
         {
 
-            quizzes[creationIndex].NewSimQ(stackCreate);
+            quizzes[creationIndex].NewSimQ();
+            UpdateCreationInterface();
         }
 
         private void btnNewMultQ_Click(object sender, RoutedEventArgs e)
         {
-            quizzes.Add(new Quiz());
-            quizzes[creationIndex].NewMultQ(stackCreate);
+            quizzes[creationIndex].NewMultQ();
+            UpdateCreationInterface();
+
         }
 
         private void btnNewPicQ_Click(object sender, RoutedEventArgs e)
         {
-            quizzes[creationIndex].NewPicQ(stackCreate);
+            quizzes[creationIndex].NewPicQ();
+            UpdateCreationInterface();
+
         }
 
         private void btnNewMathQ_Click(object sender, RoutedEventArgs e)
         {
-            quizzes[creationIndex].NewMathQ(stackCreate);
+            quizzes[creationIndex].NewMathQ();
+            UpdateCreationInterface();
+
+
+        }
+
+        private void btnNewQuiz_Click(object sender, RoutedEventArgs e)
+        {
+            quizzes.Add(new Quiz());
+            creationIndex++;
+            quizzes[creationIndex].Render(stackCreate);
+            btnNewSimQ.IsEnabled = true;
+            btnNewMultQ.IsEnabled = true;
+            btnNewPicQ.IsEnabled = true;
+            btnNewMathQ.IsEnabled = true;
+
 
         }
     }

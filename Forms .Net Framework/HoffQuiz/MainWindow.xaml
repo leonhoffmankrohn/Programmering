@@ -11,7 +11,11 @@
         <TabControl x:Name="tbcScene">
             <TabItem x:Name="tabStart" Header="START" IsSelected="True">
                 <Grid Background="#FFE5E5E5">
-                    <TabControl Margin="0,0,439,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="31*"/>
+                    </Grid.ColumnDefinitions>
+                    <TabControl Margin="0,0,439,0" Grid.ColumnSpan="2">
                         <TabItem Header="SIGN-UP" IsSelected="True">
                             <Grid Background="#FFE5E5E5"/>
                         </TabItem>
@@ -19,7 +23,7 @@
                             <Grid Background="#FFE5E5E5"/>
                         </TabItem>
                     </TabControl>
-                    <ListView d:ItemsSource="{d:SampleData ItemCount=5}" Margin="355,0,0,0">
+                    <ListView x:Name="lviewQuizzes" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="223,0,0,0" Grid.Column="1">
                         <ListView.Effect>
                             <BlurEffect/>
                         </ListView.Effect>
@@ -38,18 +42,23 @@
                     </Grid>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="CREATE QUIZ HERE" Name="tabQuizCreate" IsSelected="True" Height="20" VerticalAlignment="Top" MouseLeftButtonDown="tabQuizCreate_MouseLeftButtonDown">
+            <TabItem Header="CREATE QUIZ HERE" Name="tabQuizCreate" IsSelected="True" Height="20" VerticalAlignment="Top">
                 <Grid>
-                    <ScrollViewer>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="400*"/>
+                    </Grid.ColumnDefinitions>
+                    <ScrollViewer Grid.ColumnSpan="2">
                         <Grid Background="#FFE5E5E5" Height="auto" Name="gridCreate">
                             <Label x:Name="lblCreate" Content="HoffCreate" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="18"/>
                             <StackPanel x:Name="stackCreate"/>
                         </Grid>
                     </ScrollViewer>
-                    <Button x:Name="btnNewSimQ" Content="New Simple Question" HorizontalAlignment="Left" Margin="20,301,0,0" VerticalAlignment="Top" IsDefault="True" Click="btnNewSimQ_Click"/>
-                    <Button x:Name="btnNewMultQ" Content="New Multiple Choice" HorizontalAlignment="Left" Margin="20,323,0,0" VerticalAlignment="Top" Click="btnNewMultQ_Click" IsDefault="True"/>
-                    <Button x:Name="btnNewPicQ" Content="New Picture Question" HorizontalAlignment="Left" Margin="20,346,0,0" VerticalAlignment="Top" Click="btnNewPicQ_Click" IsDefault="True"/>
-                    <Button x:Name="btnNewMathQ" Content="New Math Question" HorizontalAlignment="Left" Margin="20,369,0,0" VerticalAlignment="Top" Click="btnNewMathQ_Click" IsDefault="True"/>
+                    <Button x:Name="btnNewQuiz" Content="Create new QUIZ" HorizontalAlignment="Left" Margin="6,51,0,0" VerticalAlignment="Top" IsDefault="True" Click="btnNewQuiz_Click" Grid.Column="1"/>
+                    <Button x:Name="btnNewSimQ" Content="New Simple Question" HorizontalAlignment="Left" Margin="6,301,0,0" VerticalAlignment="Top" IsDefault="True" Click="btnNewSimQ_Click" IsEnabled="False" Grid.Column="1"/>
+                    <Button x:Name="btnNewMultQ" Content="New Multiple Choice" HorizontalAlignment="Left" Margin="6,323,0,0" VerticalAlignment="Top" Click="btnNewMultQ_Click" IsDefault="True" IsEnabled="False" Grid.Column="1"/>
+                    <Button x:Name="btnNewPicQ" Content="New Picture Question" HorizontalAlignment="Left" Margin="6,346,0,0" VerticalAlignment="Top" Click="btnNewPicQ_Click" IsDefault="True" IsEnabled="False" Grid.Column="1"/>
+                    <Button x:Name="btnNewMathQ" Content="New Math Question" HorizontalAlignment="Left" Margin="6,369,0,0" VerticalAlignment="Top" Click="btnNewMathQ_Click" IsDefault="True" IsEnabled="False" Grid.Column="1"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Hoffman :: HS:350 HoffPoints" Margin="416,-3,-435,1" IsEnabled="False"/>
