@@ -55,14 +55,17 @@ namespace HoffQuiz
     {
         //Prompt
         //Definition
-        public virtual Control[] Controls { get; set; }
+        public Control[] Controls { get; set; }
+        public Control[] QuizControls { get; set; }
         public virtual Control[] Initialize() { return new Control[] { new Control(), new Control() }; }
+        public virtual Control[] GetQuizControls(TextBox textbox) 
+        { 
+            return new Control[] {};
+        }
     }
 
     class Simple : Question
     {
-        public override Control[] Controls { get; set; }
-
         public Simple()
         {
             Controls = Initialize();
@@ -88,10 +91,22 @@ namespace HoffQuiz
             
             return new Control[] { tbxPrompt, tbxDefinition };
         }
+        public override Control[] GetQuizControls(TextBox prompttbx)
+        {
+            Control[] controls = new Control[3];
+            controls.Append(new Label
+            {
+                Content = prompttbx.Text,
+                Padding = new Thickness(5),
+                Margin = new Thickness(0, 20, 0, 5),
+                Width = 500,
+                HorizontalAlignment = HorizontalAlignment.Center
+            });
+            return controls;
+        }
     }
     class MultipleChoice : Question
     {
-        public override Control[] Controls { get; set; }
         public MultipleChoice()
         {
             Controls = Initialize();
@@ -135,7 +150,6 @@ namespace HoffQuiz
     }
     class PictureQ : Question
     {
-        public override Control[] Controls {get;set;}
         public PictureQ()
         {
             Initialize();
@@ -149,7 +163,6 @@ namespace HoffQuiz
     }
     class MathQ : Question
     {
-        public override Control[] Controls { get; set; }
         public MathQ()
         {
             Initialize();

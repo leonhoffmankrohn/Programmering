@@ -33,12 +33,62 @@ namespace HoffQuiz
             quizzes[creationIndex].Render(stackCreate);
         }
 
+        private void ResetCreationInterface()
+        {
+            creationIndex = -1;
+            stackCreate.Children.Clear();
+            tbxQuizName.Text = "Quizname";
+            btnNewSimQ.IsEnabled = false;
+            btnNewMultQ.IsEnabled = false;
+            btnNewPicQ.IsEnabled = false;
+            btnNewMathQ.IsEnabled = false;
+        }
+
         private void UpdateQuizListView()
         {
             lviewQuizzes.ItemsSource = null;
             lviewQuizzes.ItemsSource = quizzes;
         }
 
+
+        private void btnNewQuiz_Click(object sender, RoutedEventArgs e)
+        {
+            quizzes.Add(new Quiz(tbxQuizName.Text));
+            creationIndex++;
+            btnNewSimQ.IsEnabled = true;
+            btnNewMultQ.IsEnabled = true;
+            btnNewPicQ.IsEnabled = true;
+            btnNewMathQ.IsEnabled = true;
+            if (creationIndex > 0) btnPreviousQuiz.IsEnabled = true;
+            UpdateCreationInterface();
+            UpdateQuizListView();
+        }
+
+        private void btnPreviousQuiz_Click(object sender, RoutedEventArgs e)
+        {
+            creationIndex--;
+            if (creationIndex == 0) btnPreviousQuiz.IsEnabled = false;
+            quizzes[creationIndex].Render(stackCreate);
+        }
+
+        private void btnStartQuiz_Click(object sender, RoutedEventArgs e)
+        {
+            quizzes[lviewQuizzes.SelectedIndex].Render(stackQuiz);
+            tabQuiz.IsEnabled = true;
+            tabQuiz.IsSelected = true;
+            tabQuizCreate.IsEnabled = false;
+            tabStart.IsEnabled = false;
+        }
+
+        private void btnDeleteQuiz_Click(object sender, RoutedEventArgs e)
+        {
+            if (lviewQuizzes.SelectedIndex != -1) 
+            { 
+                quizzes.RemoveAt(lviewQuizzes.SelectedIndex);
+                ResetCreationInterface();
+                UpdateQuizListView();
+            }
+        }
         private void btnNewSimQ_Click(object sender, RoutedEventArgs e)
         {
 
@@ -64,35 +114,6 @@ namespace HoffQuiz
         {
             quizzes[creationIndex].NewMathQ();
             UpdateCreationInterface();
-        }
-
-        private void btnNewQuiz_Click(object sender, RoutedEventArgs e)
-        {
-            quizzes.Add(new Quiz(tbxQuizName.Text));
-            creationIndex++;
-            btnNewSimQ.IsEnabled = true;
-            btnNewMultQ.IsEnabled = true;
-            btnNewPicQ.IsEnabled = true;
-            btnNewMathQ.IsEnabled = true;
-            if (creationIndex > 0) btnPreviousQuiz.IsEnabled = true;
-            UpdateCreationInterface();
-            UpdateQuizListView();
-        }
-
-        private void btnPreviousQuiz_Click(object sender, RoutedEventArgs e)
-        {
-            creationIndex--;
-            if (creationIndex == 0) btnPreviousQuiz.IsEnabled = false;
-            quizzes[creationIndex].Render(stackCreate);
-        }
-
-        private void btnStartQuiz_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void btnDeleteQuiz_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

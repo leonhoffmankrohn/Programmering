@@ -36,10 +36,11 @@
                     <Button x:Name="btnDeleteQuiz" Grid.Column="1" Content="Delete Selected" HorizontalAlignment="Left" Margin="525,375,0,0" VerticalAlignment="Top" Click="btnDeleteQuiz_Click"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="QUIZ" IsSelected="True" Name="tabQuiz">
+            <TabItem Header="QUIZ" IsSelected="True" Name="tabQuiz" IsEnabled="False">
                 <ScrollViewer>
                     <Grid Background="#FFE5E5E5" Height="auto">
                         <Label x:Name="lblQuizName" Content="HoffTest" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="18"/>
+                        <StackPanel x:Name="stackQuiz"/>
                     </Grid>
                 </ScrollViewer>
             </TabItem>
