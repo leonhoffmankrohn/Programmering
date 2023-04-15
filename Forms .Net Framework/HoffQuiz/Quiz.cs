@@ -37,8 +37,34 @@ namespace HoffQuiz
         {
             Questions.Add(new MathQ());
         }
-        
-        public void Render(StackPanel panel)
+        public int QuizEnd()
+        {
+            int nrCorrect = 0;
+            for (int i = 0; i < Questions.Count; i++)
+            {
+                for (int j = 0; j < Questions[i].Answers.Count; j++)
+                {
+                    nrCorrect += (Questions[i].Answers[j] == Questions[i].Controls[j + 1].ToString()[33..]) ? 1 : 0;
+                }
+            }
+            return nrCorrect;
+        }
+
+        public void SaveAnswers()
+        {
+            List<string> answers = new();
+            for (int i = 0; i < Questions.Count; i++)
+            {
+                for (int j = 1; j < Questions[i].Controls.Count();j++)
+                {
+                    answers.Add(Questions[i].Controls[j].ToString().Substring(33));
+                }
+                Questions[i].Answers = answers;
+                Questions[i].ResetDefinitionBoxes();
+            }
+        }
+
+        public void RenderEdit(StackPanel panel)
         {
             panel.Children.Clear();
             for (int i = 0; i < Questions.Count; i++)
@@ -49,18 +75,50 @@ namespace HoffQuiz
                 }
             }
         }
-    }
 
+        public void RenderQuiz(StackPanel panel)
+        {
+            panel.Children.Clear();
+            for (int i = 0; i < Questions.Count; i++)
+            {
+                string prompt = Questions[i].Controls[0].ToString();
+                prompt = prompt[33..];
+                Label lblPrompt = new Label
+                {
+                    Padding = new Thickness(5),
+                    Margin = new Thickness(0, 20, 0, 5),
+                    Width = 500,
+                    Content = prompt,
+                    HorizontalAlignment = HorizontalAlignment.Center
+                };
+                panel.Children.Add(lblPrompt);
+                for (int j = 1; j < Questions[i].Controls.Count(); j++)
+                {
+                    panel.Children.Add(Questions[i].Controls[j]);
+                }
+            }
+        }
+    }
     class Question
     {
         //Prompt
         //Definition
+        public List<string> Answers { get; set; }
         public Control[] Controls { get; set; }
-        public Control[] QuizControls { get; set; }
         public virtual Control[] Initialize() { return new Control[] { new Control(), new Control() }; }
-        public virtual Control[] GetQuizControls(TextBox textbox) 
-        { 
-            return new Control[] {};
+        public void ResetDefinitionBoxes()
+        {
+            for (int i = 1; i < Controls.Length; i++)
+            {
+                Controls[i] = new TextBox
+                {
+                    Padding = new Thickness(5),
+                    Margin = new Thickness(0, 5, 0, 20),
+                    Width = 450,
+                    Text = "",
+                    HorizontalAlignment = HorizontalAlignment.Center
+                }; ;
+            }
         }
     }
 
@@ -90,19 +148,6 @@ namespace HoffQuiz
             };
             
             return new Control[] { tbxPrompt, tbxDefinition };
-        }
-        public override Control[] GetQuizControls(TextBox prompttbx)
-        {
-            Control[] controls = new Control[3];
-            controls.Append(new Label
-            {
-                Content = prompttbx.Text,
-                Padding = new Thickness(5),
-                Margin = new Thickness(0, 20, 0, 5),
-                Width = 500,
-                HorizontalAlignment = HorizontalAlignment.Center
-            });
-            return controls;
         }
     }
     class MultipleChoice : Question

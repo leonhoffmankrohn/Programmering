@@ -30,7 +30,7 @@ namespace HoffQuiz
 
         private void UpdateCreationInterface()
         {
-            quizzes[creationIndex].Render(stackCreate);
+            quizzes[creationIndex].RenderEdit(stackCreate);
         }
 
         private void ResetCreationInterface()
@@ -68,12 +68,14 @@ namespace HoffQuiz
         {
             creationIndex--;
             if (creationIndex == 0) btnPreviousQuiz.IsEnabled = false;
-            quizzes[creationIndex].Render(stackCreate);
+            quizzes[creationIndex].RenderEdit(stackCreate);
         }
 
         private void btnStartQuiz_Click(object sender, RoutedEventArgs e)
         {
-            quizzes[lviewQuizzes.SelectedIndex].Render(stackQuiz);
+            stackCreate.Children.Clear();
+            quizzes[lviewQuizzes.SelectedIndex].SaveAnswers();
+            quizzes[lviewQuizzes.SelectedIndex].RenderQuiz(stackQuiz);
             tabQuiz.IsEnabled = true;
             tabQuiz.IsSelected = true;
             tabQuizCreate.IsEnabled = false;
@@ -88,6 +90,11 @@ namespace HoffQuiz
                 ResetCreationInterface();
                 UpdateQuizListView();
             }
+        }
+        private void btnEnd_Click(object sender, RoutedEventArgs e)
+        {
+            int nrCorrects = quizzes[lviewQuizzes.SelectedIndex].QuizEnd();
+            tabInfo.Header = "Hoffman:: HS: " + nrCorrects + " HoffPoints";
         }
         private void btnNewSimQ_Click(object sender, RoutedEventArgs e)
         {
@@ -115,5 +122,6 @@ namespace HoffQuiz
             quizzes[creationIndex].NewMathQ();
             UpdateCreationInterface();
         }
+
     }
 }
