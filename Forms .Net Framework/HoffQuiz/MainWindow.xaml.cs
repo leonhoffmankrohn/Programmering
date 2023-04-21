@@ -28,11 +28,13 @@ namespace HoffQuiz
         List<Quiz> quizzes = new List<Quiz>();
         int creationIndex = -1;
 
+        // Updates the create quiz interface with a method from the class at specified(creationindex) index in to a stackbox(stackCreate)
         private void UpdateCreationInterface()
         {
             quizzes[creationIndex].RenderEdit(stackCreate);
         }
 
+        // Resets the creationpage to a null value both in mind and visible values.
         private void ResetCreationInterface()
         {
             creationIndex = -1;
@@ -44,14 +46,15 @@ namespace HoffQuiz
             btnNewMathQ.IsEnabled = false;
         }
 
+        // Updates the list which shows the different quizzes that have been made
         private void UpdateQuizListView()
         {
             lviewQuizzes.ItemsSource = null;
             lviewQuizzes.ItemsSource = quizzes;
         }
 
-
-        private void btnNewQuiz_Click(object sender, RoutedEventArgs e)
+        // Starts the creation of a new quiz, also setting the environment
+        private void NewQuiz()
         {
             quizzes.Add(new Quiz(tbxQuizName.Text));
             creationIndex++;
@@ -59,19 +62,12 @@ namespace HoffQuiz
             btnNewMultQ.IsEnabled = true;
             btnNewPicQ.IsEnabled = true;
             btnNewMathQ.IsEnabled = true;
-            if (creationIndex > 0) btnPreviousQuiz.IsEnabled = true;
             UpdateCreationInterface();
             UpdateQuizListView();
         }
 
-        private void btnPreviousQuiz_Click(object sender, RoutedEventArgs e)
-        {
-            creationIndex--;
-            if (creationIndex == 0) btnPreviousQuiz.IsEnabled = false;
-            quizzes[creationIndex].RenderEdit(stackCreate);
-        }
-
-        private void btnStartQuiz_Click(object sender, RoutedEventArgs e)
+        // Change the visuals to the quizpage where a player does the quiz
+        private void StartQuiz()
         {
             stackCreate.Children.Clear();
             quizzes[lviewQuizzes.SelectedIndex].SaveAnswers();
@@ -82,20 +78,44 @@ namespace HoffQuiz
             tabStart.IsEnabled = false;
         }
 
-        private void btnDeleteQuiz_Click(object sender, RoutedEventArgs e)
+        // Deletes selected quiz in lViewQuizzes
+        private void DeleteQuiz()
         {
-            if (lviewQuizzes.SelectedIndex != -1) 
-            { 
+            
+            if (lviewQuizzes.SelectedIndex != -1)
+            {
                 quizzes.RemoveAt(lviewQuizzes.SelectedIndex);
                 ResetCreationInterface();
                 UpdateQuizListView();
             }
         }
-        private void btnEnd_Click(object sender, RoutedEventArgs e)
+
+        // Ends the quiz and calculate the score.
+        private void EndQuiz()
         {
             int nrCorrects = quizzes[lviewQuizzes.SelectedIndex].QuizEnd();
             tabInfo.Header = "Hoffman:: HS: " + nrCorrects + " HoffPoints";
         }
+
+        private void btnNewQuiz_Click(object sender, RoutedEventArgs e)
+        {
+            NewQuiz();
+        }
+
+        private void btnStartQuiz_Click(object sender, RoutedEventArgs e)
+        {
+            StartQuiz();
+        }
+
+        private void btnDeleteQuiz_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteQuiz();
+        }
+        private void btnEnd_Click(object sender, RoutedEventArgs e)
+        {
+            EndQuiz();
+        }
+
         private void btnNewSimQ_Click(object sender, RoutedEventArgs e)
         {
 

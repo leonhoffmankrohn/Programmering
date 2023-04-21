@@ -42,14 +42,15 @@ namespace HoffQuiz
             int nrCorrect = 0;
             for (int i = 0; i < Questions.Count; i++)
             {
-                for (int j = 0; j < Questions[i].Answers.Count; j++)
-                {
-                    nrCorrect += (Questions[i].Answers[j] == Questions[i].Controls[j + 1].ToString()[33..]) ? 1 : 0;
-                }
+                 //for (int j = 0; j < Questions[i].Answers.Count; j++)
+                 if (Questions[i].Controls[1].ToString()[30..].Length != 1)
+                 if (Questions[i].Answers[i] == Questions[i].Controls[1].ToString()[33..]) nrCorrect++;
+                
             }
             return nrCorrect;
         }
 
+        // Saves the answer for every question in the quiz
         public void SaveAnswers()
         {
             List<string> answers = new();
@@ -57,13 +58,14 @@ namespace HoffQuiz
             {
                 for (int j = 1; j < Questions[i].Controls.Count();j++)
                 {
-                    answers.Add(Questions[i].Controls[j].ToString().Substring(33));
+                    answers.Add(Questions[i].Controls[j].ToString()[33..]);
                 }
                 Questions[i].Answers = answers;
                 Questions[i].ResetDefinitionBoxes();
             }
         }
 
+        // Renders in panel every question with a definition box for the user to fill in both questions and answers
         public void RenderEdit(StackPanel panel)
         {
             panel.Children.Clear();
@@ -76,6 +78,7 @@ namespace HoffQuiz
             }
         }
 
+         // Renders the quiz with saved controls; prompt as label and definition as empty textbox to panel
         public void RenderQuiz(StackPanel panel)
         {
             panel.Children.Clear();
@@ -99,13 +102,16 @@ namespace HoffQuiz
             }
         }
     }
+
+    // Here we create a class for question where we use legacy to create different types of questions. (Questions include answers)
     class Question
     {
-        //Prompt
-        //Definition
+        // Defining virtual and other variables
         public List<string> Answers { get; set; }
         public Control[] Controls { get; set; }
         public virtual Control[] Initialize() { return new Control[] { new Control(), new Control() }; }
+
+        // Here we reset the definition(used after we saved answers), create a textbox in its place in the array. 
         public void ResetDefinitionBoxes()
         {
             for (int i = 1; i < Controls.Length; i++)
@@ -128,6 +134,8 @@ namespace HoffQuiz
         {
             Controls = Initialize();
         }
+
+        // Here we initialize the textboxes for usage, we create the textboxes and store them
         public override Control[] Initialize()
         {
             TextBox tbxPrompt = new TextBox
