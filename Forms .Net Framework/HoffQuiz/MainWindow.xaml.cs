@@ -142,5 +142,10 @@ namespace HoffQuiz
             player.score += quizzes[lviewQuizzes.SelectedIndex].CountCorrect();
             tabInfo.Header = "Hoffman - Score: " + player.score + " HoffPoints";
         }
+
+        private void btnRetry(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

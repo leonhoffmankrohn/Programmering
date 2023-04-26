@@ -46,6 +46,7 @@
                     </ScrollViewer>
                     <Button x:Name="btnQuizEnd" Content="End Quiz" HorizontalAlignment="Left" Margin="712,339,0,0" VerticalAlignment="Top" Click="btnQuizEnd_Click"/>
                     <Button x:Name="btnCorrect" Content="Correct Quiz" HorizontalAlignment="Left" Margin="693,367,0,0" VerticalAlignment="Top" Click="btnCorrect_Click"/>
+                    <Button x:Name="btnRetry" Content="Retry" HorizontalAlignment="Left" Margin="732,309,0,0" VerticalAlignment="Top" Click="btnRetry"/>
                 </Grid>
             </TabItem>
             <TabItem Header="CREATE QUIZ HERE" Name="tabQuizCreate" IsSelected="True" Height="20" VerticalAlignment="Top">
