@@ -8,6 +8,6 @@ namespace HoffQuiz
 {
     class User
     {
-
+        public int score = 0;
     }
 }

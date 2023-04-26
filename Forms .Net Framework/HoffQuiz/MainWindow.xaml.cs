@@ -24,17 +24,17 @@ namespace HoffQuiz
         {
             InitializeComponent();
         }
-        // List<User> users = new List<User>();
+        User player = new User();
         List<Quiz> quizzes = new List<Quiz>();
         int creationIndex = -1;
 
-        // Updates the create quiz interface with a method from the class at specified(creationindex) index in to a stackbox(stackCreate)
+        // Renderar ett quiz till en stackbox, för att skapa eller redigera.
         private void UpdateCreationInterface()
         {
             quizzes[creationIndex].RenderEdit(stackCreate);
         }
 
-        // Resets the creationpage to a null value both in mind and visible values.
+        // Resettar skapandetabben till ursprung/nollställd ny
         private void ResetCreationInterface()
         {
             creationIndex = -1;
@@ -46,14 +46,14 @@ namespace HoffQuiz
             btnNewMathQ.IsEnabled = false;
         }
 
-        // Updates the list which shows the different quizzes that have been made
+        // Updaterar listan med de olika quizzen att välja
         private void UpdateQuizListView()
         {
             lviewQuizzes.ItemsSource = null;
             lviewQuizzes.ItemsSource = quizzes;
         }
 
-        // Starts the creation of a new quiz, also setting the environment
+        // Startar skapandet av quiz och sätter miljön för skapande.
         private void NewQuiz()
         {
             quizzes.Add(new Quiz(tbxQuizName.Text));
@@ -66,7 +66,7 @@ namespace HoffQuiz
             UpdateQuizListView();
         }
 
-        // Change the visuals to the quizpage where a player does the quiz
+        // Ändrar visuellt så att spelaren ser quizzet och kan utföra det på den tabben
         private void StartQuiz()
         {
             stackCreate.Children.Clear();
@@ -78,7 +78,7 @@ namespace HoffQuiz
             tabStart.IsEnabled = false;
         }
 
-        // Deletes selected quiz in lViewQuizzes
+        // Tar bort selekterad i lViewQuizzes
         private void DeleteQuiz()
         {
             
@@ -90,35 +90,21 @@ namespace HoffQuiz
             }
         }
 
-        // Ends the quiz and calculate the score.
-        private void EndQuiz()
-        {
-            int nrCorrects = quizzes[lviewQuizzes.SelectedIndex].QuizEnd();
-            tabInfo.Header = "Hoffman:: HS: " + nrCorrects + " HoffPoints";
-        }
-
+        // -- Här nedan anropas respektive metod för respektive knapp. --
         private void btnNewQuiz_Click(object sender, RoutedEventArgs e)
         {
             NewQuiz();
         }
-
         private void btnStartQuiz_Click(object sender, RoutedEventArgs e)
         {
             StartQuiz();
         }
-
         private void btnDeleteQuiz_Click(object sender, RoutedEventArgs e)
         {
             DeleteQuiz();
         }
-        private void btnEnd_Click(object sender, RoutedEventArgs e)
-        {
-            EndQuiz();
-        }
-
         private void btnNewSimQ_Click(object sender, RoutedEventArgs e)
         {
-
             quizzes[creationIndex].NewSimQ();
             UpdateCreationInterface();
         }
@@ -143,5 +129,18 @@ namespace HoffQuiz
             UpdateCreationInterface();
         }
 
+        // Skriver ut hur mycket poäng man fick och avslutar quizzet
+        private void btnQuizEnd_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("You've got " + quizzes[lviewQuizzes.SelectedIndex].CountCorrect() + " answers right. Congratulations!");
+            
+        }
+
+        // Räknar ut poäng och uppdaterar poängräknaren
+        private void btnCorrect_Click(object sender, RoutedEventArgs e)
+        {
+            player.score += quizzes[lviewQuizzes.SelectedIndex].CountCorrect();
+            tabInfo.Header = "Hoffman - Score: " + player.score + " HoffPoints";
+        }
     }
 }

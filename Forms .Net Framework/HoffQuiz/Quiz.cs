@@ -37,12 +37,11 @@ namespace HoffQuiz
         {
             Questions.Add(new MathQ());
         }
-        public int QuizEnd()
+        public int CountCorrect()
         {
             int nrCorrect = 0;
             for (int i = 0; i < Questions.Count; i++)
             {
-                 //for (int j = 0; j < Questions[i].Answers.Count; j++)
                  if (Questions[i].Controls[1].ToString()[30..].Length != 1)
                  if (Questions[i].Answers[i] == Questions[i].Controls[1].ToString()[33..]) nrCorrect++;
                 
@@ -50,7 +49,7 @@ namespace HoffQuiz
             return nrCorrect;
         }
 
-        // Saves the answer for every question in the quiz
+        // Sparar svaret till varje fråga i quizzet
         public void SaveAnswers()
         {
             List<string> answers = new();
@@ -66,6 +65,7 @@ namespace HoffQuiz
         }
 
         // Renders in panel every question with a definition box for the user to fill in both questions and answers
+        // Renderar rätt frågor och svar till skapandetabben
         public void RenderEdit(StackPanel panel)
         {
             panel.Children.Clear();
@@ -78,14 +78,13 @@ namespace HoffQuiz
             }
         }
 
-         // Renders the quiz with saved controls; prompt as label and definition as empty textbox to panel
+         // Renderar quizzet och ändrar kontrollerna, frågan till en label och svar till en tom textbox
         public void RenderQuiz(StackPanel panel)
         {
             panel.Children.Clear();
             for (int i = 0; i < Questions.Count; i++)
             {
-                string prompt = Questions[i].Controls[0].ToString();
-                prompt = prompt[33..];
+                string prompt = Questions[i].Controls[0].ToString()[33..];
                 Label lblPrompt = new Label
                 {
                     Padding = new Thickness(5),
@@ -103,15 +102,16 @@ namespace HoffQuiz
         }
     }
 
-    // Here we create a class for question where we use legacy to create different types of questions. (Questions include answers)
+    // Här skapar vi en klass som stamm för frågorklassen, den kommer bara innehålla generella variabler och funktion och vi använder arv
+    // för att vidare skapa olika typer av frågor.
     class Question
     {
-        // Defining virtual and other variables
+        // Här definerar vi virtuella och andra variabler
         public List<string> Answers { get; set; }
         public Control[] Controls { get; set; }
         public virtual Control[] Initialize() { return new Control[] { new Control(), new Control() }; }
 
-        // Here we reset the definition(used after we saved answers), create a textbox in its place in the array. 
+        // Här ersätter vi svarskontrollen med en tom textbox.
         public void ResetDefinitionBoxes()
         {
             for (int i = 1; i < Controls.Length; i++)
@@ -135,7 +135,7 @@ namespace HoffQuiz
             Controls = Initialize();
         }
 
-        // Here we initialize the textboxes for usage, we create the textboxes and store them
+        // Här initierar vi kontrollerna för fråga och svar för att kunna spara värden i.
         public override Control[] Initialize()
         {
             TextBox tbxPrompt = new TextBox

@@ -37,13 +37,16 @@
                 </Grid>
             </TabItem>
             <TabItem Header="QUIZ" IsSelected="True" Name="tabQuiz" IsEnabled="False">
-                <ScrollViewer>
-                    <Grid Background="#FFE5E5E5" Height="auto">
-                        <Label x:Name="lblQuizName" Content="HoffTest" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="18"/>
-                        <StackPanel x:Name="stackQuiz"/>
-                        <Button x:Name="btnEnd" Content="Correct Quiz" HorizontalAlignment="Left" Margin="693,367,0,0" VerticalAlignment="Top" Click="btnEnd_Click"/>
-                    </Grid>
-                </ScrollViewer>
+                <Grid>
+                    <ScrollViewer>
+                        <Grid Background="#FFE5E5E5" Height="auto">
+                            <Label x:Name="lblQuizName" Content="HoffTest" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="18"/>
+                            <StackPanel x:Name="stackQuiz"/>
+                        </Grid>
+                    </ScrollViewer>
+                    <Button x:Name="btnQuizEnd" Content="End Quiz" HorizontalAlignment="Left" Margin="712,339,0,0" VerticalAlignment="Top" Click="btnQuizEnd_Click"/>
+                    <Button x:Name="btnCorrect" Content="Correct Quiz" HorizontalAlignment="Left" Margin="693,367,0,0" VerticalAlignment="Top" Click="btnCorrect_Click"/>
+                </Grid>
             </TabItem>
             <TabItem Header="CREATE QUIZ HERE" Name="tabQuizCreate" IsSelected="True" Height="20" VerticalAlignment="Top">
                 <Grid>
@@ -64,7 +67,7 @@
                     <Button x:Name="btnNewMathQ" Content="New Math Question" HorizontalAlignment="Left" Margin="6,369,0,0" VerticalAlignment="Top" Click="btnNewMathQ_Click" IsDefault="True" IsEnabled="False" Grid.Column="1"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tabInfo" Header="Hoffman :: HS:350 HoffPoints" Margin="416,-3,-435,1" IsEnabled="False"/>
+            <TabItem x:Name="tabInfo" Header="Hoffman - Score: 00 HoffPoints" Margin="356,-3,-435,1" IsEnabled="False"/>
         </TabControl>
 
     </Grid>
