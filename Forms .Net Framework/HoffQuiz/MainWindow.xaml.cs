@@ -80,10 +80,21 @@ namespace HoffQuiz
             tabStart.IsEnabled = false;
         }
 
+        // Skriver ut hur mycket poäng man fick och avslutar quizzet
+        private void EndQuiz()
+        {
+            MessageBox.Show("You've got " + quizzes[lviewQuizzes.SelectedIndex].CountCorrect() + " answers right. Congratulations!");
+            users[0].AddScore(quizzes[lviewQuizzes.SelectedIndex].CountCorrect());
+            tabInfo.Header = users[0].Username + " - Score: " + users[0].Score + " HoffPoints";
+            tabStart.IsSelected = true;
+            tabQuiz.IsEnabled = false;
+            tabQuizCreate.IsEnabled = true;
+            tabStart.IsEnabled = true;
+        }
+
         // Tar bort selekterad i lViewQuizzes
         private void DeleteQuiz()
         {
-            
             if (lviewQuizzes.SelectedIndex != -1)
             {
                 quizzes.RemoveAt(lviewQuizzes.SelectedIndex);
@@ -131,28 +142,21 @@ namespace HoffQuiz
             UpdateCreationInterface();
         }
 
-        // Skriver ut hur mycket poäng man fick och avslutar quizzet
         private void btnQuizEnd_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("You've got " + quizzes[lviewQuizzes.SelectedIndex].CountCorrect() + " answers right. Congratulations!");
-            users[0].AddScore(quizzes[lviewQuizzes.SelectedIndex].CountCorrect());
-            tabInfo.Header = users[0].Username + " - Score: " + users[0].Score + " HoffPoints";
-            tabStart.IsSelected = true;
-            tabQuiz.IsEnabled = false;
-            tabQuizCreate.IsEnabled = true;
-            tabStart.IsEnabled = true;
-            
+            EndQuiz();
         }
 
-        // Räknar ut poäng och uppdaterar poängräknaren
-        private void btnCorrect_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("You've got " + quizzes[lviewQuizzes.SelectedIndex].CountCorrect() + " answers right. Congratulations!");
-        }
-
+        // Startar om quizzet
         private void btnTryAgain_Click(object sender, RoutedEventArgs e)
         {
+            StartQuiz();
+        }
 
+        private void btnSignup_Click(object sender, RoutedEventArgs e)
+        {
+            if (tbxPasswordSignup.Text != tbxPassword2Signup.Text) MessageBox.Show("Sorry, the passwords are not the same");
+            // else for (int i = 0; i < users.Count; i++) { if (users[i].Username == tbxUsernameSignup.Text)};
         }
     }
 }
