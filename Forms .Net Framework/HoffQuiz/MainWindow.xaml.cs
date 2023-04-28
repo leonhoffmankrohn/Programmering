@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,13 +21,14 @@ namespace HoffQuiz
     /// </summary>
     public partial class MainWindow : Window
     {
+        List<User> users = new();
+        List<Quiz> quizzes = new List<Quiz>();
+        int creationIndex = -1;
         public MainWindow()
         {
             InitializeComponent();
+            users.Add(new User("Hoffman", "123abc"));
         }
-        User player = new User();
-        List<Quiz> quizzes = new List<Quiz>();
-        int creationIndex = -1;
 
         // Renderar ett quiz till en stackbox, för att skapa eller redigera.
         private void UpdateCreationInterface()
@@ -133,17 +135,22 @@ namespace HoffQuiz
         private void btnQuizEnd_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("You've got " + quizzes[lviewQuizzes.SelectedIndex].CountCorrect() + " answers right. Congratulations!");
+            users[0].AddScore(quizzes[lviewQuizzes.SelectedIndex].CountCorrect());
+            tabInfo.Header = users[0].Username + " - Score: " + users[0].Score + " HoffPoints";
+            tabStart.IsSelected = true;
+            tabQuiz.IsEnabled = false;
+            tabQuizCreate.IsEnabled = true;
+            tabStart.IsEnabled = true;
             
         }
 
         // Räknar ut poäng och uppdaterar poängräknaren
         private void btnCorrect_Click(object sender, RoutedEventArgs e)
         {
-            player.score += quizzes[lviewQuizzes.SelectedIndex].CountCorrect();
-            tabInfo.Header = "Hoffman - Score: " + player.score + " HoffPoints";
+            MessageBox.Show("You've got " + quizzes[lviewQuizzes.SelectedIndex].CountCorrect() + " answers right. Congratulations!");
         }
 
-        private void btnRetry(object sender, RoutedEventArgs e)
+        private void btnTryAgain_Click(object sender, RoutedEventArgs e)
         {
 
         }

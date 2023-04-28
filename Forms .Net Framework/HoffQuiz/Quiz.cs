@@ -12,7 +12,7 @@ namespace HoffQuiz
     class Quiz
     {
         public List<Question> Questions = new();
-        string creator = "SuperUser";
+        string creator = "Hoffman";
         public string Name { set; get; }
         public string QuestionsCount { get { return Questions.Count.ToString(); } }
         public string Creator { get { return creator; } }
