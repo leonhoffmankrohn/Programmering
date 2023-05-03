@@ -82,9 +82,12 @@ namespace HoffQuiz
         public void RenderQuiz(StackPanel panel)
         {
             panel.Children.Clear();
-            for (int i = 0; i < Questions.Count; i++)
+            List<Question> start = Questions;
+            List<Question> questions = RandomateList(start);
+
+            for (int i = 0; i < questions.Count; i++)
             {
-                string prompt = Questions[i].Controls[0].ToString()[33..];
+                string prompt = questions[i].Controls[0].ToString()[33..];
                 Label lblPrompt = new Label
                 {
                     Padding = new Thickness(5),
@@ -94,11 +97,30 @@ namespace HoffQuiz
                     HorizontalAlignment = HorizontalAlignment.Center
                 };
                 panel.Children.Add(lblPrompt);
-                for (int j = 1; j < Questions[i].Controls.Count(); j++)
+                for (int j = 1; j < questions[i].Controls.Count(); j++)
                 {
-                    panel.Children.Add(Questions[i].Controls[j]);
+                    panel.Children.Add(questions[i].Controls[j]);
                 }
             }
+        }
+        private List<Question> RandomateList(List<Question> questions)
+        {
+            /* 
+             * Slumpa ordningen av questions
+             * input är den vanliga listan
+             * output är en questions lista som är slumpad
+             */
+            Random random = new Random();
+            List<Question> result = new List<Question>();
+
+            int loops = Questions.Count;
+            for (int i = 0; i < loops; i++)
+            {
+                int randomNr = random.Next(questions.Count);
+                result.Add(questions[randomNr]);
+                questions.RemoveAt(randomNr);
+            }
+            return result;
         }
     }
 
