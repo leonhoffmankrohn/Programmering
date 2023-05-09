@@ -129,7 +129,7 @@ namespace HoffQuiz
     class Question
     {
         // Här definerar vi virtuella och andra variabler
-        public List<string> Answers { get; set; }
+        public Control AnswerBox { get; set; }
         public Control[] Controls { get; set; }
         public virtual Control[] Initialize() { return new Control[] { new Control(), new Control() }; }
 
