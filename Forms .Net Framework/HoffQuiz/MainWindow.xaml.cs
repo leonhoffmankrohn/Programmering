@@ -78,6 +78,7 @@ namespace HoffQuiz
             stackCreate.Children.Clear();
             quizzes[lviewQuizzes.SelectedIndex].SetMode(Mode.Answer);
             quizzes[lviewQuizzes.SelectedIndex].RenderQuiz(stackQuiz);
+            creationIndex = -1;
             tabQuiz.IsEnabled = true;
             tabQuiz.IsSelected = true;
             tabQuizCreate.IsEnabled = false;

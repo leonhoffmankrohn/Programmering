@@ -25,23 +25,29 @@ namespace HoffQuiz
         {
             Mode origin = Mode;
             if (origin != newmode)
-            switch (newmode)
             {
-                // Ändrar tillbaka så att man kan ändra på frågor och svar.
-                case Mode.Default:
+                Mode = newmode;
+                switch (Mode)
+                {
+                    // Ändrar tillbaka så att man kan ändra på frågor och svar.
+                    case Mode.Default:
+                        for (int i = 0; i < Questions.Count; i++)
+                        {
+                            Questions[i].Controls[1] = Questions[i].DefinitionCopyController;
+                        }
+                        break;
 
-                    break;
+                    // Kopierar definitionenskontrollern och 
+                    case Mode.Answer:
+                        for (int i = 0; i < Questions.Count; i++)
+                        {
+                            Control empty = Questions[i].DefinitionCopyController;
+                            Questions[i].DefinitionCopyController = Questions[i].Controls[1];
+                            Questions[i].Controls[1] = empty;
+                        }
+                        break;
 
-                // Kopierar definitionenskontrollern och 
-                case Mode.Answer:
-                    for (int i = 0; i < Questions.Count; i++)
-                    {
-                        Control empty = Questions[i].DefinitionCopyController;
-                        Questions[i].DefinitionCopyController = Questions[i].Controls[1];
-                        Questions[i].Controls[1] = empty;
-                    }
-                    break;
-
+                }
             }
         }
 
@@ -120,10 +126,7 @@ namespace HoffQuiz
                     HorizontalAlignment = HorizontalAlignment.Center
                 };
                 panel.Children.Add(lblPrompt);
-                for (int j = 1; j < questions[i].Controls.Count(); j++)
-                {
-                    panel.Children.Add(questions[i].Controls[j]);
-                }
+                panel.Children.Add(questions[i].Controls[1]);
             }
         }
         private List<Question> RandomateList(List<Question> questions)
@@ -152,7 +155,14 @@ namespace HoffQuiz
     class Question
     {
         // Här definerar vi virtuella och andra variabler
-        public Control DefinitionCopyController { get; set; }
+        public Control DefinitionCopyController = new TextBox
+            {
+                Padding = new Thickness(5),
+                Margin = new Thickness(0, 5, 0, 20),
+                Width = 450,
+                Text = "",
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
         public Control[] Controls { get; set; }
         public virtual Control[] Initialize() { return new Control[] { new Control(), new Control() }; }
     }
