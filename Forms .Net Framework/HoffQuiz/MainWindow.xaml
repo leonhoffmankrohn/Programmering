@@ -44,6 +44,7 @@
                     <Button x:Name="btnStartQuiz" Grid.Column="1" Content="Start Quiz" HorizontalAlignment="Left" Margin="616,375,0,0" VerticalAlignment="Top" Click="btnStartQuiz_Click"/>
                     <Button x:Name="btnDeleteQuiz" Grid.Column="1" Content="Delete Selected" HorizontalAlignment="Left" Margin="525,375,0,0" VerticalAlignment="Top" Click="btnDeleteQuiz_Click"/>
                     <Button x:Name="btnLogout" Grid.Column="1" Content="SIGNOUT" HorizontalAlignment="Left" Margin="187,2,0,0" VerticalAlignment="Top"/>
+                    <Button x:Name="btnEditQuiz" Grid.Column="1" Content="Edit Selected" HorizontalAlignment="Left" Margin="447,375,0,0" VerticalAlignment="Top" Click="btnEditQuiz_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="QUIZ" IsSelected="True" Name="tabQuiz" IsEnabled="False">

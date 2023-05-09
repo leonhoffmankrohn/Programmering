@@ -55,15 +55,19 @@ namespace HoffQuiz
             lviewQuizzes.ItemsSource = quizzes;
         }
 
-        // Startar skapandet av quiz och sätter miljön för skapande.
+        // Startar skapandet/redigeringen av ett quiz och sätter miljön för skapande.
         private void NewQuiz()
         {
-            quizzes.Add(new Quiz(tbxQuizName.Text));
-            creationIndex++;
+            if (creationIndex == -1)
+            {
+                quizzes.Add(new Quiz(tbxQuizName.Text));
+                creationIndex++;
+            }
             btnNewSimQ.IsEnabled = true;
             btnNewMultQ.IsEnabled = true;
             btnNewPicQ.IsEnabled = true;
             btnNewMathQ.IsEnabled = true;
+            tabQuizCreate.IsSelected = true;
             UpdateCreationInterface();
             UpdateQuizListView();
         }
@@ -72,7 +76,7 @@ namespace HoffQuiz
         private void StartQuiz()
         {
             stackCreate.Children.Clear();
-            quizzes[lviewQuizzes.SelectedIndex].SaveAnswers();
+            quizzes[lviewQuizzes.SelectedIndex].SetMode(Mode.Answer);
             quizzes[lviewQuizzes.SelectedIndex].RenderQuiz(stackQuiz);
             tabQuiz.IsEnabled = true;
             tabQuiz.IsSelected = true;
@@ -157,6 +161,13 @@ namespace HoffQuiz
         {
             if (tbxPasswordSignup.Text != tbxPassword2Signup.Text) MessageBox.Show("Sorry, the passwords are not the same");
             // else for (int i = 0; i < users.Count; i++) { if (users[i].Username == tbxUsernameSignup.Text)};
+        }
+
+        private void btnEditQuiz_Click(object sender, RoutedEventArgs e)
+        {
+            creationIndex = lviewQuizzes.SelectedIndex;
+            quizzes[creationIndex].SetMode(Mode.Default);
+            NewQuiz();
         }
     }
 }

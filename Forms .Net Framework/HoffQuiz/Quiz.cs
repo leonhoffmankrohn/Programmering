@@ -9,13 +9,41 @@ using System.Windows.Controls;
 
 namespace HoffQuiz
 {
+    enum Mode {Answer, Default}
+    
     class Quiz
     {
         public List<Question> Questions = new();
         string creator = "Hoffman";
+        public Mode Mode = Mode.Default;
         public string Name { set; get; }
         public string QuestionsCount { get { return Questions.Count.ToString(); } }
         public string Creator { get { return creator; } }
+
+        // Ändrar controllers till frågorna så att när de renderas sä renderas de med rätt saker och inte visar svaret när det inte ska visas osv.
+        public void SetMode(Mode newmode)
+        {
+            Mode origin = Mode;
+            if (origin != newmode)
+            switch (newmode)
+            {
+                // Ändrar tillbaka så att man kan ändra på frågor och svar.
+                case Mode.Default:
+
+                    break;
+
+                // Kopierar definitionenskontrollern och 
+                case Mode.Answer:
+                    for (int i = 0; i < Questions.Count; i++)
+                    {
+                        Control empty = Questions[i].DefinitionCopyController;
+                        Questions[i].DefinitionCopyController = Questions[i].Controls[1];
+                        Questions[i].Controls[1] = empty;
+                    }
+                    break;
+
+            }
+        }
 
         public Quiz(string _name)
         {
@@ -43,7 +71,7 @@ namespace HoffQuiz
             for (int i = 0; i < Questions.Count; i++)
             {
                  if (Questions[i].Controls[1].ToString()[30..].Length != 1)
-                 if (Questions[i].Answers[i] == Questions[i].Controls[1].ToString()[33..]) nrCorrect++;
+                 if (Questions[i].DefinitionCopyController.ToString()[33..] == Questions[i].Controls[1].ToString()[33..]) nrCorrect++;
                 
             }
             return nrCorrect;
@@ -55,12 +83,7 @@ namespace HoffQuiz
             List<string> answers = new();
             for (int i = 0; i < Questions.Count; i++)
             {
-                for (int j = 1; j < Questions[i].Controls.Count();j++)
-                {
-                    answers.Add(Questions[i].Controls[j].ToString()[33..]);
-                }
-                Questions[i].Answers = answers;
-                Questions[i].ResetDefinitionBoxes();
+                Questions[i].DefinitionCopyController = Questions[i].Controls[1];
             }
         }
 
@@ -129,25 +152,9 @@ namespace HoffQuiz
     class Question
     {
         // Här definerar vi virtuella och andra variabler
-        public Control AnswerBox { get; set; }
+        public Control DefinitionCopyController { get; set; }
         public Control[] Controls { get; set; }
         public virtual Control[] Initialize() { return new Control[] { new Control(), new Control() }; }
-
-        // Här ersätter vi svarskontrollen med en tom textbox.
-        public void ResetDefinitionBoxes()
-        {
-            for (int i = 1; i < Controls.Length; i++)
-            {
-                Controls[i] = new TextBox
-                {
-                    Padding = new Thickness(5),
-                    Margin = new Thickness(0, 5, 0, 20),
-                    Width = 450,
-                    Text = "",
-                    HorizontalAlignment = HorizontalAlignment.Center
-                }; ;
-            }
-        }
     }
 
     class Simple : Question
