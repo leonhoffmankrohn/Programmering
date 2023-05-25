@@ -15,23 +15,6 @@
                         <ColumnDefinition Width="6*"/>
                         <ColumnDefinition Width="31*"/>
                     </Grid.ColumnDefinitions>
-                    <TabControl Margin="0,0,439,0" Grid.ColumnSpan="2">
-                        <TabItem x:Name="tabSignup" Header="SIGN-UP" IsSelected="True">
-                            <Grid Background="#FFE5E5E5">
-                                <Button x:Name="btnSignup" Content="SIGNUP" HorizontalAlignment="Left" Margin="160,305,0,0" VerticalAlignment="Top" Click="btnSignup_Click"/>
-                                <TextBox x:Name="tbxUsernameSignup" HorizontalAlignment="Left" Margin="84,151,0,0" TextWrapping="Wrap" Text="&lt;Username&gt;" VerticalAlignment="Top" MinWidth="120"/>
-                                <TextBox x:Name="tbxPasswordSignup" HorizontalAlignment="Left" Margin="84,179,0,0" TextWrapping="Wrap" Text="&lt;Password&gt;" VerticalAlignment="Top" MinWidth="120"/>
-                                <TextBox x:Name="tbxPassword2Signup" HorizontalAlignment="Left" Margin="84,207,0,0" TextWrapping="Wrap" Text="&lt;Password again&gt;" VerticalAlignment="Top" MinWidth="120"/>
-                            </Grid>
-                        </TabItem>
-                        <TabItem x:Name="tabLogin" Header="LOGIN" IsSelected="True">
-                            <Grid Background="#FFE5E5E5">
-                                <Button x:Name="btnLogin" Content="Login" HorizontalAlignment="Left" Margin="155,248,0,0" VerticalAlignment="Top"/>
-                                <TextBox x:Name="tbxUsername" HorizontalAlignment="Left" Margin="75,131,0,0" TextWrapping="Wrap" Text="&lt;Username&gt;" VerticalAlignment="Top" MinWidth="120"/>
-                                <TextBox x:Name="tbxPassword" HorizontalAlignment="Left" Margin="75,160,0,0" TextWrapping="Wrap" Text="&lt;Password&gt;" VerticalAlignment="Top" MinWidth="120"/>
-                            </Grid>
-                        </TabItem>
-                    </TabControl>
                     <ListView x:Name="lviewQuizzes" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="282,0,0,51" Grid.Column="1" Width="400">
                         <ListView.View>
                             <GridView>
@@ -43,7 +26,6 @@
                     </ListView>
                     <Button x:Name="btnStartQuiz" Grid.Column="1" Content="Start Quiz" HorizontalAlignment="Left" Margin="616,375,0,0" VerticalAlignment="Top" Click="btnStartQuiz_Click"/>
                     <Button x:Name="btnDeleteQuiz" Grid.Column="1" Content="Delete Selected" HorizontalAlignment="Left" Margin="525,375,0,0" VerticalAlignment="Top" Click="btnDeleteQuiz_Click"/>
-                    <Button x:Name="btnLogout" Grid.Column="1" Content="SIGNOUT" HorizontalAlignment="Left" Margin="187,2,0,0" VerticalAlignment="Top"/>
                     <Button x:Name="btnEditQuiz" Grid.Column="1" Content="Edit Selected" HorizontalAlignment="Left" Margin="447,375,0,0" VerticalAlignment="Top" Click="btnEditQuiz_Click"/>
                 </Grid>
             </TabItem>
