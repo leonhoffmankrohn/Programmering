@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -46,14 +47,14 @@ namespace HoffQuiz
                             Questions[i].Controls[1] = empty;
                         }
                         break;
-
                 }
             }
         }
 
-        public Quiz(string _name)
+        public Quiz(string _name, string _creator)
         {
             Name = _name;
+            creator = _creator;
         }
         public void NewSimQ()
         {
@@ -98,6 +99,9 @@ namespace HoffQuiz
         public void RenderEdit(StackPanel panel)
         {
             panel.Children.Clear();
+
+            SetMode(Mode.Default);
+
             for (int i = 0; i < Questions.Count; i++)
             {
                 for (int j = 0; j < Questions[i].Controls.Count(); j++)
@@ -111,25 +115,21 @@ namespace HoffQuiz
         public void RenderQuiz(StackPanel panel)
         {
             panel.Children.Clear();
-            List<Question> start = Questions;
-            List<Question> questions = RandomateList(start);
 
-            for (int i = 0; i < questions.Count; i++)
+            List<Question> start = new List<Question> (Questions);
+            List<Question> output = RandomateList(start);
+
+            SetMode(Mode.Answer);
+
+            for (int i = 0; i < output.Count; i++)
             {
-                string prompt = questions[i].Controls[0].ToString()[33..];
-                Label lblPrompt = new Label
+                for (int j = 0; j < output[i].Controls.Count(); j++)
                 {
-                    Padding = new Thickness(5),
-                    Margin = new Thickness(0, 20, 0, 5),
-                    Width = 500,
-                    Content = prompt,
-                    HorizontalAlignment = HorizontalAlignment.Center
-                };
-                panel.Children.Add(lblPrompt);
-                panel.Children.Add(questions[i].Controls[1]);
+                    panel.Children.Add(output[i].Controls[j]);
+                }
             }
         }
-        private List<Question> RandomateList(List<Question> questions)
+        private List<Question> RandomateList(List<Question> input)
         {
             /* 
              * Slumpa ordningen av questions
@@ -140,18 +140,20 @@ namespace HoffQuiz
             List<Question> result = new List<Question>();
 
             int loops = Questions.Count;
-            for (int i = 0; i < loops; i++)
+            for (int i = loops; i > 0; i--)
             {
-                int randomNr = random.Next(questions.Count);
-                result.Add(questions[randomNr]);
-                questions.RemoveAt(randomNr);
+                int randomNr = random.Next(i);
+                result.Add(input[randomNr]);
+                input.RemoveAt(randomNr);
             }
             return result;
         }
     }
 
-    // Här skapar vi en klass som stamm för frågorklassen, den kommer bara innehålla generella variabler och funktion och vi använder arv
-    // för att vidare skapa olika typer av frågor.
+    /* Här skapar vi en klass som stamm för frågorklassen, den kommer
+     * bara innehålla generella variabler och funktioner och vi använder arv
+     * för att vidare skapa olika typer av frågor.
+    */
     class Question
     {
         // Här definerar vi virtuella och andra variabler

@@ -27,7 +27,10 @@ namespace HoffQuiz
         public MainWindow()
         {
             InitializeComponent();
-            users.Add(new User("Hoffman", "123abc"));
+            users.Add(new User("Player 1"));
+            users.Add(new User("Player 2"));
+            users.Add(new User("Player 3"));
+            users.Add(new User("Player 4"));
         }
 
         // Renderar ett quiz till en stackbox, för att skapa eller redigera.
@@ -39,7 +42,7 @@ namespace HoffQuiz
         // Resettar skapandetabben till ursprung/nollställd ny
         private void ResetCreationInterface()
         {
-            creationIndex = -1;
+            creationIndex = quizzes.Count;
             stackCreate.Children.Clear();
             tbxQuizName.Text = "Quizname";
             btnNewSimQ.IsEnabled = false;
@@ -60,8 +63,8 @@ namespace HoffQuiz
         {
             if (creationIndex == -1)
             {
-                quizzes.Add(new Quiz(tbxQuizName.Text));
-                creationIndex++;
+                quizzes.Add(new Quiz(tbxQuizName.Text, users[cbxUser.SelectedIndex].Username));
+                creationIndex = quizzes.Count-1;
             }
             btnNewSimQ.IsEnabled = true;
             btnNewMultQ.IsEnabled = true;
@@ -76,8 +79,9 @@ namespace HoffQuiz
         private void StartQuiz()
         {
             stackCreate.Children.Clear();
-            quizzes[lviewQuizzes.SelectedIndex].SetMode(Mode.Answer);
-            quizzes[lviewQuizzes.SelectedIndex].RenderQuiz(stackQuiz);
+            Quiz currentQuiz = quizzes[lviewQuizzes.SelectedIndex];
+            currentQuiz.SetMode(Mode.Answer);
+            currentQuiz.RenderQuiz(stackQuiz);
             creationIndex = -1;
             tabQuiz.IsEnabled = true;
             tabQuiz.IsSelected = true;
@@ -88,9 +92,11 @@ namespace HoffQuiz
         // Skriver ut hur mycket poäng man fick och avslutar quizzet
         private void EndQuiz()
         {
-            MessageBox.Show("You've got " + quizzes[lviewQuizzes.SelectedIndex].CountCorrect() + " answers right. Congratulations!");
-            users[0].AddScore(quizzes[lviewQuizzes.SelectedIndex].CountCorrect());
-            tabInfo.Header = users[0].Username + " - Score: " + users[0].Score + " HoffPoints";
+            int score = quizzes[lviewQuizzes.SelectedIndex].CountCorrect();
+            if (score != 0) MessageBox.Show("You've got " + score + " answers right. Congratulations!");
+            else MessageBox.Show("No answers right, better luck next time!");
+            users[cbxUser.SelectedIndex].AddScore(score, lviewQuizzes.SelectedIndex);
+            tabInfo.Header = users[cbxUser.SelectedIndex].Username + " - HighScore: " + users[cbxUser.SelectedIndex] + " corrects";
             tabStart.IsSelected = true;
             tabQuiz.IsEnabled = false;
             tabQuizCreate.IsEnabled = true;
@@ -158,17 +164,21 @@ namespace HoffQuiz
             StartQuiz();
         }
 
-        private void btnSignup_Click(object sender, RoutedEventArgs e)
-        {
-            if (tbxPasswordSignup.Text != tbxPassword2Signup.Text) MessageBox.Show("Sorry, the passwords are not the same");
-            // else for (int i = 0; i < users.Count; i++) { if (users[i].Username == tbxUsernameSignup.Text)};
-        }
-
         private void btnEditQuiz_Click(object sender, RoutedEventArgs e)
         {
             creationIndex = lviewQuizzes.SelectedIndex;
             quizzes[creationIndex].SetMode(Mode.Default);
             NewQuiz();
+        }
+
+        private void cbxUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbxUser.IsEnabled)
+            { 
+                tabInfo.Header = users[cbxUser.SelectedIndex].Username + " - HighScore: " + 0 + " Corrects"; 
+                ResetCreationInterface();
+            }
+            else cbxUser.IsEnabled = true;
         }
     }
 }

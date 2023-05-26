@@ -15,7 +15,7 @@
                         <ColumnDefinition Width="6*"/>
                         <ColumnDefinition Width="31*"/>
                     </Grid.ColumnDefinitions>
-                    <ListView x:Name="lviewQuizzes" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="282,0,0,51" Grid.Column="1" Width="400">
+                    <ListView x:Name="lviewQuizzes" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,0,0,51" Grid.ColumnSpan="2">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Quizname" Width="125" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
@@ -24,9 +24,16 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button x:Name="btnStartQuiz" Grid.Column="1" Content="Start Quiz" HorizontalAlignment="Left" Margin="616,375,0,0" VerticalAlignment="Top" Click="btnStartQuiz_Click"/>
-                    <Button x:Name="btnDeleteQuiz" Grid.Column="1" Content="Delete Selected" HorizontalAlignment="Left" Margin="525,375,0,0" VerticalAlignment="Top" Click="btnDeleteQuiz_Click"/>
-                    <Button x:Name="btnEditQuiz" Grid.Column="1" Content="Edit Selected" HorizontalAlignment="Left" Margin="447,375,0,0" VerticalAlignment="Top" Click="btnEditQuiz_Click"/>
+                    <Button x:Name="btnStartQuiz" Grid.Column="1" Content="Start Quiz" HorizontalAlignment="Left" Margin="605,375,0,0" VerticalAlignment="Top" Click="btnStartQuiz_Click"/>
+                    <Button x:Name="btnDeleteQuiz" Grid.Column="1" Content="Delete Selected" HorizontalAlignment="Left" Margin="514,375,0,0" VerticalAlignment="Top" Click="btnDeleteQuiz_Click"/>
+                    <Button x:Name="btnEditQuiz" Grid.Column="1" Content="Edit Selected" HorizontalAlignment="Left" Margin="436,375,0,0" VerticalAlignment="Top" Click="btnEditQuiz_Click"/>
+                    <ComboBox x:Name="cbxUser" Grid.Column="1" HorizontalAlignment="Left" Margin="19,370,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" SelectionChanged="cbxUser_SelectionChanged" IsEnabled="False">
+                        <ComboBoxItem Content="Player 1"/>
+                        <ComboBoxItem Content="Player 2"/>
+                        <ComboBoxItem Content="Player 3"/>
+                        <ComboBoxItem Content="Player 4"/>
+                    </ComboBox>
+                    <Label x:Name="lblPlayerSelected" Content="Player Selected:" HorizontalAlignment="Left" Margin="43,370,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
             <TabItem Header="QUIZ" IsSelected="True" Name="tabQuiz" IsEnabled="False">
@@ -60,7 +67,7 @@
                     <Button x:Name="btnNewMathQ" Content="New Math Question" HorizontalAlignment="Left" Margin="6,369,0,0" VerticalAlignment="Top" Click="btnNewMathQ_Click" IsDefault="True" IsEnabled="False" Grid.Column="1"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tabInfo" Header="Hoffman - Score: 00 HoffPoints" Margin="356,-3,-435,1" IsEnabled="False"/>
+            <TabItem x:Name="tabInfo" Header="Player 1 - HighScore: 0 Corrects" Margin="356,-3,-435,1" IsEnabled="False"/>
         </TabControl>
 
     </Grid>
