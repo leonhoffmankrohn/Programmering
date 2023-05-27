@@ -23,7 +23,8 @@ namespace HoffQuiz
         public string QuestionsCount { get { return Questions.Count.ToString(); } }
         public string Creator { get { return creator; } }
 
-        // Ändrar controllers till frågorna så att när de renderas sä renderas de med rätt saker och inte visar svaret när det inte ska visas osv.
+        // Här skiftar vi Mode och ändrar också så att frågorna får tomma svarsrutor för spelaren att fylla i.
+        // För MultipleChoiceQ sparas och ändras visuellt val samt i värdena.
         public void SetMode(Mode newmode)
         {
             Mode origin = Mode;
@@ -35,13 +36,26 @@ namespace HoffQuiz
                     //Innan: Controls är svaren, spareControllers är de riktiga definitionerna
                     //Göra: Controls blir spareControllers(Definitioner), spareControlls blir nollade
                     case Mode.Default:
-                        for (int i = 0; i < Questions.Count; i++)
+                        foreach (Question q in Questions)
                         {
-                            Questions[i].Controls[0].IsEnabled = true;
-                            for (int j = 1; j < Questions[i].Controls.Count(); j++)
+                            q.Controls[0].IsEnabled = true;
+                            if (q.Controls.Count() == 2)
                             {
-                                Questions[i].Controls[j] = Questions[i].spareControllers[j-1];
-                                Questions[i].spareControllers[j-1] = Questions[i].PlainControler();
+                                for (int j = 1; j < q.Controls.Count(); j++)
+                                {
+                                    q.Controls[j] = q.spareControllers[j-1];
+                                    q.spareControllers[j-1] = q.PlainControler();
+                                }
+                            }
+                            else
+                            {
+                                for (int j = 1; j < q.Controls.Count(); j++)
+                                {
+                                    if (q.correctAnswers[j-1]) q.Controls[j].BorderThickness = new Thickness(5);
+                                    else q.Controls[j].BorderThickness = new Thickness(1);
+                                }
+                                foreach (TextBox tbx in q.Controls) tbx.IsReadOnly = false;
+                                q.mode = Mode.Default;
                             }
                         }
                         break;
@@ -49,18 +63,26 @@ namespace HoffQuiz
                     // Innan: Controls är de riktiga svaren(Definitioner), spareControllers är nollad 
                     // Göra: Nolla Controls, spareControllers blir de riktiga svaren från Controls
                     case Mode.Answer:
-                        for (int i = 0; i < Questions.Count; i++)
+                        foreach (Question q in Questions)
                         {
-                            Questions[i].Controls[0].IsEnabled = false;
-                            for (int j = 1; j < Questions[i].Controls.Count(); j++)
+                            q.Controls[0].IsEnabled = false;
+                            if (q.Controls.Count() == 2) 
                             {
-                                Questions[i].spareControllers[j - 1] = Questions[i].Controls[j];
-                                Questions[i].Controls[j] = Questions[i].PlainControler();
+                                for (int j = 1; j < q.Controls.Count(); j++)
+                                {
+                                    q.spareControllers[j - 1] = q.Controls[j];
+                                    q.Controls[j] = q.PlainControler();
+                                }
                             }
-                            if (Questions[i].Controls.Count() > 2)
+                            else
                             {
-                                Questions[i].selectedAnswers = new() { false, false, false };
-                                foreach (Control ctr in Questions[i].Controls) ctr.IsEnabled = false;
+                                q.selectedAnswers = new() { false, false, false };
+                                for (int j = 1; j < q.Controls.Count(); j++)
+                                {
+                                    q.Controls[j].BorderThickness = new Thickness(1);
+                                }
+                                foreach (TextBox tbx in q.Controls) tbx.IsReadOnly = true;
+                                q.mode = Mode.Answer;
                             }
                         }
                         break;
@@ -82,29 +104,27 @@ namespace HoffQuiz
             Questions.Add(new MultipleChoice());
         }
 
-        //Resultatberäkningen, här överänsstämmer vi svaren med igentliga svaren.
+        //Resultatberäkningen, här överänsstämmer de skrivna svaren med rätta svaren.
         public int CountCorrect()
         {
             int nrCorrect = 0;
-            for (int i = 0; i < Questions.Count; i++)
+            
+            foreach (Question q in Questions)
             {
-                 if ((Questions[i].Controls[1].ToString()[30..].Length != 1) && (Questions[i].Controls[0].ToString()[30..].Length != 1))
+                if (q.Controls.Count() == 2)
                 {
-                    if (Questions[i].Controls.Count() > 2)
-                    {
-
-                    }
-
-
-                 if (Questions[i].DefinitionCopyController.ToString()[33..] == Questions[i].Controls[1].ToString()[33..]) nrCorrect++;
+                    nrCorrect += (q.Controls[1].Text == q.spareControllers[0].Text) ? 1 : 0;
                 }
-                
+                else
+                {
+                    nrCorrect += (q.correctAnswers[0] == q.selectedAnswers[0] && q.correctAnswers[1] == q.selectedAnswers[1] && q.correctAnswers[2] == q.selectedAnswers[2]) ? 1 : 0;
+                }
             }
+
             return nrCorrect;
         }
 
-        // Renders in panel every question with a definition box for the user to fill in both questions and answers
-        // Renderar rätt frågor och svar till skapandetabben
+        // Renderar alla textboxar
         public void RenderEdit(StackPanel panel)
         {
             panel.Children.Clear();
@@ -120,7 +140,7 @@ namespace HoffQuiz
             }
         }
 
-         // Renderar quizzet och ändrar kontrollerna, frågan till en label och svar till en tom textbox
+         // Renderar quizzet med slumpad ordning
         public void RenderQuiz(StackPanel panel)
         {
             panel.Children.Clear();
@@ -136,13 +156,10 @@ namespace HoffQuiz
                 }
             }
         }
+
+        // slumpar ordningen av vad man skickar in
         private List<Question> RandomateList(List<Question> input)
         {
-            /* 
-             * Slumpa ordningen av questions
-             * input är den vanliga listan
-             * output är en questions lista som är slumpad
-             */
             Random random = new Random();
             List<Question> result = new List<Question>();
 
@@ -165,8 +182,9 @@ namespace HoffQuiz
     {
         public List<bool> correctAnswers = new List<bool>() { false, false, false };
         public List<bool> selectedAnswers = new List<bool>() { false, false, false };
-        // Här definerar vi virtuella och andra variabler
-        public Control PlainControler()
+
+        public Mode mode;
+        public TextBox PlainControler()
         {
             return new TextBox
             {
@@ -177,7 +195,7 @@ namespace HoffQuiz
                 HorizontalAlignment = HorizontalAlignment.Center
             };
         }
-        public Control DefinitionCopyController = new TextBox
+        public TextBox DefinitionCopyController = new TextBox
             {
                 Padding = new Thickness(5),
                 Margin = new Thickness(0, 5, 0, 20),
@@ -185,22 +203,22 @@ namespace HoffQuiz
                 Text = "",
                 HorizontalAlignment = HorizontalAlignment.Center
             };
-        public List<Control> spareControllers;
-        public Control[] Controls { get; set; }
+        public List<TextBox> spareControllers;
+        public TextBox[] Controls { get; set; }
         public virtual Control[] Initialize() { return new Control[] { new Control(), new Control() }; }
     }
 
+    // En simpel fråga med ett svar härstammar från klassen Question
     class Simple : Question
     {
         public Simple()
         {
             Controls = Initialize();
 
-            spareControllers = new List<Control>() { PlainControler() };
+            spareControllers = new List<TextBox>() { PlainControler() };
         }
 
-        // Här initierar vi kontrollerna för fråga och svar för att kunna spara värden i.
-        public override Control[] Initialize()
+        public override TextBox[] Initialize()
         {
             TextBox tbxPrompt = new TextBox
             {
@@ -219,44 +237,21 @@ namespace HoffQuiz
                 HorizontalAlignment = HorizontalAlignment.Center
             };
             
-            return new Control[] { tbxPrompt, tbxDefinition };
+            return new TextBox[] { tbxPrompt, tbxDefinition };
         }
     }
+
+    // En alternativfråga med en fråga och 3 olika alternativ, där du väljer själv vilka som är rätt
     class MultipleChoice : Question
     {
         public MultipleChoice()
         {
-            spareControllers = new List<Control>();
-            for (int i = 0; i < 3; i++) 
-            { 
-                spareControllers.Add(PlainControler());
-            }
-            spareControllers[0].MouseDoubleClick += answerClicked1;
-            spareControllers[1].MouseDoubleClick += answerClicked2;
-            spareControllers[2].MouseDoubleClick += answerClicked3;
-
+            mode = Mode.Default;
             Controls = Initialize();
         }
-        private void answerClicked1(object sender, System.Windows.Input.MouseButtonEventArgs e) { QuizzerSelect(1); }
-        private void answerClicked2(object sender, System.Windows.Input.MouseButtonEventArgs e) { QuizzerSelect(2); }
-        private void answerClicked3(object sender, System.Windows.Input.MouseButtonEventArgs e) { QuizzerSelect(3); }
 
-        private void QuizzerSelect(int index)
-        {
-            Control ctr = Controls[index];
-            if (ctr.BorderThickness == new Thickness(1))
-            {
-                ctr.BorderThickness = new Thickness(5);
-                selectedAnswers[index - 1] = true;
-            }
-            else
-            {
-                ctr.BorderThickness = new Thickness(1);
-                selectedAnswers[index - 1] = false;
-            }
-        }
-
-        public override Control[] Initialize()
+        // Sätter en definition för Controls
+        public override TextBox[] Initialize()
         {
             TextBox tbxPrompt = new TextBox
             {
@@ -295,24 +290,44 @@ namespace HoffQuiz
             tbxDefinition2.MouseDoubleClick += def2Alternativ_down;
             tbxDefinition3.MouseDoubleClick += def3Alternativ_down;
 
-            return new Control[] { tbxPrompt, tbxDefinition1, tbxDefinition2, tbxDefinition3 };
+            return new TextBox[] { tbxPrompt, tbxDefinition1, tbxDefinition2, tbxDefinition3 };
         }
+
+        // Dessa anropas när dubbeltryck sker på ett svarsalternativ som sedan "markerar" och sparar markerad i minnet
         private void def1Alternativ_down(object sender, System.Windows.Input.MouseButtonEventArgs e) { ChooseAnswered(1); }
         private void def2Alternativ_down(object sender, System.Windows.Input.MouseButtonEventArgs e) { ChooseAnswered(2); }
         private void def3Alternativ_down(object sender, System.Windows.Input.MouseButtonEventArgs e) { ChooseAnswered(3); }
 
+        // Markerar med borderthickness och i minnet beroende på vad den var innan och om läget är svar(Mode.Answer) eller skapa(Mode.Default)
         private void ChooseAnswered(int index)
         {
             Control ctr = Controls[index];
-            if (ctr.BorderThickness == new Thickness(1))
+            
+            if ( mode == Mode.Answer)
             {
-                ctr.BorderThickness = new Thickness(5);
-                correctAnswers[index - 1] = true;
+                if (ctr.BorderThickness == new Thickness(1))
+                {
+                    ctr.BorderThickness = new Thickness(5);
+                    selectedAnswers[index - 1] = true;
+                }
+                else
+                {
+                    ctr.BorderThickness = new Thickness(1);
+                    selectedAnswers[index - 1] = false;
+                }
             }
             else
             {
-                ctr.BorderThickness = new Thickness(1);
-                correctAnswers[index - 1] = false;
+                if (ctr.BorderThickness == new Thickness(1))
+                {
+                    ctr.BorderThickness = new Thickness(5);
+                    correctAnswers[index - 1] = true;
+                }
+                else
+                {
+                    ctr.BorderThickness = new Thickness(1);
+                    correctAnswers[index - 1] = false;
+                }
             }
         }
 

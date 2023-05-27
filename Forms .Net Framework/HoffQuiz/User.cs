@@ -16,7 +16,7 @@ namespace HoffQuiz
             Username = _username;
         }
 
-        // Här lägger vi till i Highscore
+        // Här lägger vi till correct i Highscore på highscore som corresponderar till rätt quiz
         public void AddScore(int correct, int quiz) 
         {
             if (Highscore.Count < quiz+1)
