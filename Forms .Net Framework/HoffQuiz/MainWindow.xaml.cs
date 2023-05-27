@@ -36,6 +36,7 @@ namespace HoffQuiz
         // Renderar ett quiz till en stackbox, för att skapa eller redigera.
         private void UpdateCreationInterface()
         {
+            stackQuiz.Children.Clear();
             quizzes[creationIndex].RenderEdit(stackCreate);
         }
 
@@ -82,7 +83,6 @@ namespace HoffQuiz
             Quiz currentQuiz = quizzes[lviewQuizzes.SelectedIndex];
             currentQuiz.SetMode(Mode.Answer);
             currentQuiz.RenderQuiz(stackQuiz);
-            creationIndex = -1;
             tabQuiz.IsEnabled = true;
             tabQuiz.IsSelected = true;
             tabQuizCreate.IsEnabled = false;
@@ -93,14 +93,19 @@ namespace HoffQuiz
         private void EndQuiz()
         {
             int score = quizzes[lviewQuizzes.SelectedIndex].CountCorrect();
-            if (score != 0) MessageBox.Show("You've got " + score + " answers right. Congratulations!");
-            else MessageBox.Show("No answers right, better luck next time!");
             users[cbxUser.SelectedIndex].AddScore(score, lviewQuizzes.SelectedIndex);
-            tabInfo.Header = users[cbxUser.SelectedIndex].Username + " - HighScore: " + users[cbxUser.SelectedIndex] + " corrects";
+            if (score != 0)
+            {
+                if (score >= users[cbxUser.SelectedIndex].Highscore[lviewQuizzes.SelectedIndex]) MessageBox.Show("You've got " + score + " answers right. Highscore!");
+                else MessageBox.Show("You've got " + score + " answers right. Try beating your personal record of " + users[cbxUser.SelectedIndex].Highscore[lviewQuizzes.SelectedIndex] + " !");
+            }
+            else MessageBox.Show("No answers right, better luck next time!");
+            tabInfo.Header = users[cbxUser.SelectedIndex].Username + " - HighScore: " + users[cbxUser.SelectedIndex].Highscore[lviewQuizzes.SelectedIndex] + " corrects";
             tabStart.IsSelected = true;
             tabQuiz.IsEnabled = false;
             tabQuizCreate.IsEnabled = true;
             tabStart.IsEnabled = true;
+            creationIndex = -1;
         }
 
         // Tar bort selekterad i lViewQuizzes
@@ -129,12 +134,15 @@ namespace HoffQuiz
         }
         private void btnNewSimQ_Click(object sender, RoutedEventArgs e)
         {
+            foreach (User user in users) user.Highscore.Add(new());
             quizzes[creationIndex].NewSimQ();
             UpdateCreationInterface();
         }
 
         private void btnNewMultQ_Click(object sender, RoutedEventArgs e)
         {
+            foreach (User user in users) user.Highscore.Add(new());
+
             quizzes[creationIndex].NewMultQ();
             UpdateCreationInterface();
 
@@ -142,6 +150,8 @@ namespace HoffQuiz
 
         private void btnNewPicQ_Click(object sender, RoutedEventArgs e)
         {
+            foreach (User user in users) user.Highscore.Add(new());
+
             quizzes[creationIndex].NewPicQ();
             UpdateCreationInterface();
 
@@ -149,6 +159,8 @@ namespace HoffQuiz
 
         private void btnNewMathQ_Click(object sender, RoutedEventArgs e)
         {
+            foreach (User user in users) user.Highscore.Add(new());
+
             quizzes[creationIndex].NewMathQ();
             UpdateCreationInterface();
         }
@@ -175,7 +187,7 @@ namespace HoffQuiz
         {
             if (cbxUser.IsEnabled)
             { 
-                tabInfo.Header = users[cbxUser.SelectedIndex].Username + " - HighScore: " + 0 + " Corrects"; 
+                tabInfo.Header = users[cbxUser.SelectedIndex].Username + " - HighScore: " + users[cbxUser.SelectedIndex].Highscore[lviewQuizzes.SelectedIndex] + " Corrects"; 
                 ResetCreationInterface();
             }
             else cbxUser.IsEnabled = true;
