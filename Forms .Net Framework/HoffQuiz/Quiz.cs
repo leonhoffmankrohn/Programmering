@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,31 +32,36 @@ namespace HoffQuiz
                 Mode = newmode;
                 switch (Mode)
                 {
-                    // Ändrar tillbaka så att man kan ändra på frågor och svar.
+                    //Innan: Controls är svaren, spareControllers är de riktiga definitionerna
+                    //Göra: Controls blir spareControllers(Definitioner), spareControlls blir nollade
                     case Mode.Default:
                         for (int i = 0; i < Questions.Count; i++)
                         {
-                            Questions[i].Controls[1] = Questions[i].DefinitionCopyController;
                             Questions[i].Controls[0].IsEnabled = true;
-                            Questions[i].DefinitionCopyController = new TextBox
+                            for (int j = 1; j < Questions[i].Controls.Count(); j++)
                             {
-                                Padding = new Thickness(5),
-                                Margin = new Thickness(0, 5, 0, 20),
-                                Width = 450,
-                                Text = "",
-                                HorizontalAlignment = HorizontalAlignment.Center
-                            };
+                                Questions[i].Controls[j] = Questions[i].spareControllers[j-1];
+                                Questions[i].spareControllers[j-1] = Questions[i].PlainControler();
+                            }
                         }
                         break;
 
-                    // Kopierar definitionenskontrollern och 
+                    // Innan: Controls är de riktiga svaren(Definitioner), spareControllers är nollad 
+                    // Göra: Nolla Controls, spareControllers blir de riktiga svaren från Controls
                     case Mode.Answer:
                         for (int i = 0; i < Questions.Count; i++)
                         {
-                            Control empty = Questions[i].DefinitionCopyController;
-                            Questions[i].DefinitionCopyController = Questions[i].Controls[1];
                             Questions[i].Controls[0].IsEnabled = false;
-                            Questions[i].Controls[1] = empty;
+                            for (int j = 1; j < Questions[i].Controls.Count(); j++)
+                            {
+                                Questions[i].spareControllers[j - 1] = Questions[i].Controls[j];
+                                Questions[i].Controls[j] = Questions[i].PlainControler();
+                            }
+                            if (Questions[i].Controls.Count() > 2)
+                            {
+                                Questions[i].selectedAnswers = new() { false, false, false };
+                                foreach (Control ctr in Questions[i].Controls) ctr.IsEnabled = false;
+                            }
                         }
                         break;
                 }
@@ -82,8 +88,16 @@ namespace HoffQuiz
             int nrCorrect = 0;
             for (int i = 0; i < Questions.Count; i++)
             {
-                 if ((Questions[i].Controls[1].ToString()[30..].Length != 1) && (Questions[i].Controls[0].ToString()[30..].Length != 1 ))
+                 if ((Questions[i].Controls[1].ToString()[30..].Length != 1) && (Questions[i].Controls[0].ToString()[30..].Length != 1))
+                {
+                    if (Questions[i].Controls.Count() > 2)
+                    {
+
+                    }
+
+
                  if (Questions[i].DefinitionCopyController.ToString()[33..] == Questions[i].Controls[1].ToString()[33..]) nrCorrect++;
+                }
                 
             }
             return nrCorrect;
@@ -113,8 +127,6 @@ namespace HoffQuiz
 
             List<Question> start = new List<Question> (Questions);
             List<Question> output = RandomateList(start);
-
-            SetMode(Mode.Answer);
 
             for (int i = 0; i < output.Count; i++)
             {
@@ -151,7 +163,20 @@ namespace HoffQuiz
     */
     class Question
     {
+        public List<bool> correctAnswers = new List<bool>() { false, false, false };
+        public List<bool> selectedAnswers = new List<bool>() { false, false, false };
         // Här definerar vi virtuella och andra variabler
+        public Control PlainControler()
+        {
+            return new TextBox
+            {
+                Padding = new Thickness(5),
+                Margin = new Thickness(0, 5, 0, 20),
+                Width = 450,
+                Text = "",
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
+        }
         public Control DefinitionCopyController = new TextBox
             {
                 Padding = new Thickness(5),
@@ -160,6 +185,7 @@ namespace HoffQuiz
                 Text = "",
                 HorizontalAlignment = HorizontalAlignment.Center
             };
+        public List<Control> spareControllers;
         public Control[] Controls { get; set; }
         public virtual Control[] Initialize() { return new Control[] { new Control(), new Control() }; }
     }
@@ -169,6 +195,8 @@ namespace HoffQuiz
         public Simple()
         {
             Controls = Initialize();
+
+            spareControllers = new List<Control>() { PlainControler() };
         }
 
         // Här initierar vi kontrollerna för fråga och svar för att kunna spara värden i.
@@ -196,11 +224,38 @@ namespace HoffQuiz
     }
     class MultipleChoice : Question
     {
-        public List<bool> correctAnswers = new List<bool>() { false, false, false };
         public MultipleChoice()
         {
+            spareControllers = new List<Control>();
+            for (int i = 0; i < 3; i++) 
+            { 
+                spareControllers.Add(PlainControler());
+            }
+            spareControllers[0].MouseDoubleClick += answerClicked1;
+            spareControllers[1].MouseDoubleClick += answerClicked2;
+            spareControllers[2].MouseDoubleClick += answerClicked3;
+
             Controls = Initialize();
         }
+        private void answerClicked1(object sender, System.Windows.Input.MouseButtonEventArgs e) { QuizzerSelect(1); }
+        private void answerClicked2(object sender, System.Windows.Input.MouseButtonEventArgs e) { QuizzerSelect(2); }
+        private void answerClicked3(object sender, System.Windows.Input.MouseButtonEventArgs e) { QuizzerSelect(3); }
+
+        private void QuizzerSelect(int index)
+        {
+            Control ctr = Controls[index];
+            if (ctr.BorderThickness == new Thickness(1))
+            {
+                ctr.BorderThickness = new Thickness(5);
+                selectedAnswers[index - 1] = true;
+            }
+            else
+            {
+                ctr.BorderThickness = new Thickness(1);
+                selectedAnswers[index - 1] = false;
+            }
+        }
+
         public override Control[] Initialize()
         {
             TextBox tbxPrompt = new TextBox
@@ -242,19 +297,9 @@ namespace HoffQuiz
 
             return new Control[] { tbxPrompt, tbxDefinition1, tbxDefinition2, tbxDefinition3 };
         }
-
-        private void def1Alternativ_down(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            ChooseAnswered(1);
-        }
-        private void def2Alternativ_down(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            ChooseAnswered(2);
-        }
-        private void def3Alternativ_down(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            ChooseAnswered(3);
-        }
+        private void def1Alternativ_down(object sender, System.Windows.Input.MouseButtonEventArgs e) { ChooseAnswered(1); }
+        private void def2Alternativ_down(object sender, System.Windows.Input.MouseButtonEventArgs e) { ChooseAnswered(2); }
+        private void def3Alternativ_down(object sender, System.Windows.Input.MouseButtonEventArgs e) { ChooseAnswered(3); }
 
         private void ChooseAnswered(int index)
         {
@@ -267,7 +312,7 @@ namespace HoffQuiz
             else
             {
                 ctr.BorderThickness = new Thickness(1);
-                correctAnswers[index-1] = false;
+                correctAnswers[index - 1] = false;
             }
         }
 
