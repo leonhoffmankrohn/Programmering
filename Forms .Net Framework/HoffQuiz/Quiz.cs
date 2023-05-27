@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -35,6 +36,15 @@ namespace HoffQuiz
                         for (int i = 0; i < Questions.Count; i++)
                         {
                             Questions[i].Controls[1] = Questions[i].DefinitionCopyController;
+                            Questions[i].Controls[0].IsEnabled = true;
+                            Questions[i].DefinitionCopyController = new TextBox
+                            {
+                                Padding = new Thickness(5),
+                                Margin = new Thickness(0, 5, 0, 20),
+                                Width = 450,
+                                Text = "",
+                                HorizontalAlignment = HorizontalAlignment.Center
+                            };
                         }
                         break;
 
@@ -44,6 +54,7 @@ namespace HoffQuiz
                         {
                             Control empty = Questions[i].DefinitionCopyController;
                             Questions[i].DefinitionCopyController = Questions[i].Controls[1];
+                            Questions[i].Controls[0].IsEnabled = false;
                             Questions[i].Controls[1] = empty;
                         }
                         break;
@@ -64,34 +75,18 @@ namespace HoffQuiz
         {
             Questions.Add(new MultipleChoice());
         }
-        public void NewPicQ()
-        {
-            Questions.Add(new PictureQ());
-        }
-        public void NewMathQ()
-        {
-            Questions.Add(new MathQ());
-        }
+
+        //Resultatberäkningen, här överänsstämmer vi svaren med igentliga svaren.
         public int CountCorrect()
         {
             int nrCorrect = 0;
             for (int i = 0; i < Questions.Count; i++)
             {
-                 if (Questions[i].Controls[1].ToString()[30..].Length != 1)
+                 if ((Questions[i].Controls[1].ToString()[30..].Length != 1) && (Questions[i].Controls[0].ToString()[30..].Length != 1 ))
                  if (Questions[i].DefinitionCopyController.ToString()[33..] == Questions[i].Controls[1].ToString()[33..]) nrCorrect++;
                 
             }
             return nrCorrect;
-        }
-
-        // Sparar svaret till varje fråga i quizzet
-        public void SaveAnswers()
-        {
-            List<string> answers = new();
-            for (int i = 0; i < Questions.Count; i++)
-            {
-                Questions[i].DefinitionCopyController = Questions[i].Controls[1];
-            }
         }
 
         // Renders in panel every question with a definition box for the user to fill in both questions and answers
@@ -201,6 +196,7 @@ namespace HoffQuiz
     }
     class MultipleChoice : Question
     {
+        public List<bool> correctAnswers = new List<bool>() { false, false, false };
         public MultipleChoice()
         {
             Controls = Initialize();
@@ -239,31 +235,41 @@ namespace HoffQuiz
                 Text = "Choice 3",
                 HorizontalAlignment = HorizontalAlignment.Center
             };
+
+            tbxDefinition1.MouseDoubleClick += def1Alternativ_down;
+            tbxDefinition2.MouseDoubleClick += def2Alternativ_down;
+            tbxDefinition3.MouseDoubleClick += def3Alternativ_down;
+
             return new Control[] { tbxPrompt, tbxDefinition1, tbxDefinition2, tbxDefinition3 };
         }
-    }
-    class PictureQ : Question
-    {
-        public PictureQ()
+
+        private void def1Alternativ_down(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            Initialize();
+            ChooseAnswered(1);
         }
-        public override Control[] Initialize()
+        private void def2Alternativ_down(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            return new Control[] { new Control(), new Control() };
+            ChooseAnswered(2);
+        }
+        private void def3Alternativ_down(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            ChooseAnswered(3);
         }
 
+        private void ChooseAnswered(int index)
+        {
+            Control ctr = Controls[index];
+            if (ctr.BorderThickness == new Thickness(1))
+            {
+                ctr.BorderThickness = new Thickness(5);
+                correctAnswers[index - 1] = true;
+            }
+            else
+            {
+                ctr.BorderThickness = new Thickness(1);
+                correctAnswers[index-1] = false;
+            }
+        }
 
-    }
-    class MathQ : Question
-    {
-        public MathQ()
-        {
-            Initialize();
-        }
-        public override Control[] Initialize()
-        {
-            return new Control[] { new Control(), new Control() };
-        }
     }
 }

@@ -48,8 +48,6 @@ namespace HoffQuiz
             tbxQuizName.Text = "Quizname";
             btnNewSimQ.IsEnabled = false;
             btnNewMultQ.IsEnabled = false;
-            btnNewPicQ.IsEnabled = false;
-            btnNewMathQ.IsEnabled = false;
         }
 
         // Updaterar listan med de olika quizzen att välja
@@ -64,13 +62,12 @@ namespace HoffQuiz
         {
             if (creationIndex == -1)
             {
+                foreach (User user in users) user.Highscore.Add(new());
                 quizzes.Add(new Quiz(tbxQuizName.Text, users[cbxUser.SelectedIndex].Username));
                 creationIndex = quizzes.Count-1;
             }
             btnNewSimQ.IsEnabled = true;
             btnNewMultQ.IsEnabled = true;
-            btnNewPicQ.IsEnabled = true;
-            btnNewMathQ.IsEnabled = true;
             tabQuizCreate.IsSelected = true;
             UpdateCreationInterface();
             UpdateQuizListView();
@@ -93,6 +90,7 @@ namespace HoffQuiz
         private void EndQuiz()
         {
             int score = quizzes[lviewQuizzes.SelectedIndex].CountCorrect();
+            quizzes[lviewQuizzes.SelectedIndex].SetMode(Mode.Default);
             users[cbxUser.SelectedIndex].AddScore(score, lviewQuizzes.SelectedIndex);
             if (score != 0)
             {
@@ -122,6 +120,7 @@ namespace HoffQuiz
         // -- Här nedan anropas respektive metod för respektive knapp. --
         private void btnNewQuiz_Click(object sender, RoutedEventArgs e)
         {
+            creationIndex = -1;
             NewQuiz();
         }
         private void btnStartQuiz_Click(object sender, RoutedEventArgs e)
@@ -134,34 +133,13 @@ namespace HoffQuiz
         }
         private void btnNewSimQ_Click(object sender, RoutedEventArgs e)
         {
-            foreach (User user in users) user.Highscore.Add(new());
             quizzes[creationIndex].NewSimQ();
             UpdateCreationInterface();
         }
 
         private void btnNewMultQ_Click(object sender, RoutedEventArgs e)
         {
-            foreach (User user in users) user.Highscore.Add(new());
-
             quizzes[creationIndex].NewMultQ();
-            UpdateCreationInterface();
-
-        }
-
-        private void btnNewPicQ_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (User user in users) user.Highscore.Add(new());
-
-            quizzes[creationIndex].NewPicQ();
-            UpdateCreationInterface();
-
-        }
-
-        private void btnNewMathQ_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (User user in users) user.Highscore.Add(new());
-
-            quizzes[creationIndex].NewMathQ();
             UpdateCreationInterface();
         }
 
@@ -173,7 +151,9 @@ namespace HoffQuiz
         // Startar om quizzet
         private void btnTryAgain_Click(object sender, RoutedEventArgs e)
         {
+            EndQuiz();
             StartQuiz();
+
         }
 
         private void btnEditQuiz_Click(object sender, RoutedEventArgs e)
