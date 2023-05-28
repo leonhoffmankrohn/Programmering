@@ -195,14 +195,6 @@ namespace HoffQuiz
                 HorizontalAlignment = HorizontalAlignment.Center
             };
         }
-        public TextBox DefinitionCopyController = new TextBox
-            {
-                Padding = new Thickness(5),
-                Margin = new Thickness(0, 5, 0, 20),
-                Width = 450,
-                Text = "",
-                HorizontalAlignment = HorizontalAlignment.Center
-            };
         public List<TextBox> spareControllers;
         public TextBox[] Controls { get; set; }
         public virtual Control[] Initialize() { return new Control[] { new Control(), new Control() }; }

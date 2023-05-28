@@ -55,6 +55,7 @@ namespace HoffQuiz
         // Updaterar listan med de olika quizzen att välja
         private void UpdateQuizListView()
         {
+            lviewQuizzes.ItemsSource = null;
             lviewQuizzes.ItemsSource = quizzes;
         }
 
@@ -72,6 +73,13 @@ namespace HoffQuiz
                 UpdateCreationInterface();
             }
             else if (tbxQuizName.Text == "") MessageBox.Show("Please enter a name for the new quiz!");
+            else
+            {
+                btnNewSimQ.IsEnabled = true;
+                btnNewMultQ.IsEnabled = true;
+                tabQuizCreate.IsSelected = true;
+                UpdateCreationInterface();
+            }
         }
 
         // Ändrar visuellt så att spelaren ser quizzet och kan utföra det på den tabben
