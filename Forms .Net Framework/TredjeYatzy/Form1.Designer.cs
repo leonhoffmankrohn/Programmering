@@ -1,4 +1,4 @@
-﻿namespace AndraYatzy
+﻿namespace TredjeYatzy
 {
     partial class Form1
     {
@@ -38,8 +38,6 @@
             this.lbxMöjligRes = new System.Windows.Forms.ListBox();
             this.lbxValdRes = new System.Windows.Forms.ListBox();
             this.gbxResultat = new System.Windows.Forms.GroupBox();
-            this.lblPoäng = new System.Windows.Forms.Label();
-            this.lblVälj = new System.Windows.Forms.Label();
             this.lblOmgångar = new System.Windows.Forms.Label();
             this.btnVälj = new System.Windows.Forms.Button();
             this.prbarKastkvar = new System.Windows.Forms.ProgressBar();
@@ -50,6 +48,8 @@
             this.tabAllt = new System.Windows.Forms.TabControl();
             this.tabPYatzy = new System.Windows.Forms.TabPage();
             this.tabPResultat = new System.Windows.Forms.TabPage();
+            this.lblVälj = new System.Windows.Forms.Label();
+            this.lblPoäng = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pc1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pc5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pc4)).BeginInit();
@@ -63,7 +63,7 @@
             // 
             // pc1
             // 
-            this.pc1.Image = global::AndraYatzy.Tärningsgrafik.d0;
+            this.pc1.Image = global::TredjeYatzy.Tärningsgrafik.d0;
             this.pc1.Location = new System.Drawing.Point(33, 243);
             this.pc1.Name = "pc1";
             this.pc1.Size = new System.Drawing.Size(50, 50);
@@ -73,7 +73,7 @@
             // 
             // pc5
             // 
-            this.pc5.Image = global::AndraYatzy.Tärningsgrafik.d0;
+            this.pc5.Image = global::TredjeYatzy.Tärningsgrafik.d0;
             this.pc5.Location = new System.Drawing.Point(33, 19);
             this.pc5.Name = "pc5";
             this.pc5.Size = new System.Drawing.Size(50, 50);
@@ -83,7 +83,7 @@
             // 
             // pc4
             // 
-            this.pc4.Image = global::AndraYatzy.Tärningsgrafik.d0;
+            this.pc4.Image = global::TredjeYatzy.Tärningsgrafik.d0;
             this.pc4.Location = new System.Drawing.Point(33, 75);
             this.pc4.Name = "pc4";
             this.pc4.Size = new System.Drawing.Size(50, 50);
@@ -93,7 +93,7 @@
             // 
             // pc3
             // 
-            this.pc3.Image = global::AndraYatzy.Tärningsgrafik.d0;
+            this.pc3.Image = global::TredjeYatzy.Tärningsgrafik.d0;
             this.pc3.Location = new System.Drawing.Point(33, 131);
             this.pc3.Name = "pc3";
             this.pc3.Size = new System.Drawing.Size(50, 50);
@@ -103,7 +103,7 @@
             // 
             // pc2
             // 
-            this.pc2.Image = global::AndraYatzy.Tärningsgrafik.d0;
+            this.pc2.Image = global::TredjeYatzy.Tärningsgrafik.d0;
             this.pc2.Location = new System.Drawing.Point(33, 187);
             this.pc2.Name = "pc2";
             this.pc2.Size = new System.Drawing.Size(50, 50);
@@ -214,24 +214,6 @@
             this.gbxResultat.TabIndex = 9;
             this.gbxResultat.TabStop = false;
             this.gbxResultat.Text = "Resultaten";
-            // 
-            // lblPoäng
-            // 
-            this.lblPoäng.AutoSize = true;
-            this.lblPoäng.Location = new System.Drawing.Point(167, 0);
-            this.lblPoäng.Name = "lblPoäng";
-            this.lblPoäng.Size = new System.Drawing.Size(38, 13);
-            this.lblPoäng.TabIndex = 18;
-            this.lblPoäng.Text = "Poäng";
-            // 
-            // lblVälj
-            // 
-            this.lblVälj.AutoSize = true;
-            this.lblVälj.Location = new System.Drawing.Point(131, 0);
-            this.lblVälj.Name = "lblVälj";
-            this.lblVälj.Size = new System.Drawing.Size(24, 13);
-            this.lblVälj.TabIndex = 17;
-            this.lblVälj.Text = "Välj";
             // 
             // lblOmgångar
             // 
@@ -362,6 +344,24 @@
             this.tabPResultat.TabIndex = 1;
             this.tabPResultat.Text = "RESULTAT";
             // 
+            // lblVälj
+            // 
+            this.lblVälj.AutoSize = true;
+            this.lblVälj.Location = new System.Drawing.Point(129, 0);
+            this.lblVälj.Name = "lblVälj";
+            this.lblVälj.Size = new System.Drawing.Size(24, 13);
+            this.lblVälj.TabIndex = 17;
+            this.lblVälj.Text = "Välj";
+            // 
+            // lblPoäng
+            // 
+            this.lblPoäng.AutoSize = true;
+            this.lblPoäng.Location = new System.Drawing.Point(173, 0);
+            this.lblPoäng.Name = "lblPoäng";
+            this.lblPoäng.Size = new System.Drawing.Size(38, 13);
+            this.lblPoäng.TabIndex = 18;
+            this.lblPoäng.Text = "Poäng";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -369,7 +369,7 @@
             this.ClientSize = new System.Drawing.Size(334, 443);
             this.Controls.Add(this.tabAllt);
             this.Name = "Form1";
-            this.Text = "Andra yatzy";
+            this.Text = "visual";
             ((System.ComponentModel.ISupportInitialize)(this.pc1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pc5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pc4)).EndInit();
