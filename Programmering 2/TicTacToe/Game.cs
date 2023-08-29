@@ -22,15 +22,31 @@ namespace TicTacToe
                     board[i, j] = '-';
                 }
             }
+
+            Drawboard();
         }
         private void Drawboard()
         {
-            
+            Console.WriteLine("---1-----2-----3---\n\r" +
+                              "1  " + board[0, 0] + "  |  " + board[0, 1] + "  |  " + board[0, 2] + "  |\n\r" +
+                              "|-----------------| \n\r" +
+                              "2  " + board[1, 0] + "  |  " + board[1, 1] + "  |  " + board[1, 2] + "  |\n\r" +
+                              "|-----------------| \n\r" +
+                              "3  " + board[2, 0] + "  |  " + board[2, 1] + "  |  " + board[2, 2] + "  |\n\r" +
+                              "-------------------");
         }
 
         public bool CheckChoice( int row, int column, Player playerturn)
         {
-            return false;
+            row--;column--;
+            if (board[row, column] == '-')
+            {
+                if (playerturn == Player.One) board[row, column] = 'X';
+                else if (playerturn == Player.Two) board[row, column] = 'O';
+                Drawboard();
+                return true;
+            }
+            else return false;
         }
 
         public bool CheckWinner()
