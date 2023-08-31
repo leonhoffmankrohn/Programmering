@@ -27,6 +27,7 @@ namespace TicTacToe
         }
         private void Drawboard()
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("---1-----2-----3---\n\r" +
                               "1  " + board[0, 0] + "  |  " + board[0, 1] + "  |  " + board[0, 2] + "  |\n\r" +
                               "|-----------------| \n\r" +
@@ -34,6 +35,8 @@ namespace TicTacToe
                               "|-----------------| \n\r" +
                               "3  " + board[2, 0] + "  |  " + board[2, 1] + "  |  " + board[2, 2] + "  |\n\r" +
                               "-------------------");
+            Console.ForegroundColor = ConsoleColor.White;
+
         }
 
         public bool CheckChoice( int row, int column, Player playerturn)

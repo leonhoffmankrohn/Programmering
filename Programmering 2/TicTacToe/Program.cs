@@ -11,8 +11,8 @@ namespace TicTacToe
         static void Main(string[] args)
         {
             Player player = Player.Ett;
-            Game game = new Game();
 
+            Game game;
             bool run = true;
             while (run)
             {
@@ -22,18 +22,23 @@ namespace TicTacToe
 
                 bool gameOver = false;
                 if (answer == 'q' || answer == 'n') Environment.Exit(0);
+
+                Console.Clear();
+                game = new Game();
+
                 while ( answer == 'y' && !gameOver)
                 {
                     bool success = Choice();
                     gameOver = game.CheckWinner();
 
-                    if (success) CurrentPlayer();
+                    if (gameOver) break;
+                    else if (success) CurrentPlayer();
                     else
                     {
-                        Console.WriteLine("Jag tror det blev något fel där... prova igen spelare " + player.ToString());
+                        Console.WriteLine("Jag tror det blev något fel där... prova igen spelare " + player.ToString().ToLower());
                     }
                 }
-                Console.WriteLine("Bra spelat, spelare " + player.ToString() + " vann!\n\r");
+                Console.WriteLine("Bra spelat, spelare " + player.ToString().ToLower() + " vann!\n\r");
             }
 
             bool Choice()
@@ -45,22 +50,24 @@ namespace TicTacToe
                 bool question = true;
                 while (question)
                 {
-                    Console.WriteLine("Spelare " + player.ToString() + " var vänlig att ange en rad. 1/2/3/q");
+                    Console.WriteLine("Spelare " + player.ToString().ToLower() + " var vänlig att ange en rad. 1/2/3/q");
                     row = Console.ReadKey().KeyChar;
                     Console.WriteLine();
                     if (row == 'q') Environment.Exit(0);
                     // Lägg till elseifsats som tryparsear skiten
+                    else if (!char.IsDigit(row)) Console.WriteLine("Var vänlig att skriva ett tal");
                     else if (int.Parse(row.ToString()) < 4 && int.Parse(row.ToString()) > 0) question = false;
                 }
 
                 question = true;
                 while (question)
                 {
-                    Console.WriteLine("Spelare " + player.ToString() + " var vänlig att ange en kolumn. 1/2/3/q");
+                    Console.WriteLine("Spelare " + player.ToString().ToLower() + " var vänlig att ange en kolumn. 1/2/3/q");
                     col = Console.ReadKey().KeyChar;
                     Console.WriteLine();
                     if (col == 'q') Environment.Exit(0);
                     // Lägg till elseifsats som tryparsear skiten
+                    else if (!char.IsDigit(col)) Console.WriteLine("Var vänlig att skriva ett tal");
                     else if (int.Parse(col.ToString()) < 4 && int.Parse(col.ToString()) > 0) question = false;
                     else Console.WriteLine("Du får försöka igen: \r\n");
                 }
