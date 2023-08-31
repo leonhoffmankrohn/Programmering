@@ -41,8 +41,8 @@ namespace TicTacToe
             row--;column--;
             if (board[row, column] == '-')
             {
-                if (playerturn == Player.One) board[row, column] = 'X';
-                else if (playerturn == Player.Two) board[row, column] = 'O';
+                if (playerturn == Player.Ett) board[row, column] = 'X';
+                else if (playerturn == Player.Två) board[row, column] = 'O';
                 Drawboard();
                 return true;
             }
@@ -51,7 +51,21 @@ namespace TicTacToe
 
         public bool CheckWinner()
         {
-            return false;
+            bool win = false;
+            for (int row = 0; row < 3; row++) if (board[row, 0] != '-' && board[row, 0] == board[row, 1] && board[row, 0] == board[row, 2])
+                {
+                    win = true;
+                }
+            for (int col = 0; col < 3; col++) if (board[0,col] != '-' && board[0, col] == board[1, col] && board[0, col] == board[2, col])
+                {
+                    win = true;
+                }
+            if ((board[0, 0].Equals(board[1,1]) && board[0, 0].Equals(board[2,2])) || 
+                (board[0, 2].Equals(board[1,1]) && board[0, 2].Equals(board[2, 0])))
+            {
+                win = true;
+            }
+            return win;
         }
     }
 }

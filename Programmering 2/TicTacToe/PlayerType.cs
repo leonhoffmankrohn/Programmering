@@ -8,7 +8,7 @@ namespace TicTacToe
 {
     public enum Player
     {
-        One = 1,
-        Two = 2
+        Ett = 1,
+        Två = 2
     }
 }
