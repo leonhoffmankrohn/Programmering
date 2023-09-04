@@ -21,6 +21,7 @@ namespace TicTacToe
                 char answer = Console.ReadKey().KeyChar;
                 Console.WriteLine();
 
+                bool noWinner = false;
                 bool gameOver = false;
                 if (answer == 'q' || answer == 'n') Environment.Exit(0);
 
@@ -31,18 +32,26 @@ namespace TicTacToe
                 while ( answer == 'y' && !gameOver)
                 {
                     bool success = Choice();
-                    gameOver = game.CheckWinner();
+                    gameOver = game.CheckWinner(out noWinner);
 
-                    if (gameOver) break;
+                    if (gameOver || noWinner) break;
                     else if (success) CurrentPlayer();
                     else
                     {
                         Console.WriteLine("Jag tror det blev något fel där... prova igen spelare " + player.ToString().ToLower());
                     }
                 }
-                Console.WriteLine("Bra spelat, spelare " + player.ToString().ToLower() + " vann!\n\r");
-                score[(int)player-1]+=1;
-                Console.WriteLine("Spelare ett: " + score[0] + " poäng\n\rSpelare två: " + score[1] + " poäng.");
+                
+                if (noWinner)
+                {
+                    Console.WriteLine("Bra spelat, det belv dock oavgjort");
+                }
+                else
+                {
+                    Console.WriteLine("Bra spelat, spelare " + player.ToString().ToLower() + " vann!\n\r");
+                    score[(int)player-1]+=1;
+                    Console.WriteLine("Spelare ett: " + score[0] + " poäng\n\rSpelare två: " + score[1] + " poäng.");
+                }
 
             }
 
