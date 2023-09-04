@@ -11,9 +11,10 @@ namespace TicTacToe
         static void Main(string[] args)
         {
             Player player = Player.Ett;
-
+            int[] score = new int[] { 0, 0 };
             Game game;
             bool run = true;
+            // Denna loop kommer att köras om hela tiden tills spelare indikerar att stänga ner
             while (run)
             {
                 Console.WriteLine("Vill du spela en runda Tre-I-Rad? - y/n/q");
@@ -26,6 +27,7 @@ namespace TicTacToe
                 Console.Clear();
                 game = new Game();
 
+                // Den här kommer att köra ett helt spel
                 while ( answer == 'y' && !gameOver)
                 {
                     bool success = Choice();
@@ -39,8 +41,12 @@ namespace TicTacToe
                     }
                 }
                 Console.WriteLine("Bra spelat, spelare " + player.ToString().ToLower() + " vann!\n\r");
+                score[(int)player-1]+=1;
+                Console.WriteLine("Spelare ett: " + score[0] + " poäng\n\rSpelare två: " + score[1] + " poäng.");
+
             }
 
+            // Här ber vi spelaren om en rad och en kolumn
             bool Choice()
             {
                 char row = '1';
@@ -75,6 +81,7 @@ namespace TicTacToe
                 return game.CheckChoice(int.Parse(row.ToString()), int.Parse(col.ToString()), player);
             }
 
+            // Här byter vi spelare
             void CurrentPlayer() { player = (player == Player.Ett) ? Player.Två : Player.Ett; }
 
             Environment.Exit(0);

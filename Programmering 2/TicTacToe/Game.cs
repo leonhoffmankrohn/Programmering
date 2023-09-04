@@ -63,8 +63,8 @@ namespace TicTacToe
                 {
                     win = true;
                 }
-            if ((board[0, 0].Equals(board[1,1]) && board[0, 0].Equals(board[2,2])) || 
-                (board[0, 2].Equals(board[1,1]) && board[0, 2].Equals(board[2, 0])))
+            if (board[0,0] != '-' && board[2,0] != '-' && ((board[0, 0].Equals(board[1,1]) && board[0, 0].Equals(board[2,2])) || 
+                (board[0, 2].Equals(board[1,1]) && board[0, 2].Equals(board[2, 0]))))
             {
                 win = true;
             }
