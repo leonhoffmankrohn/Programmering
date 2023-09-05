@@ -55,7 +55,7 @@ namespace TicTacToe
         public bool CheckWinner( out bool noWinner)
         {
             bool win = false;
-            noWinner = false;
+            noWinner = true;
 
             for (int i = 0; i < 3; i++)
             {
@@ -75,7 +75,7 @@ namespace TicTacToe
                     {
                         if (board[row, col] == '-')
                         {
-                            noWinner = true;
+                            noWinner = false;
                             break;
                         }
                     }
