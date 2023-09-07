@@ -25,20 +25,25 @@ namespace TicTacToe
 
             Drawboard();
         }
+
+        // Här skriver vi ut spelet i konsollen med respektive X/O i ruta
         private void Drawboard()
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("---1-----2-----3---\n\r" +
                               "1  " + board[0, 0] + "  |  " + board[0, 1] + "  |  " + board[0, 2] + "  |\n\r" +
-                              "|-----------------| \n\r" +
+                              "|-----------------|\n\r" +
                               "2  " + board[1, 0] + "  |  " + board[1, 1] + "  |  " + board[1, 2] + "  |\n\r" +
-                              "|-----------------| \n\r" +
+                              "|-----------------|\n\r" +
                               "3  " + board[2, 0] + "  |  " + board[2, 1] + "  |  " + board[2, 2] + "  |\n\r" +
                               "-------------------");
+
             Console.ForegroundColor = ConsoleColor.White;
+
 
         }
 
+        // Här dubbelkollar vi om spelarens val går att göra
         public bool CheckChoice( int row, int column, Player playerturn)
         {
             row--;column--;
@@ -52,35 +57,33 @@ namespace TicTacToe
             else return false;
         }
 
-        public bool CheckWinner( out bool noWinner)
+        // Här kollar vi om vi har tre i rad/kolumn/diagonal
+        // Skickar också tillbaka om brädet är fullt
+        public bool CheckWinner( out bool fullBoard)
         {
             bool win = false;
-            noWinner = true;
+            fullBoard = true;
 
             for (int i = 0; i < 3; i++)
             {
-                win = (board[i, 0] == board[i, 1] && board[i, 0] == board[i, 2] && board[i, 0] != '-') ? true : false;
-                win = (board[0, i] == board[1, i] && board[0, i] == board[2, i] && board[0, i] != '-') ? true : false;
+                win = ((board[i, 0] == board[i, 1] && board[i, 0] == board[i, 2] && board[i, 0] != '-') ||
+                    (board[0, i] == board[1, i] && board[0, i] == board[2, i] && board[0, i] != '-')) ? true : win;
             }
             if (board[1, 1] != '-')
             {
-                win = (board[0, 0] == board[1, 1] && board[0, 0] == board[2, 2]) ? true : false;
-                win = (board[0, 2] == board[1, 1] && board[0, 2] == board[2, 0]) ? true : false;
+                win = ((board[0, 0] == board[1, 1] && board[0, 0] == board[2, 2]) || (board[0, 2] == board[1, 1] && board[0, 2] == board[2, 0])) ? true : win;
             }
-            else
+            for (int row = 0; row < 3; row++)
             {
-                for (int row = 0; row < 3; row++)
+                for (int col = 0; col < 3; col++)
                 {
-                    for (int col = 0; col < 3; col++)
+                    if (board[row, col] == '-')
                     {
-                        if (board[row, col] == '-')
-                        {
-                            noWinner = false;
-                            break;
-                        }
+                        fullBoard = false;
+                        break;
                     }
-                    if (noWinner) break;
                 }
+                if (!fullBoard) break;
             }
             return win;
         }
