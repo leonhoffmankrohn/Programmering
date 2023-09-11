@@ -9,21 +9,21 @@ namespace _2._2_Personalregister
     internal class Konsult : Anställd
     {
         double arbetadeTimmar;
-        double timlön;
+        double timLön;
 
         public Konsult(string _namn, double _arbetadeTimmar, double _timLön) : base(_namn)
         {
             arbetadeTimmar = _arbetadeTimmar;
-            timlön = _timLön;
+            timLön = _timLön;
         }
         public override double BeräknaLön()
         {
-            return timlön * arbetadeTimmar;
+            return timLön * arbetadeTimmar;
         }
 
         public override string ToString()
         {
-            return base.ToString();
+            return "Typ: Konsult ; Arbetade timmar: " + arbetadeTimmar + " h ; Timlön: " + timLön + " kr ;;; Lön: " + BeräknaLön() + " kr";
         }
     }
 }

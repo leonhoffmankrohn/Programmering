@@ -23,7 +23,7 @@ namespace _2._2_Personalregister
 
         public override string ToString()
         {
-            return base.ToString();
+            return "Typ: Kontorist ; Månadslön: " + månadsLön + " kr ;;; Lön: " + BeräknaLön() + " kr";
         }
     }
 }

@@ -24,7 +24,7 @@ namespace _2._2_Personalregister
 
         public override string ToString()
         {
-            return base.ToString();
+            return "Typ: Säljare ; Provision: " + provision + "% ; Försäljning: " + försäljning + " kr ;;; Lön: " + BeräknaLön() + " kr";
         }
     }
 }
