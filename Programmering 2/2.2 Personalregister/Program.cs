@@ -28,7 +28,7 @@ while (run)
     else
     {
         Console.WriteLine("Var snäll och ange något giltigt\n\rTryck på valfri knapp för att fortsätta");
-        Console.ReadLine();
+        Console.ReadKey();
     }
      Console.Clear();
 }
