@@ -21,5 +21,10 @@ namespace _2._3_Sparbanken_Banken
             behållning *= räntesats+1;
             return behållning * räntesats;
         }
+
+        public override string ToString()
+        {
+            return "Sparkonto: " + personNummer + " Behållning: " + behållning + " kr";
+        }
     }
 }

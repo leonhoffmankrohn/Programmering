@@ -31,5 +31,10 @@ namespace _2._3_Sparbanken_Banken
             behållning -= behållning * räntesats;
             return behållning - behållning * räntesats;
         }
+
+        public override string ToString()
+        {
+            return "Lånekonto: " + personNummer + " Behållning: " + behållning + " kr";
+        }
     }
 }

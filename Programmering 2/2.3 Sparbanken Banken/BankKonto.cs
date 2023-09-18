@@ -32,9 +32,5 @@ namespace _2._3_Sparbanken_Banken
         {
             behållning += belopp;
         }
-        public override string ToString()
-        {
-            return "";
-        }
     }
 }

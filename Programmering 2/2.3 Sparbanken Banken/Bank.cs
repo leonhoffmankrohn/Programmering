@@ -10,7 +10,15 @@ namespace _2._3_Sparbanken_Banken
     {
         public List<BankKonto> konton = new();
 
-        public double Behållning { get; set; }
+        public double Behållning 
+        {
+            get
+            { 
+                double bankBehållning = 0;
+                foreach (BankKonto konto in konton) bankBehållning += konto.Behållning;
+                return bankBehållning;
+            }
+        }
 
         public override string ToString()
         {
