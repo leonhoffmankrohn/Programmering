@@ -8,7 +8,7 @@ namespace _2._3_Sparbanken_Banken
 {
     internal class Bank
     {
-        public BankKonto[] konton;
+        public List<BankKonto> konton = new();
 
         public double Behållning { get; set; }
 

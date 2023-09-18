@@ -14,13 +14,22 @@ namespace _2._3_Sparbanken_Banken
         {
             kreditGräns = _kreditGräns;
         }
-        public bool Uttag(double belopp)
+        public override bool Uttag(double belopp)
         {
-            return true;
+            if (behållning-belopp < kreditGräns * -1)
+            {
+                return false;
+            }
+            else
+            {
+                behållning -= belopp;
+                return true;
+            }
         }
-        public double BeräknaRänta()
+        public override double BeräknaRänta()
         {
-            return 0;
+            behållning -= behållning * räntesats;
+            return behållning - behållning * räntesats;
         }
     }
 }

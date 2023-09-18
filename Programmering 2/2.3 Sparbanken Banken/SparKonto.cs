@@ -9,13 +9,17 @@ namespace _2._3_Sparbanken_Banken
     internal class SparKonto : BankKonto
     {
         public SparKonto(string _personNummer, double _behållning, double _räntesats) : base(_personNummer, _behållning, _räntesats) { }
-        public bool Uttag(double belopp)
+        public override bool Uttag(double belopp)
         {
+            if (behållning - belopp < 0)
+                return false;
+            else behållning -= belopp;
             return true;
         }
-        public double BeräknaRänta()
+        public override double BeräknaRänta()
         {
-            return 0;
+            behållning *= räntesats+1;
+            return behållning * räntesats;
         }
     }
 }

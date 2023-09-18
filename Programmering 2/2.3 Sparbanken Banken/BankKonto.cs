@@ -24,11 +24,17 @@ namespace _2._3_Sparbanken_Banken
             räntesats = _räntesats;
         }
 
-        public abstract void Insättning(double belopp);
 
         public abstract bool Uttag(double belopp);
-        public abstract double beräknaRänta();
+        public abstract double BeräknaRänta();
 
-        public abstract override string ToString();
+        public void Insättning(double belopp)
+        {
+            behållning += belopp;
+        }
+        public override string ToString()
+        {
+            return "";
+        }
     }
 }
