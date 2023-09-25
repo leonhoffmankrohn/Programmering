@@ -20,9 +20,29 @@ namespace Zoo
     /// </summary>
     public partial class MainWindow : Window
     {
+        List<Djur> djurlista = new List<Djur>();
         public MainWindow()
         {
             InitializeComponent();
+            string[] köntyper = Enum.GetNames(typeof(KönTyp));
+
+            foreach (string kön in köntyper) lbxKön.Items.Add(kön);
+        }
+        void UppdateraLviewRegister()
+        {
+
+        }
+
+        void SkapaDjur(string namn, double ålder, KönTyp kön)
+        {
+            Djur djur = new() { namn, ålder, kön };
+        }
+
+        private void btnLäggTillDjur_Click(object sender, RoutedEventArgs e)
+        {
+            string namn = tbxNamn.Text;
+            double.TryParse(tbxÅlder.Text, out double ålder);
+            
         }
     }
 }

@@ -17,13 +17,13 @@
                 <StackPanel>
                     <TextBox Margin="5"  MinWidth="50" Name="tbxNamn"></TextBox>
                     <TextBox Margin="5" MinWidth="50" Name="tbxÅlder"></TextBox>
-                    <ListBox Margin="5" MinWidth="50" Name="tbxKön"></ListBox>
-                    <Button Margin="5" MinWidth="50" Name="btnLäggTillDjur">Lägg till djur</Button>
+                    <ListBox Margin="5" MinWidth="50" Name="lbxKön"></ListBox>
+                    <Button Margin="5" MinWidth="50" Name="btnLäggTillDjur" Click="btnLäggTillDjur_Click">Lägg till djur</Button>
                 </StackPanel>
             </WrapPanel>
         </GroupBox>
         <GroupBox Header="Register" Height="225" VerticalAlignment="Bottom" Margin="5">
-			<ListView x:Name="lviewQuizzes" d:ItemsSource="{d:SampleData ItemCount=5}">
+			<ListView x:Name="lviewRegister" d:ItemsSource="{d:SampleData ItemCount=5}">
 				<ListView.View>
 					<GridView>
                         <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}"></GridViewColumn>

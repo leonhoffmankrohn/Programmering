@@ -8,23 +8,15 @@ namespace Zoo
 {
     class Djur
     {
-        enum Kön
-        {
-            Hona,
-            Hane
-        }
-        double ID;
+        static int id = 0;
+        int ID;
         string namn;
         double ålder;
-        Kön kön;
-        static double id = 0;
+        KönTyp kön;
 
-        Djur(string _namn, double _ålder, Enum _kön)
+        public Djur()
         {
-            ID = ++id;
-            namn = _namn;
-            ålder = _ålder;
-            kön = _kön;
+
         }
 
     }
