@@ -1,0 +1,38 @@
+﻿<Window x:Class="Zoo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Zoo"
+        mc:Ignorable="d"
+        Title="Mitt Zoo" Height="450" Width="300">
+    <Grid>
+        <GroupBox Header="Nytt djur" Height="225" VerticalAlignment="Top" Margin="5">
+            <WrapPanel>
+                <StackPanel>
+                    <TextBlock Margin="5" MinWidth="50">Namn</TextBlock>
+                    <TextBlock Margin="5" MinWidth="50">Ålder</TextBlock>
+                    <TextBlock Margin="5" MinWidth="50">Kön</TextBlock>
+                </StackPanel>
+                <StackPanel>
+                    <TextBox Margin="5"  MinWidth="50" Name="tbxNamn"></TextBox>
+                    <TextBox Margin="5" MinWidth="50" Name="tbxÅlder"></TextBox>
+                    <ListBox Margin="5" MinWidth="50" Name="tbxKön"></ListBox>
+                    <Button Margin="5" MinWidth="50" Name="btnLäggTillDjur">Lägg till djur</Button>
+                </StackPanel>
+            </WrapPanel>
+        </GroupBox>
+        <GroupBox Header="Register" Height="225" VerticalAlignment="Bottom" Margin="5">
+			<ListView x:Name="lviewQuizzes" d:ItemsSource="{d:SampleData ItemCount=5}">
+				<ListView.View>
+					<GridView>
+                        <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}"></GridViewColumn>
+                        <GridViewColumn Header="Namn" DisplayMemberBinding="{Binding Namn}"></GridViewColumn>
+						<GridViewColumn Header="Ålder" DisplayMemberBinding="{Binding Ålder}"></GridViewColumn>
+						<GridViewColumn Header="Kön" DisplayMemberBinding="{Binding Kön}"></GridViewColumn>
+					</GridView>
+				</ListView.View>
+			</ListView>
+        </GroupBox>
+    </Grid>
+</Window>

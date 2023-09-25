@@ -71,7 +71,7 @@ void Uttag()
         Console.WriteLine("\n\rSkriv belopp och sen enter:");
         double.TryParse(Console.ReadLine(), out double belopp);
 
-        if (0 < kontoNummer && kontoNummer <= bank.konton.Count + 1)
+        if (0 < kontoNummer && kontoNummer <= bank.konton.Count)
         {
             bool lyckad = bank.konton[kontoNummer-1].Uttag(belopp);
             if (!lyckad)

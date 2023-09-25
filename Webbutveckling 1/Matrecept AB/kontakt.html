@@ -4,6 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body{
+            background: #eee;
+            font-family: Arial, Helvetica, sans-serif;
+            max-width: 800px;
+            line-height: 25px;
+            margin: 2rem auto;
+        }
+         img{
+             width: 800px;
+             height: 300px;
+        }
+        label,input,legend,textarea{
+            display: flex;
+        }
+    </style>
 </head>
 <body>
     <!-- Header section starts here -->
@@ -22,8 +38,24 @@
     </header>
     <!-- Header section ends here -->
     <!-- Main section starts here -->
-    <form action="feedback.html" target="_self" autocomplete="on">
-        <label for=""></label>
+    <form action="feedback.html" target="_blank" autocomplete="on">
+        <fieldset>
+            <legend>Kontakta oss</legend>
+            <label for="fname">Förnamn</label>
+            <input type="text" id="fname" name="fname">
+            <label for="lname">Efternamn</label>
+            <input type="text" id="lname" name="lname">
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email">
+            <label for="message">Meddelande</label>
+            <textarea id="message" name="message"></textarea>
+            <label for="ja">Är du en kund?</label>
+            <label for="ja">Ja</label>
+            <input type="radio" name="val" id="ja" value="Ja">
+            <label for="nej">Nej</label>
+            <input type="radio" name="val" id="nej" value="Nej">
+            <input type="submit" value="Skicka">
+        </fieldset>
     </form>
     <!-- Main section ends here -->
     <!-- Footer section starts here -->
