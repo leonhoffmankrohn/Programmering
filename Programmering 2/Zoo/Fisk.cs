@@ -8,15 +8,19 @@ namespace Zoo
 {
     internal class Fisk : Djur
     {
+        // Egenskaper
         public bool Sötvatten { get; }
 
-        Fisk(string _namn, double _ålder, KönTyp _kön) : base(_namn, _ålder, _kön)
+        // Konstruktören
+        public Fisk(string _namn, double _ålder, KönTyp _kön, bool _sötvatten) : base(_namn, _ålder, _kön)
         {
-
+            Sötvatten = _sötvatten;
         }
+
+        // Returnerar ett värde motsvarande till egenskapen
         public override string ToString()
         {
-            return "En fisk som lever i sötvatten";
+            return (Sötvatten) ? "En fisk som lever i sötvatten" : "En fisk som lever i havet";
         }
     }
 }

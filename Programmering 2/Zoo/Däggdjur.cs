@@ -8,15 +8,19 @@ namespace Zoo
 {
     internal class Däggdjur : Djur
     {
+        // Egenskap
         public bool Nattaktiv { get; }
 
-        Däggdjur(string _namn, double _ålder, KönTyp _kön) : base(_namn, _ålder, _kön)
+        // Konstruktören
+        public Däggdjur(string _namn, double _ålder, KönTyp _kön, bool _nattaktiv) : base(_namn, _ålder, _kön)
         {
-
+            Nattaktiv = _nattaktiv;
         }
+
+        // Skriver ut motsvarnde värde för egenskapen Nattaktiv
         public override string ToString()
         {
-            return "Ett däggdjur som är nattaktiv";
+            return (Nattaktiv) ? "Ett däggdjur som är nattaktiv" : "Ett däggdjur som ej är nattaktiv";
         }
     }
 }

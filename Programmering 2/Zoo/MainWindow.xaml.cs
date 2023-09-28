@@ -30,6 +30,13 @@ namespace Zoo
 
             foreach (string kön in köntyper) lbxKön.Items.Add(kön);
             lbxKön.SelectedIndex = 0;
+
+            string[] djurtyper = Enum.GetNames(typeof(DjurTyp));
+
+            foreach (string typ in djurtyper) lbxGrupp.Items.Add(typ);
+            lbxGrupp.SelectedIndex = 0;
+
+            tblSpc1.Text = "Nattaktivt?";
         }
 
         // Här uppdateras listview:en med korresponderande data
@@ -40,9 +47,10 @@ namespace Zoo
         }
 
         // Här skapas ett djur och läggs till i en djurlista
-        void SkapaDjur(string namn, double ålder, KönTyp kön)
+        void SkapaDjur(string namn, double ålder, KönTyp kön, bool harExtraAttribut)
         {
-            djurlista.Add(new Djur(namn, ålder, kön));
+            // index 0 är däggdjur
+            djurlista.Add((lbxGrupp.SelectedIndex == 0) ? new Däggdjur(namn, ålder, kön, harExtraAttribut): new Fisk(namn, ålder, kön, harExtraAttribut));
         }
 
         // Denna körs vid knapptryck och samlar in data om djuret och skickar data för skapande och lagrande av djur men åker också vidare till att uppdatera listview:en
@@ -51,13 +59,15 @@ namespace Zoo
             string namn = tbxNamn.Text;
             double.TryParse(tbxÅlder.Text, out double ålder);
             KönTyp könet = (KönTyp)lbxKön.SelectedIndex;
-            SkapaDjur(namn, ålder, könet);
+            bool harExtraAttribut = (rbJa.IsChecked == true) ? true : false;
+            SkapaDjur(namn, ålder, könet, harExtraAttribut);
             UppdateraLviewRegister();
         }
 
+        // Här ändrar vi frågan i textblocket ifall däggdjur eller fisk är vald i listboxen
         private void lbxGrupp_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            tblSpc1.Text = (lbxGrupp.SelectedIndex == 0) ? "Nattaktivt?": "Sötvatten?";
         }
     }
 }
