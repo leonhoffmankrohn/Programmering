@@ -54,5 +54,10 @@ namespace Zoo
             SkapaDjur(namn, ålder, könet);
             UppdateraLviewRegister();
         }
+
+        private void lbxGrupp_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

@@ -18,7 +18,28 @@
                     <TextBox Margin="5"  MinWidth="50" Name="tbxNamn"></TextBox>
                     <TextBox Margin="5" MinWidth="50" Name="tbxÅlder"></TextBox>
                     <ListBox Margin="5" MinWidth="50" Name="lbxKön"></ListBox>
-                    <Button Margin="5" MinWidth="50" Name="btnLäggTillDjur" Click="btnLäggTillDjur_Click">Lägg till djur</Button>
+                </StackPanel>
+                <StackPanel>
+                    <WrapPanel>
+                        <StackPanel>
+                            <TextBlock Margin="5">Grupp</TextBlock>
+                        </StackPanel>
+                        <StackPanel>
+                            <ListBox Name="lbxGrupp" Width="100" Margin="5" SelectionChanged="lbxGrupp_SelectionChanged"></ListBox>
+                        </StackPanel>
+                    </WrapPanel>
+                    <WrapPanel>
+                        <StackPanel>
+                            <TextBlock Name="tblSpc1" Margin="5">Specifik 1</TextBlock>
+                        </StackPanel>
+                        <StackPanel>
+                            <WrapPanel>
+                                <RadioButton Name="rbJa" IsChecked="True" Margin="5">Ja</RadioButton>
+                                <RadioButton Name="rbNej" Margin="5">Nej</RadioButton>
+                            </WrapPanel>
+                            <Button Margin="5" MinWidth="100" Name="btnLäggTillDjur" Click="btnLäggTillDjur_Click">Lägg till djur</Button>
+                        </StackPanel>
+                    </WrapPanel>
                 </StackPanel>
             </WrapPanel>
         </GroupBox>
@@ -29,8 +50,9 @@
                         <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"></GridViewColumn>
                         <GridViewColumn Header="Namn" DisplayMemberBinding="{Binding Namn}"></GridViewColumn>
 						<GridViewColumn Header="Ålder" DisplayMemberBinding="{Binding Ålder}"></GridViewColumn>
-						<GridViewColumn Header="Kön" DisplayMemberBinding="{Binding Kön}"></GridViewColumn>
-					</GridView>
+                        <GridViewColumn Header="Kön" DisplayMemberBinding="{Binding Kön}"></GridViewColumn>
+                        <GridViewColumn Header="Beskrivning" DisplayMemberBinding="{Binding Beskrivning}"></GridViewColumn>
+                    </GridView>
 				</ListView.View>
 			</ListView>
         </GroupBox>

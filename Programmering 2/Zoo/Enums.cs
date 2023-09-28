@@ -11,4 +11,9 @@ namespace Zoo
         Hona,
         Hane
     }
+    enum DjurTyp
+    {
+        Däggdjur,
+        Fisk
+    }
 }
