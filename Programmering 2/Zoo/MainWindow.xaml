@@ -26,7 +26,7 @@
 			<ListView x:Name="lviewRegister" d:ItemsSource="{d:SampleData ItemCount=5}">
 				<ListView.View>
 					<GridView>
-                        <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}"></GridViewColumn>
+                        <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"></GridViewColumn>
                         <GridViewColumn Header="Namn" DisplayMemberBinding="{Binding Namn}"></GridViewColumn>
 						<GridViewColumn Header="Ålder" DisplayMemberBinding="{Binding Ålder}"></GridViewColumn>
 						<GridViewColumn Header="Kön" DisplayMemberBinding="{Binding Kön}"></GridViewColumn>
