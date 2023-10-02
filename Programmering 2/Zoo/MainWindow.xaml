@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Zoo"
         mc:Ignorable="d"
-        Title="Mitt Zoo" Height="450" Width="400">
+        Title="Mitt Zoo" Height="450" Width="500">
     <Grid>
         <GroupBox Header="Nytt djur" Height="225" VerticalAlignment="Top" Margin="5">
             <WrapPanel>
@@ -37,9 +37,23 @@
                                 <RadioButton Name="rbJa" IsChecked="True" Margin="5">Ja</RadioButton>
                                 <RadioButton Name="rbNej" Margin="5">Nej</RadioButton>
                             </WrapPanel>
-                            <Button Margin="5" MinWidth="100" Name="btnLäggTillDjur" Click="btnLäggTillDjur_Click">Lägg till djur</Button>
                         </StackPanel>
                     </WrapPanel>
+                    <WrapPanel>
+                        <TextBlock Name="tblSpc2" Margin="5">Specifik 2</TextBlock>
+                        <TextBox Margin="5" MinWidth="50" Name="tbxSpc2"></TextBox>
+                    </WrapPanel>
+                </StackPanel>
+                <StackPanel>
+                    <WrapPanel>
+                        <StackPanel>
+                            <TextBlock Margin="5">Art</TextBlock>
+                        </StackPanel>
+                        <StackPanel>
+                            <ListBox Name="lbxArt" Width="100" Margin="5" SelectionChanged="lbxGrupp_SelectionChanged"></ListBox>
+                        </StackPanel>
+                    </WrapPanel>
+                    <Button Margin="5" MinWidth="100" Name="btnLäggTillDjur" Click="btnLäggTillDjur_Click">Lägg till djur</Button>
                 </StackPanel>
             </WrapPanel>
         </GroupBox>

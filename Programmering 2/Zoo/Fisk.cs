@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Zoo
 {
-    internal class Fisk : Djur
+    abstract internal class Fisk : Djur
     {
         // Egenskaper
         public bool Sötvatten { get; }
