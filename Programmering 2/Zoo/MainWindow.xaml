@@ -50,7 +50,7 @@
                             <TextBlock Margin="5">Art</TextBlock>
                         </StackPanel>
                         <StackPanel>
-                            <ListBox Name="lbxArt" Width="100" Margin="5" SelectionChanged="lbxGrupp_SelectionChanged"></ListBox>
+                            <ListBox Name="lbxArt" Width="100" Margin="5" SelectedIndex="0"></ListBox>
                         </StackPanel>
                     </WrapPanel>
                     <Button Margin="5" MinWidth="100" Name="btnLäggTillDjur" Click="btnLäggTillDjur_Click">Lägg till djur</Button>

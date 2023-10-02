@@ -6,9 +6,16 @@ using System.Threading.Tasks;
 
 namespace Zoo
 {
-    internal class Sill
+    internal class Sill : Fisk
     {
         public string Lekperiod { get; }
-        public Sill() { }
+        public Sill(string _namn, double _ålder, KönTyp _kön, bool _nattaktiv, string _lekperiod) : base(_namn, _ålder, _kön, _nattaktiv)
+        {
+            Lekperiod = _lekperiod;
+        }
+        public override string ToString()
+        {
+            return base.ToString() + " och lekperioden är " + Lekperiod;
+        }
     }
 }

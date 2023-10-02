@@ -6,9 +6,16 @@ using System.Threading.Tasks;
 
 namespace Zoo
 {
-    internal class Lax
+    internal class Lax : Fisk
     {
-        public string Födelseplats { }
-        public Lax() { }
+        public string Födelseplats { get; }
+        public Lax(string _namn, double _ålder, KönTyp _kön, bool _nattaktiv, string _födelseplats) : base(_namn, _ålder, _kön, _nattaktiv)
+        {
+            Födelseplats = _födelseplats;
+        }
+        public override string ToString()
+        {
+            return base.ToString() + " och är född i " + Födelseplats;
+        }
     }
 }

@@ -16,4 +16,14 @@ namespace Zoo
         Däggdjur,
         Fisk
     }
+    enum DäggdjurTyp
+    {
+        Hund,
+        Katt,
+    }
+    enum FiskTyp
+    {
+        Lax,
+        Sill
+    }
 }
