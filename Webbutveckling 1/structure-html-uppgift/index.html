@@ -2,70 +2,81 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple House</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="/your-path-to-fontawesome/css/fontawesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" 
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <nav>
-        <h1 class="nav title" id="site-title">Simple House</h1>
-        <h3 class="nav"><a href="#">Home</a></h3>
-        <h3 class="nav"><a href="#">About</a></h3>
-        <h3 class="nav"><a href="#">Contact</a></h3>
-    </nav>
+    <!--Navigation starts here-->
+    <header>
+        <img src="resources/simple-house-01.jpg" alt="simple house">
+        <div class="menu-head">
+            <i class="fas fa-clone"></i>
+            <h1 class="menu-header">Simple House</h1>
+        </div>
+        <nav class="menu">
+            <ul class="menu-list">
+                <li class="menu-item"><a href="#">Home</a></li>
+                <li class="menu-item"><a href="#">About</a></li>
+                <li class="menu-item"><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!--Navigation ends here and main start-->
     <main>
-        <div>
-             <h1>Welcome to Simple House</h1>
-             <i class="fa-"></i>
-             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
-                Perferendis, architecto minus, impedit quae neque earum 
-                quis, quo dolores ad fugit libero aliquam minima magnam 
-                eaque aut excepturi voluptates optio. Veritatis doloribus 
-                vel error accusamus at aliquid ipsum ab, cumque omnis 
-                optio excepturi dolorum earum molestias laboriosam odit 
-                saepe officiis maxime.</p>
-                <div>
-                    <button type="button">Pizza</button>
-                    <button type="button">Salad</button>
-                    <button type="button">Noodle</button>
-                </div>
+        <div class="welcome"> <!--Here is a welcomemessage and about-->
+            <div class="welcome-info">
+                <h1 class="welcome-message">Welcome to Simple House</h1>
+                 <p class="welcome-about">Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
+                    Perferendis, architecto minus, impedit quae neque earum 
+                    quis, quo dolores ad fugit libero aliquam minima magnam 
+                    eaque aut excepturi voluptates optio. Veritatis doloribus 
+                    vel error accusamus at aliquid ipsum ab, cumque omnis 
+                    optio excepturi dolorum earum molestias laboriosam odit 
+                    saepe officiis maxime.</p>
+            </div>
+            <div class="filter"> <!--Filter for the pagearticles-->
+                <button type="button" class="filter-pizza">Pizza</button>
+                <button type="button" class="filter-salad">Salad</button>
+                <button type="button" class="filter-noodle">Noodle</button>
+            </div>
         </div>
-        <div class="food-articles">
-            <article>
+        <div class="food-articles"> <!--Here comes 4 food articles in a row-->
+            <article class="article"> 
                 <img src="resources/01.jpg" alt="Lorem">
-                <h2>Lorem, ipsum dolor.</h2>
-                <p>Lorem ipsum dolor sit amet consectetur 
+                <h2 class="article-header">Lorem, ipsum dolor.</h2>
+                <p class="article-content">Lorem ipsum dolor sit amet consectetur 
                     adipisicing elit. Error eveniet dolorum 
                     rem temporibus enim facere!</p>
             </article>
-            <article>
+            <article class="article">
                 <img src="resources/02.jpg" alt="Lorem">
-                <h2>Lorem, ipsum dolor.</h2>
-                <p>Lorem ipsum dolor sit amet consectetur 
+                <h2 class="article-header">Lorem, ipsum dolor.</h2>
+                <p class="article-content">Lorem ipsum dolor sit amet consectetur 
                     adipisicing elit. Error eveniet dolorum 
                     rem temporibus enim facere!</p>
             </article>
-            <article>
+            <article class="article">
                 <img src="resources/03.jpg" alt="Lorem">
-                <h2>Lorem, ipsum dolor.</h2>
-                <p>Lorem ipsum dolor sit amet consectetur 
+                <h2 class="article-header">Lorem, ipsum dolor.</h2>
+                <p class="article-content">Lorem ipsum dolor sit amet consectetur 
                     adipisicing elit. Error eveniet dolorum 
                     rem temporibus enim facere!</p>
             </article>
-            <article>
+            <article class="article">
                 <img src="resources/04.jpg" alt="Lorem">
-                <h2>Lorem, ipsum dolor.</h2>
-                <p>Lorem ipsum dolor sit amet consectetur 
+                <h2 class="article-header">Lorem, ipsum dolor.</h2>
+                <p class="article-content">Lorem ipsum dolor sit amet consectetur 
                     adipisicing elit. Error eveniet dolorum 
                     rem temporibus enim facere!</p>
             </article>
-        </div>
+        </div> <!--The food articles ends here-->
         <div>
-            <section>
+            <section> <!--Here comes one focused article-->
                 <img src="resources/img-01.jpg" alt="Lorem">
-                <h2>Lorem, ipsum dolor.</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur 
+                <h2 class="article-header">Lorem, ipsum dolor.</h2>
+                <p class="article-content">Lorem ipsum dolor sit amet, consectetur 
                     adipisicing elit. Doloribus, repudiandae 
                     eius quaerat eos quia ex aliquam reprehenderit 
                     delectus est suscipit corporis odio adipisci 
@@ -75,9 +86,10 @@
                     impedit rerum, eligendi soluta placeat quasi 
                     delectus magnam totam vero?</p>
                 <button type="button">Read More</button>
-            </section>
+            </section> <!--Here does that one focused article end-->
         </div>
     </main>
-    <footer><p>Copyright 2020 Simple House | Design: TemplateMo</p></footer>
+    <!--Here does the main end and footer begin-->
+    <footer><p class="copyright">Copyright 2020 Simple House | Design: TemplateMo</p></footer>
 </body>
 </html>
