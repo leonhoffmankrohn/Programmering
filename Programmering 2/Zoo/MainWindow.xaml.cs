@@ -43,16 +43,15 @@ namespace Zoo
                 lbxGrupp.Items.Add(typ);
             }
                
-         
             lbxGrupp.SelectedIndex = 0;
             tblSpc1.Text = "Nattaktivt?";
+            lviewRegister.ItemsSource = djurlista;
         }
 
         // Här uppdateras listview:en med korresponderande data
         void UppdateraLviewRegister()
         {
-            lviewRegister.ItemsSource = null;
-            lviewRegister.ItemsSource = djurlista;
+            lviewRegister.Items.Refresh();
         }
 
         // Här skapas ett djur och läggs till i en djurlista
@@ -88,31 +87,76 @@ namespace Zoo
             SkapaDjur(namn, ålder, könet, harExtraAttribut, attribut2);
             UppdateraLviewRegister();
         }
+        void lbxArt_Ändra(Enum art)
+        {
+            lbxArt.Items.Clear();
+            string[] djurtyper = Enum.GetNames(typeof(art));
+            foreach (string typ in djurtyper) { lbxArt.Items.Add(typ); }
+        }
 
         // Här ändrar vi frågan i textblocket ifall däggdjur eller fisk är vald i listboxen
         private void lbxGrupp_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int gruppval = lbxGrupp.SelectedIndex;
-            //lbxArt.Items.Add("Hello");
+            DjurTyp gruppval = (DjurTyp)lbxGrupp.SelectedIndex;
             
-            if (gruppval == 0) // Däggdjur
+            if (gruppval == DjurTyp.Däggdjur) // Däggdjur
             {
                 tblSpc1.Text = "Nattaktivt?";
-                lbxArt.Items.Clear();
-                string[] djurtyper = Enum.GetNames(typeof(DäggdjurTyp));
-                foreach (string typ in djurtyper) { lbxArt.Items.Add(typ); }
+
+                lbxArt_Ändra(DäggdjurTyp.Hund);
+
             }
-            else if (gruppval == 1) // Fisk
+            else if (gruppval == DjurTyp.Fisk) // Fisk
             {
                 tblSpc1.Text = "Sötvatten?";
-                lbxArt.Items.Clear();
-                string[] djurtyper = Enum.GetNames(typeof(FiskTyp));
-                foreach (string typ in djurtyper) lbxArt.Items.Add(typ);
+
+                lbxArt_Ändra(FiskTyp.Lax);
             }
+            lbxArt.SelectedIndex = 0;
 
-            //lbxArt.Items.Clear();
-            //lbxArt.SelectedIndex = 0;
+        }
 
+        private void lbxArt_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DjurTyp gruppval = (DjurTyp)lbxGrupp.SelectedIndex;
+            Enum artval = (gruppval == DjurTyp.Däggdjur) ? (DäggdjurTyp)artval : (FiskTyp)artval;
+            
+            /*if (gruppval == DjurTyp.Däggdjur)
+            {
+                DäggdjurTyp artval = (DäggdjurTyp)lbxArt.SelectedIndex;
+                if (artval == DäggdjurTyp.Hund)
+                {
+                    tblSpc2.Text = "Ras";
+                    lbxArt.Items.Clear();
+                    string[] djurtyper = Enum.GetNames(typeof(DäggdjurTyp));
+                    foreach (string typ in djurtyper) { lbxArt.Items.Add(typ); }
+                }
+                else if (artval == DäggdjurTyp.Katt)
+                {
+                    tblSpc2.Text = "Sötvatten?";
+                    lbxArt.Items.Clear();
+                    string[] djurtyper = Enum.GetNames(typeof(FiskTyp));
+                    foreach (string typ in djurtyper) lbxArt.Items.Add(typ);
+                }
+            }
+            else if (gruppval == DjurTyp.Fisk)
+            {
+                FiskTyp artval = (FiskTyp)lbxArt.SelectedIndex;
+                if(artval == FiskTyp.Lax)
+                {
+                    tblSpc2.Text = "Nattaktivt?";
+                    lbxArt.Items.Clear();
+                    string[] djurtyper = Enum.GetNames(typeof(DäggdjurTyp));
+                    foreach (string typ in djurtyper) { lbxArt.Items.Add(typ); }
+                }
+                else if (artval == FiskTyp.Sill)
+                {
+                    tblSpc2.Text = "Sötvatten?";
+                    lbxArt.Items.Clear();
+                    string[] djurtyper = Enum.GetNames(typeof(FiskTyp));
+                    foreach (string typ in djurtyper) lbxArt.Items.Add(typ);
+                }*/
+            }
         }
     }
 }

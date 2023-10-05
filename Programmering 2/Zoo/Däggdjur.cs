@@ -20,7 +20,7 @@ namespace Zoo
         // Skriver ut motsvarnde värde för egenskapen Nattaktiv
         public override string ToString()
         {
-            return (Nattaktiv) ? "Ett däggdjur som är nattaktiv" : "Ett däggdjur som ej är nattaktiv";
+            return (Nattaktiv) ? "som är ett nattaktivt däggdjur" : "som inte är ett nattaktivt däggdjur";
         }
     }
 }

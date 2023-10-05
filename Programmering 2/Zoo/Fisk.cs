@@ -20,7 +20,7 @@ namespace Zoo
         // Returnerar ett värde motsvarande till egenskapen
         public override string ToString()
         {
-            return (Sötvatten) ? "En fisk som lever i sötvatten" : "En fisk som lever i havet";
+            return (Sötvatten) ? "som lever i sötvatten" : "som lever i havet";
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Zoo
         }
         public override string ToString()
         {
-            return base.ToString() + " och lekperioden är " + Lekperiod;
+            return "En sill " + base.ToString() + " som har lekperioden: " + Lekperiod;
         }
     }
 }

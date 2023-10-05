@@ -15,7 +15,7 @@ namespace Zoo
         }
         public override string ToString()
         {
-            return base.ToString() + " och har " + Päls + " päls";
+            return "En katt " + base.ToString() + " som har pälsen: " + Päls;
         }
     }
 }
