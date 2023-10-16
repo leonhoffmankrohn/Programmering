@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -58,22 +59,9 @@ namespace Zoo
         // Här skapas ett djur och läggs till i en djurlista
         void SkapaDjur(string namn, double ålder, KönTyp kön, bool harExtraAttribut, string attribut2)
         {
-
-
-            // index 0 är däggdjur
-            // djurlista.Add((lbxGrupp.SelectedIndex == 0) ? new Däggdjur(namn, ålder, kön, harExtraAttribut): new Fisk(namn, ålder, kön, harExtraAttribut));
-            if (lbxGrupp.SelectedIndex == 0) // Grupp däggdjur
-            {
-                // 0 = hund, 1 = katt
-                if (lbxArt.SelectedIndex == 0) djurlista.Add(new Hund(namn, ålder, kön, harExtraAttribut, attribut2));
-                else djurlista.Add(new Katt(namn, ålder, kön, harExtraAttribut, attribut2));
-            }
-            else // grupp fisk
-            {
-                // 0 = lax, 1 = sill
-                 if (lbxArt.SelectedIndex == 0) djurlista.Add(new Lax(namn, ålder, kön, harExtraAttribut, attribut2));
-                 else djurlista.Add(new Sill(namn, ålder, kön, harExtraAttribut, attribut2));
-            }
+            DjurTyp gruppval = (DjurTyp)lbxGrupp.SelectedIndex;
+            Enum artval = (gruppval.Equals(DjurTyp.Däggdjur)) ? (DäggdjurTyp)lbxArt.SelectedIndex : (FiskTyp)lbxArt.SelectedIndex;
+            djurlista.Add(djurskaparn.SkapaDjur(gruppval, artval, namn, ålder, kön, harExtraAttribut, attribut2));
         }
 
         // Denna körs vid knapptryck och samlar in data om djuret och skickar data för skapande och lagrande av djur men åker också vidare till att uppdatera listview:en
@@ -88,6 +76,7 @@ namespace Zoo
             UppdateraLviewRegister();
         }
 
+        // Här ändrar vi vad som ska stå i spec 2
         void SättArtText()
         {
             DjurTyp gruppval = (DjurTyp)lbxGrupp.SelectedIndex;
@@ -104,26 +93,24 @@ namespace Zoo
             }
         }
 
-        void ArtSättLbx(Enum art) // bara ändra labeln
-        {
-            lbxArt.Items.Clear();
-            string[] djurtyper = Enum.GetNames(typeof());
-            foreach (string typ in djurtyper) { lbxArt.Items.Add(typ); }
-        }
-
-        void GruppÄndraSpec1()
+        // Här ändrar vi vad som ska stå i spec 1 ( den som är speciell för djurgruppen ) men också fyller listbox art
+        void ÄndraSpec1()
         {
             DjurTyp gruppval = (DjurTyp)lbxGrupp.SelectedIndex;
 
             if (gruppval is DjurTyp.Däggdjur) // Däggdjur
             {
                 tblSpc1.Text = "Nattaktivt?";
-                ArtSättLbx(DäggdjurTyp.Hund);
+                lbxArt.Items.Clear();
+                string[] djurtyper = Enum.GetNames(typeof(DäggdjurTyp));
+                foreach (string typ in djurtyper) { lbxArt.Items.Add(typ); }
             }
             else if (gruppval is DjurTyp.Fisk) // Fisk
             {
                 tblSpc1.Text = "Sötvatten?";
-                ArtSättLbx(FiskTyp.Lax);
+                lbxArt.Items.Clear();
+                string[] djurtyper = Enum.GetNames(typeof(FiskTyp));
+                foreach (string typ in djurtyper) { lbxArt.Items.Add(typ); }
             }
             lbxArt.SelectedIndex = 0;
         }
@@ -131,13 +118,13 @@ namespace Zoo
         // Här ändrar vi frågan i textblocket ifall däggdjur eller fisk är vald i listboxen
         private void lbxGrupp_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            GruppÄndraSpec1();
+            ÄndraSpec1();
         }
 
+        // Ändrar frågan för arten
         private void lbxArt_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SättArtText();
         }
-
     }
 }
