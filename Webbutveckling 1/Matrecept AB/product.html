@@ -16,6 +16,12 @@
              width: 800px;
              height: 300px;
         }
+        .shop-item{
+            border-width: 1px;
+            border-style: dashed;
+            margin: 10px;
+            padding: 5px;
+        }
     </style>
 </head>
 <body>
@@ -101,36 +107,42 @@
         </div>
         <div class="buy">
             <table>
-                <caption>Våra priser</caption>
+                <caption class="shoppingsystem-label">Våra priser</caption>
                 <tr>
                     <th>Boktitel</th>
                     <th>Författare</th>
                     <th>pris i kr</th>
+                    <th>Lägg till i kundkorg</th>
                 </tr>
                 <tr>
                     <td>Wok, Ris, Nudlar</td>
                     <td>Fredrik N.</td>
                     <td>75 kr</td>
+                    <td><button class="add-to-shopping-cart">Lägg till</button></td>
                 </tr>
                 <tr>
                     <td>100 familljerecept</td>
                     <td>Petter O</td>
                     <td>175 kr</td>
+                    <td><button class="add-to-shopping-cart">Lägg till</button></td>
                 </tr>
                 <tr>
                     <td>Det autoimuna köket</td>
                     <td>Cecilia N</td>
                     <td>85 kr</td>
+                    <td><button class="add-to-shopping-cart">Lägg till</button></td>
                 </tr>
                 <tr>
                     <td>Food Pharmacy : kokboken</td>
                     <td>Mia C</td>
                     <td>125 kr</td>
+                    <td><button class="add-to-shopping-cart">Lägg till</button></td>
                 </tr>
                 <tr>
                     <td>Grön mat för gravida och barnfamiljer</td>
                     <td>Åsa S</td>
                     <td>175 kr</td>
+                    <td><button class="add-to-shopping-cart">Lägg till</button></td>
                 </tr>
             </table>
         </div>
@@ -140,6 +152,7 @@
                     <legend class="form-title">Kommentera</legend>
                     <label for="comment-message" class="comment-title">Vad tycker du om våran hemsida, vad finns det inte att gilla?</label>
                     <input type="text" name="comment-message" id="comment-message" class="comment-message">
+                    <input type="submit" value="Skicka">
                 </fieldset>
             </form>
         </div>
