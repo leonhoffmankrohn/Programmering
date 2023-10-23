@@ -12,6 +12,7 @@ namespace Zoo
         public Sill(string _namn, double _ålder, KönTyp _kön, bool _nattaktiv, string _lekperiod) : base(_namn, _ålder, _kön, _nattaktiv)
         {
             Lekperiod = _lekperiod;
+            ÄggPerKull = 30000;
         }
         public override string ToString()
         {

@@ -14,7 +14,8 @@ namespace Zoo
     enum DjurTyp
     {
         Däggdjur,
-        Fisk
+        Fisk,
+        Fågel
     }
     enum DäggdjurTyp
     {
@@ -25,5 +26,10 @@ namespace Zoo
     {
         Lax,
         Sill
+    }
+    enum FågelTyp
+    {
+        Hackspett,
+        Falk
     }
 }

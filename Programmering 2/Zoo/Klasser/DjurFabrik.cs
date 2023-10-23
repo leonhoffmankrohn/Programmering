@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Zoo.Klasser.Fågelklasser;
 
 namespace Zoo
 {
@@ -18,10 +20,15 @@ namespace Zoo
                 if (arttyp.Equals(DäggdjurTyp.Hund)) return (new Hund(namn, ålder, kön, harExtraAttribut, attribut2));
                 else return (new Katt(namn, ålder, kön, harExtraAttribut, attribut2));
             }
-            else // Grupp fisk
+            else if (djurtyp.Equals(DjurTyp.Fisk))// Grupp fisk
             {
                 if (arttyp.Equals(FiskTyp.Lax)) return (new Lax(namn, ålder, kön, harExtraAttribut, attribut2));
                 else return (new Sill(namn, ålder, kön, harExtraAttribut, attribut2));
+            }
+            else // if (djurtyp.Equals(DjurTyp.Fågel)) skippar dehär eftersom det inte kan vara något annat djur.
+            {
+                if (arttyp.Equals(FågelTyp.Hackspett)) return (new Hackspett(namn, ålder, kön, harExtraAttribut, attribut2));
+                else return (new Falk(namn, ålder, kön, harExtraAttribut, attribut2));
             }
         }
     }

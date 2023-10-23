@@ -5,25 +5,25 @@ using System.Text;
 using System.Threading.Tasks;
 using Zoo.Interfaces;
 
-namespace Zoo
+namespace Zoo.Klasser.Fågelklasser
 {
-    abstract internal class Fisk : Djur, ILäggÄgg
+    internal class Fågel : Djur, ILäggÄgg
     {
         Random rnd = new Random();
         // Egenskaper
-        public bool Sötvatten { get; }
+        public bool Flyttfågel { get; }
         public int ÄggPerKull { get; set; }
 
         // Konstruktören
-        public Fisk(string _namn, double _ålder, KönTyp _kön, bool _sötvatten) : base(_namn, _ålder, _kön)
+        public Fågel(string _namn, double _ålder, KönTyp _kön, bool _flyttfågel) : base(_namn, _ålder, _kön)
         {
-            Sötvatten = _sötvatten;
+            Flyttfågel = _flyttfågel;
         }
 
         // Returnerar ett värde motsvarande till egenskapen
         public override string ToString()
         {
-            return (Sötvatten) ? "som lever i sötvatten" : "som lever i havet";
+            return (Flyttfågel) ? "som är en flyttfågel" : "som inte är en flyttfågel";
         }
 
         public string LäggÄgg()

@@ -8,7 +8,7 @@ namespace Zoo.Interfaces
 {
     internal interface ILäggÄgg
     {
-        public double ÄggPerKull {get; set;}
+        public int ÄggPerKull {get; set;}
 
         public string LäggÄgg();
     }

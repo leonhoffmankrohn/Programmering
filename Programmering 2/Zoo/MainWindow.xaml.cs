@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Zoo.Klasser.Fågelklasser;
 
 namespace Zoo
 {
@@ -58,7 +59,10 @@ namespace Zoo
         void SkapaDjur(string namn, double ålder, KönTyp kön, bool harExtraAttribut, string attribut2)
         {
             DjurTyp gruppval = (DjurTyp)lbxGrupp.SelectedIndex;
-            Enum artval = (gruppval.Equals(DjurTyp.Däggdjur)) ? (DäggdjurTyp)lbxArt.SelectedIndex : (FiskTyp)lbxArt.SelectedIndex;
+            Enum artval;
+            if (gruppval.Equals(DjurTyp.Däggdjur))  artval = (DäggdjurTyp)lbxArt.SelectedIndex;
+            else if (gruppval.Equals(DjurTyp.Fisk)) artval = (FiskTyp)lbxArt.SelectedIndex;
+            else artval = (FågelTyp)lbxArt.SelectedIndex;
             djurlista.Add(djurskaparn.SkapaDjur(gruppval, artval, namn, ålder, kön, harExtraAttribut, attribut2));
         }
 
@@ -94,6 +98,11 @@ namespace Zoo
                 FiskTyp artval = (FiskTyp)lbxArt.SelectedIndex;
                 tblSpc2.Text = (artval is FiskTyp.Lax) ? "Födelseplats?" : "Lekperiod?";
             }
+            else if (gruppval is DjurTyp.Fågel)
+            {
+                FågelTyp artval = (FågelTyp)lbxArt.SelectedIndex;
+                tblSpc2.Text = (artval is FågelTyp.Hackspett) ? "Typ?" : "Vingspann?";
+            }
         }
 
         // Här ändrar vi vad som ska stå i spec 1 ( den som är speciell för djurgruppen ) men också fyller listbox art
@@ -115,9 +124,18 @@ namespace Zoo
                 string[] djurtyper = Enum.GetNames(typeof(FiskTyp));
                 foreach (string typ in djurtyper) { lbxArt.Items.Add(typ); }
             }
-            lbxArt.SelectedIndex = 0;
+            else if (gruppval is DjurTyp.Fågel)
+            {
+                tblSpc1.Text = "Flyttfågel?";
+                lbxArt.Items.Clear();
+                string[] djurtyper = Enum.GetNames(typeof(FågelTyp));
+                foreach (string typ in djurtyper)
+                {
+                    lbxArt.Items.Add(typ);
+                }
+                lbxArt.SelectedIndex = 0;
+            }
         }
-
 
         // Denna körs vid knapptryck och samlar in data om djuret och skickar data
         // för skapande och lagrande av djur men åker också vidare till att uppdatera listview:en
@@ -141,12 +159,26 @@ namespace Zoo
 
         private void lviewRegister_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            Djur djur = djurlista[lviewRegister.SelectedIndex];
+            if (djur.Kön == KönTyp.Hona && ((djur as Fågel).ÄggPerKull != 0) || ((djur as Fisk).ÄggPerKull != 0))
+            {
+                btnLäggÄgg.IsEnabled = true;
+            }
+            else btnLäggÄgg.IsEnabled = false;
         }
 
         private void btnLäggÄgg_Click(object sender, RoutedEventArgs e)
         {
-
+            Djur djur = djurlista[lviewRegister.SelectedIndex];
+            if (djur is Fågel)
+            {
+                tblÄggVärpning.Text = (djur as Fågel).LäggÄgg();
+            }
+            else
+            {
+                tblÄggVärpning.Text = (djur as Fisk).LäggÄgg();
+            }
+            
         }
     }
 }
