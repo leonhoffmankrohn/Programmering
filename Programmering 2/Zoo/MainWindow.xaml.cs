@@ -157,6 +157,7 @@ namespace Zoo
             SättArtText();
         }
 
+        // Kollar om vald är hona och kan värpa, då 
         private void lviewRegister_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Djur djur = djurlista[lviewRegister.SelectedIndex];
