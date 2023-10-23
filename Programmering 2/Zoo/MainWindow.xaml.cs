@@ -138,5 +138,15 @@ namespace Zoo
         {
             SättArtText();
         }
+
+        private void lviewRegister_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void btnLäggÄgg_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

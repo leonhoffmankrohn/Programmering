@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Zoo"
         mc:Ignorable="d"
-        Title="Mitt Zoo" Height="450" Width="500">
+        Title="Mitt Zoo" Height="400" Width="662">
     <Grid>
         <GroupBox Header="Nytt djur" Height="225" VerticalAlignment="Top" Margin="5">
             <WrapPanel>
@@ -58,17 +58,23 @@
             </WrapPanel>
         </GroupBox>
         <GroupBox Header="Register" Height="225" VerticalAlignment="Bottom" Margin="5">
-			<ListView x:Name="lviewRegister" d:ItemsSource="{d:SampleData ItemCount=5}">
-				<ListView.View>
-					<GridView>
-                        <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"></GridViewColumn>
-                        <GridViewColumn Header="Namn" DisplayMemberBinding="{Binding Namn}"></GridViewColumn>
-						<GridViewColumn Header="Ålder" DisplayMemberBinding="{Binding Ålder}"></GridViewColumn>
-                        <GridViewColumn Header="Kön" DisplayMemberBinding="{Binding Kön}"></GridViewColumn>
-                        <GridViewColumn Header="Beskrivning" DisplayMemberBinding="{Binding Beskrivning}"></GridViewColumn>
-                    </GridView>
-				</ListView.View>
-			</ListView>
+            <StackPanel>
+                <ListView Height="150" x:Name="lviewRegister" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="lviewRegister_SelectionChanged">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"></GridViewColumn>
+                            <GridViewColumn Header="Namn" DisplayMemberBinding="{Binding Namn}"></GridViewColumn>
+                            <GridViewColumn Header="Ålder" DisplayMemberBinding="{Binding Ålder}"></GridViewColumn>
+                            <GridViewColumn Header="Kön" DisplayMemberBinding="{Binding Kön}"></GridViewColumn>
+                            <GridViewColumn Header="Beskrivning" DisplayMemberBinding="{Binding Beskrivning}"></GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <WrapPanel>
+                    <Button Name="btnLäggÄgg" Margin="5" Padding="10,0" Click="btnLäggÄgg_Click" IsEnabled="False">Lägg ägg</Button>
+                    <TextBlock Margin="5"></TextBlock>
+                </WrapPanel>
+            </StackPanel>
         </GroupBox>
     </Grid>
 </Window>
