@@ -13,9 +13,10 @@ namespace Zoo
         {
             Ras = _ras;
         }
+   
         public override string ToString()
         {
-            //return "En hund " base.ToString() + " och är av rasen " + Ras;
+            return "En hund " + base.ToString() + " och är av rasen " + Ras;
         }
     }
 }

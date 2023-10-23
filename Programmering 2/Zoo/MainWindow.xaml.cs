@@ -26,16 +26,19 @@ namespace Zoo
         public MainWindow()
         {
             InitializeComponent();
+            FörstaInititiation();
+        }
 
-            // Här läggs värden in som ska vara från början
+        // Initieras en gång, den skapar variabler, listor, objekt och sammankopplar som vi senare använder i koden.
+        void FörstaInititiation()
+        {
             string[] köntyper = Enum.GetNames(typeof(KönTyp));
 
             foreach (string kön in köntyper)
             {
                 lbxKön.Items.Add(kön);
             }
-               
-            
+
             lbxKön.SelectedIndex = 0;
 
             string[] djurtyper = Enum.GetNames(typeof(DjurTyp));
@@ -44,19 +47,14 @@ namespace Zoo
             {
                 lbxGrupp.Items.Add(typ);
             }
-               
+
             lbxGrupp.SelectedIndex = 0;
             tblSpc1.Text = "Nattaktivt?";
             lviewRegister.ItemsSource = djurlista;
         }
 
-        // Här uppdateras listview:en med korresponderande data
-        void UppdateraLviewRegister()
-        {
-            lviewRegister.Items.Refresh();
-        }
-
-        // Här skapas ett djur och läggs till i en djurlista
+        // Här skickas all data om djuret och hämtas data som handlar om vilket djur och
+        // skickar sedan vidare det till en klass som ger oss djuret i objekt(snacka om objektifiering)
         void SkapaDjur(string namn, double ålder, KönTyp kön, bool harExtraAttribut, string attribut2)
         {
             DjurTyp gruppval = (DjurTyp)lbxGrupp.SelectedIndex;
@@ -64,8 +62,8 @@ namespace Zoo
             djurlista.Add(djurskaparn.SkapaDjur(gruppval, artval, namn, ålder, kön, harExtraAttribut, attribut2));
         }
 
-        // Denna körs vid knapptryck och samlar in data om djuret och skickar data för skapande och lagrande av djur men åker också vidare till att uppdatera listview:en
-        private void btnLäggTillDjur_Click(object sender, RoutedEventArgs e)
+        // Denna metod hämtar data från formuläret samt skickar vidare den för att senare bli till ett objekt
+        void HämtaDjurDataSamtSkickaVidare()
         {
             string namn = tbxNamn.Text;
             double.TryParse(tbxÅlder.Text, out double ålder);
@@ -73,7 +71,12 @@ namespace Zoo
             bool harExtraAttribut = (rbJa.IsChecked == true) ? true : false;
             string attribut2 = tbxSpc2.Text;
             SkapaDjur(namn, ålder, könet, harExtraAttribut, attribut2);
-            UppdateraLviewRegister();
+        }
+
+        // Här uppdateras listview:en med korresponderande data
+        void UppdateraLviewRegister()
+        {
+            lviewRegister.Items.Refresh();
         }
 
         // Här ändrar vi vad som ska stå i spec 2
@@ -89,7 +92,7 @@ namespace Zoo
             else if (gruppval is DjurTyp.Fisk)
             {
                 FiskTyp artval = (FiskTyp)lbxArt.SelectedIndex;
-                tblSpc2.Text = (artval is FiskTyp.Lax) ? "Nattaktivt?" : "Sötvatten?";
+                tblSpc2.Text = (artval is FiskTyp.Lax) ? "Födelseplats?" : "Lekperiod?";
             }
         }
 
@@ -115,13 +118,22 @@ namespace Zoo
             lbxArt.SelectedIndex = 0;
         }
 
-        // Här ändrar vi frågan i textblocket ifall däggdjur eller fisk är vald i listboxen
+
+        // Denna körs vid knapptryck och samlar in data om djuret och skickar data
+        // för skapande och lagrande av djur men åker också vidare till att uppdatera listview:en
+        private void btnLäggTillDjur_Click(object sender, RoutedEventArgs e)
+        {
+            HämtaDjurDataSamtSkickaVidare();
+            UppdateraLviewRegister();
+        }
+
+        // Ändrar frågan som är specifik för djurgruppen
         private void lbxGrupp_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ÄndraSpec1();
         }
 
-        // Ändrar frågan för arten
+        // Ändrar frågan som är specifik för arten
         private void lbxArt_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SättArtText();
