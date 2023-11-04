@@ -9,7 +9,7 @@
  */
 
 // Nu är aplha och definitioners index motsvarande.
-Initialize(out char[] alpha, out string[] definitions);
+Begin(out char[] alpha, out string[] definitions);
 
 // Hämtar antalet definitioner som vi vet om från början
 bool clear = int.TryParse(Console.ReadLine(), out int numDefs);
@@ -46,11 +46,10 @@ void GetDefinitions(int numberOfDefs)
         char alphakey = input[0];
         int index = Array.IndexOf(alpha, alphakey);
         definitions[index] = input.Substring(2);
-        Console.WriteLine("\n--- " + alphakey + " = " + definitions[index] + " ---\n");
     }
 }
 
-void Initialize(out char[] a, out string[] b)
+void Begin(out char[] a, out string[] b)
 {
     string alphabethstring = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     a = alphabethstring.ToCharArray();
