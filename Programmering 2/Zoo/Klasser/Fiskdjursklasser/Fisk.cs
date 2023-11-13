@@ -28,8 +28,8 @@ namespace Zoo
 
         public string LäggÄgg()
         {
-            int a = (int)(rnd.Next(80, 120) / 100 * ÄggPerKull);
-            return Namn + "har lagt " + a + " ägg.";
+            int a = (int)(rnd.Next(80, 120) / 100.0 * ÄggPerKull);
+            return Namn + " har lagt " + a + " ägg.";
         }
     }
 }

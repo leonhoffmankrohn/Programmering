@@ -25,7 +25,7 @@ namespace Zoo
                 if (arttyp.Equals(FiskTyp.Lax)) return (new Lax(namn, ålder, kön, harExtraAttribut, attribut2));
                 else return (new Sill(namn, ålder, kön, harExtraAttribut, attribut2));
             }
-            else // if (djurtyp.Equals(DjurTyp.Fågel)) skippar dehär eftersom det inte kan vara något annat djur.
+            else // if (djurtyp.Equals(DjurTyp.Fågel)) skippar dehär eftersom det inte kan vara något annat djur. Grupp fågel
             {
                 if (arttyp.Equals(FågelTyp.Hackspett)) return (new Hackspett(namn, ålder, kön, harExtraAttribut, attribut2));
                 else return (new Falk(namn, ålder, kön, harExtraAttribut, attribut2));

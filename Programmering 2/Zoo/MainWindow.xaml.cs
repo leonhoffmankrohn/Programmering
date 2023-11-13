@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Zoo.Interfaces;
 using Zoo.Klasser.Fågelklasser;
 
 namespace Zoo
@@ -83,28 +84,6 @@ namespace Zoo
             lviewRegister.Items.Refresh();
         }
 
-        // Här ändrar vi vad som ska stå i spec 2
-        void SättArtText()
-        {
-            DjurTyp gruppval = (DjurTyp)lbxGrupp.SelectedIndex;
-
-            if (gruppval is DjurTyp.Däggdjur)
-            {
-                DäggdjurTyp artval = (DäggdjurTyp)lbxArt.SelectedIndex;
-                tblSpc2.Text = (artval is DäggdjurTyp.Hund) ? "Ras?" : "Päls?";
-            }
-            else if (gruppval is DjurTyp.Fisk)
-            {
-                FiskTyp artval = (FiskTyp)lbxArt.SelectedIndex;
-                tblSpc2.Text = (artval is FiskTyp.Lax) ? "Födelseplats?" : "Lekperiod?";
-            }
-            else if (gruppval is DjurTyp.Fågel)
-            {
-                FågelTyp artval = (FågelTyp)lbxArt.SelectedIndex;
-                tblSpc2.Text = (artval is FågelTyp.Hackspett) ? "Typ?" : "Vingspann?";
-            }
-        }
-
         // Här ändrar vi vad som ska stå i spec 1 ( den som är speciell för djurgruppen ) men också fyller listbox art
         void ÄndraSpec1()
         {
@@ -137,6 +116,53 @@ namespace Zoo
             }
         }
 
+        // Här ändrar vi vad som ska stå i spec 2
+        void ÄndraSpec2()
+        {
+            DjurTyp gruppval = (DjurTyp)lbxGrupp.SelectedIndex;
+
+            if (gruppval is DjurTyp.Däggdjur)
+            {
+                DäggdjurTyp artval = (DäggdjurTyp)lbxArt.SelectedIndex;
+                tblSpc2.Text = (artval is DäggdjurTyp.Hund) ? "Ras?" : "Päls?";
+            }
+            else if (gruppval is DjurTyp.Fisk)
+            {
+                FiskTyp artval = (FiskTyp)lbxArt.SelectedIndex;
+                tblSpc2.Text = (artval is FiskTyp.Lax) ? "Födelseplats?" : "Lekperiod?";
+            }
+            else if (gruppval is DjurTyp.Fågel)
+            {
+                FågelTyp artval = (FågelTyp)lbxArt.SelectedIndex;
+                tblSpc2.Text = (artval is FågelTyp.Hackspett) ? "Typ?" : "Vingspann?";
+            }
+        }
+
+        // Kollar om djuret kan värpa och aktiverar knappen som kan räkna ut hurm ånga ägg som värps.
+        private void KollaOmVärpning()
+        {
+            Djur djur = djurlista[lviewRegister.SelectedIndex];
+            if (djur.Kön == KönTyp.Hona && (djur is ILäggÄgg))
+            {
+                btnLäggÄgg.IsEnabled = true;
+            }
+            else btnLäggÄgg.IsEnabled = false;
+        }
+
+        // Skriver ut hur många ägg djuret värper
+        private void AntalÄggVärpa()
+        {
+            Djur djur = djurlista[lviewRegister.SelectedIndex];
+            if (djur is Fågel)
+            {
+                tblÄggVärpning.Text = (djur as Fågel).LäggÄgg();
+            }
+            else
+            {
+                tblÄggVärpning.Text = (djur as Fisk).LäggÄgg();
+            }
+        }
+
         // Denna körs vid knapptryck och samlar in data om djuret och skickar data
         // för skapande och lagrande av djur men åker också vidare till att uppdatera listview:en
         private void btnLäggTillDjur_Click(object sender, RoutedEventArgs e)
@@ -154,32 +180,19 @@ namespace Zoo
         // Ändrar frågan som är specifik för arten
         private void lbxArt_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SättArtText();
+            ÄndraSpec2();
         }
 
         // Kollar om vald är hona och kan värpa, då 
         private void lviewRegister_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Djur djur = djurlista[lviewRegister.SelectedIndex];
-            if (djur.Kön == KönTyp.Hona && ((djur as Fågel).ÄggPerKull != 0) || ((djur as Fisk).ÄggPerKull != 0))
-            {
-                btnLäggÄgg.IsEnabled = true;
-            }
-            else btnLäggÄgg.IsEnabled = false;
+            KollaOmVärpning();
         }
 
+        // Kan bara köras om djuret är fågel eller fisk och skriver ut hur många ägg den värper bredvid knappen
         private void btnLäggÄgg_Click(object sender, RoutedEventArgs e)
         {
-            Djur djur = djurlista[lviewRegister.SelectedIndex];
-            if (djur is Fågel)
-            {
-                tblÄggVärpning.Text = (djur as Fågel).LäggÄgg();
-            }
-            else
-            {
-                tblÄggVärpning.Text = (djur as Fisk).LäggÄgg();
-            }
-            
+            AntalÄggVärpa();
         }
     }
 }

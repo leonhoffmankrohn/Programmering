@@ -26,10 +26,10 @@ namespace Zoo.Klasser.Fågelklasser
             return (Flyttfågel) ? "som är en flyttfågel" : "som inte är en flyttfågel";
         }
 
-        public string LäggÄgg()
+        public string LäggÄgg() 
         {
-            int a = (int)(rnd.Next(80, 120) / 100 * ÄggPerKull);
-            return Namn + "har lagt " + a + " ägg.";
+            int a = (int)(rnd.Next(80, 120) / 100.0 * ÄggPerKull);
+            return Namn + " har lagt " + a + " ägg.";
         }
     }
 }
