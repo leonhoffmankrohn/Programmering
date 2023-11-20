@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Zoo.Dialoger;
 using Zoo.Interfaces;
 using Zoo.Klasser.Fågelklasser;
 
@@ -166,6 +167,18 @@ namespace Zoo
             }
         }
 
+        private void TaBortDjur()
+        {
+
+        }
+
+        private void ÄndraDjurlista()
+        {
+            Djur djur = djurlista[lviewRegister.SelectedIndex];
+            ÄndraDjur dialog = new ÄndraDjur(djur);
+            bool ändra = (bool)dialog.ShowDialog();
+        }
+
         // Denna körs vid knapptryck och samlar in data om djuret och skickar data
         // för skapande och lagrande av djur men åker också vidare till att uppdatera listview:en
         private void btnLäggTillDjur_Click(object sender, RoutedEventArgs e)
@@ -190,6 +203,8 @@ namespace Zoo
         private void lviewRegister_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             KollaOmVärpning();
+            btnÄndraLview.IsEnabled = true;
+            btnTaBortLview.IsEnabled = true;
         }
 
         // Kan bara köras om djuret är fågel eller fisk och skriver ut hur många ägg den värper bredvid knappen
@@ -200,12 +215,12 @@ namespace Zoo
 
         private void btnTaBortLview_Click(object sender, RoutedEventArgs e)
         {
-
+            TaBortDjur();
         }
 
         private void btnÄndraLview_Click(object sender, RoutedEventArgs e)
         {
-
+            ÄndraDjurlista();
         }
     }
 }

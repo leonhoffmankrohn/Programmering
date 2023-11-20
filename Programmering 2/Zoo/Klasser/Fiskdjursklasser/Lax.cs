@@ -8,15 +8,15 @@ namespace Zoo
 {
     internal class Lax : Fisk
     {
-        public string Lekperiod { get; }
-        public Lax(string _namn, double _ålder, KönTyp _kön, bool _nattaktiv, string _lekperiod) : base(_namn, _ålder, _kön, _nattaktiv)
+        public string Födselplats { get; }
+        public Lax(string _namn, double _ålder, KönTyp _kön, bool _nattaktiv, string _födselplats) : base(_namn, _ålder, _kön, _nattaktiv)
         {
-            Lekperiod = _lekperiod;
+            Födselplats = _födselplats;
             ÄggPerKull = 10000;
         }
         public override string ToString()
         {
-            return "En lax " + base.ToString() + " som har lekperioden: " + Lekperiod;
+            return "En lax " + base.ToString() + " som har födselplatsen: " + Födselplats;
         }
     }
 }
