@@ -5,6 +5,7 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -25,6 +26,8 @@ namespace Zoo
     {
         List<Djur> djurlista = new List<Djur>();
         DjurFabrik djurskaparn = new DjurFabrik();
+        Window ändraDjurWindow = new Window();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -193,6 +196,16 @@ namespace Zoo
         private void btnLäggÄgg_Click(object sender, RoutedEventArgs e)
         {
             AntalÄggVärpa();
+        }
+
+        private void btnTaBortLview_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnÄndraLview_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

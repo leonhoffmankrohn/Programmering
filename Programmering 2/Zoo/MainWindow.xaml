@@ -70,9 +70,13 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <WrapPanel>
-                    <Button Name="btnLäggÄgg" Margin="5" Padding="10,0" Click="btnLäggÄgg_Click" IsEnabled="False">Lägg ägg</Button>
+                <WrapPanel HorizontalAlignment="Right">
                     <TextBlock Margin="5" Name="tblÄggVärpning"></TextBlock>
+                    <Button Name="btnLäggÄgg" Margin="5" Padding="10,0" Click="btnLäggÄgg_Click" IsEnabled="False">Lägg ägg</Button>
+                </WrapPanel>
+                <WrapPanel HorizontalAlignment="Left">
+                    <Button Name="btnTaBortLview" Margin="5" Padding="10,0" IsEnabled="False" Click="btnTaBortLview_Click">Ta bort</Button>
+                    <Button Name="btnÄndraLview" Margin="5" Padding="10,0" IsEnabled="False" Click="btnÄndraLview_Click">Ändra</Button>
                 </WrapPanel>
             </StackPanel>
         </GroupBox>
