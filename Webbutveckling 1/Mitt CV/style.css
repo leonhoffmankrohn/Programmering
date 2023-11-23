@@ -1,0 +1,41 @@
+* {
+    box-sizing: border-box;
+    margin : 0;
+    padding : 0;
+}
+header{
+    background-color: black;
+    color: white;
+}
+
+.nav_item{
+    box-sizing: content-box;
+    display: inline;
+    background-color: rgb(94, 94, 94);
+    padding: 10px;
+}
+
+.profile_picture{
+    height: 200px;
+    display: block;
+    margin: 0 auto;
+}
+
+.action_item{
+    display: inline;
+    margin:10px;
+    background-color: greenyellow;
+    color:black;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.action_links{
+    margin:20px;
+    text-align: center;
+}
+
+.about, .basic_info {
+    width: 50%;
+    display: inline;
+}

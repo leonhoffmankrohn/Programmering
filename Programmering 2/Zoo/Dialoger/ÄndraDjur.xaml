@@ -54,7 +54,7 @@
                         </StackPanel>
                     </WrapPanel>
                     <WrapPanel Margin="10">
-                        <Button IsDefault="True" Name="btnÄndraDjur" Margin="10,0,0,0" Padding="3">Ändra djur</Button>
+                        <Button IsDefault="True" Name="btnÄndraDjur" Margin="10,0,0,0" Padding="3" Click="btnÄndraDjur_Click">Ändra djur</Button>
                         <Button IsCancel="True" Name="btnAvbryt" Margin="10,0,0,0" Padding="3"> Avbryt</Button>
                     </WrapPanel>
             </StackPanel>

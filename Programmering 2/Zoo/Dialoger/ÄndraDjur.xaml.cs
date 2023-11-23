@@ -38,7 +38,7 @@ namespace Zoo.Dialoger
             {
                 lbxKön.Items.Add(kön);
             }
-            lbxKön.SelectedItem = djur.Kön;
+            lbxKön.SelectedIndex = (int)djur.Kön;
             SättSpec1o2();
         }
 
@@ -95,6 +95,44 @@ namespace Zoo.Dialoger
                     tblSpc2.Text = "Typ";
                 }
             }
+        }
+        internal Djur SkapaDjur()
+        {
+            // gruppval, artval, namn, ålder, kön, harExtraAttribut, attribut2
+            DjurTyp gruppval;
+            Enum artval;
+            if (djur is Däggdjur) // Däggdjur
+            {
+                gruppval = DjurTyp.Däggdjur;
+                artval = (djur is Hund) ? DäggdjurTyp.Hund : DäggdjurTyp.Katt;
+            }
+            else if (djur is Fisk) // Fisk
+            {
+                gruppval = DjurTyp.Fisk;
+                artval = (djur is Lax) ? FiskTyp.Lax : FiskTyp.Sill;
+            }
+            else // Fågel
+            {
+                gruppval = DjurTyp.Fågel;
+                artval = (djur is Falk) ? FågelTyp.Falk : FågelTyp.Hackspett;
+            }
+
+            string namn = tbxNamn.Text;
+            double.TryParse(tbxÅlder.Text, out double ålder);
+            KönTyp könet = (KönTyp)lbxKön.SelectedIndex;
+            bool harExtraAttribut = (rbJa.IsChecked == true) ? true : false;
+            string attribut2 = tbxSpc2.Text;
+
+            DjurFabrik djurskaparn = new DjurFabrik();
+            Djur nyttDjur = djurskaparn.SkapaDjur(gruppval, artval, namn, ålder, könet, harExtraAttribut, attribut2);
+            nyttDjur.Id = djur.Id;
+            return nyttDjur;
+        }
+
+        private void btnÄndraDjur_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
+            this.Close();
         }
     }
 }

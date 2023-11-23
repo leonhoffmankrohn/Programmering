@@ -169,14 +169,23 @@ namespace Zoo
 
         private void TaBortDjur()
         {
-
+            Djur d = (Djur)lviewRegister.Items[lviewRegister.SelectedIndex];
+            djurlista.Remove(d);
         }
 
         private void ÄndraDjurlista()
         {
-            Djur djur = djurlista[lviewRegister.SelectedIndex];
+            int listindex = lviewRegister.SelectedIndex;
+            Djur djur = djurlista[listindex];
             ÄndraDjur dialog = new ÄndraDjur(djur);
             bool ändra = (bool)dialog.ShowDialog();
+
+            if (ändra)
+            {
+                Djur nyttdjur = dialog.SkapaDjur();
+                djurlista[listindex] = nyttdjur;
+                UppdateraLviewRegister();
+            }
         }
 
         // Denna körs vid knapptryck och samlar in data om djuret och skickar data

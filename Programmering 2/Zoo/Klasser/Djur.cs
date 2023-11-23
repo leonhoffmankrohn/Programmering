@@ -12,7 +12,7 @@ namespace Zoo
         static int id = 0;
 
         // Egenskaperna
-        public int Id { get; }
+        public int Id { get; set; }
         public string Namn { get; }
         public double Ålder { get; }
         public KönTyp Kön { get; }
