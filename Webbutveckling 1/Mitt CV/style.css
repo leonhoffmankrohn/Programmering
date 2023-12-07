@@ -67,7 +67,6 @@ main{
 .about_p{
     overflow-y:scroll;
     max-height: 250px;
-
 }
 .basic_info{
     vertical-align: top;

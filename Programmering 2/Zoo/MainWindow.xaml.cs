@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.DirectoryServices;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
@@ -27,7 +29,6 @@ namespace Zoo
     {
         List<Djur> djurlista = new List<Djur>();
         DjurFabrik djurskaparn = new DjurFabrik();
-        Window ändraDjurWindow = new Window();
 
         public MainWindow()
         {
@@ -86,6 +87,8 @@ namespace Zoo
         void UppdateraLviewRegister()
         {
             lviewRegister.Items.Refresh();
+            CollectionView vy = (CollectionView)CollectionViewSource.GetDefaultView(lviewRegister.ItemsSource);
+            vy.SortDescriptions.Add(new SortDescription("Namn", ListSortDirection.Ascending));
         }
 
         // Här ändrar vi vad som ska stå i spec 1 ( den som är speciell för djurgruppen ) men också fyller listbox art
@@ -145,10 +148,13 @@ namespace Zoo
         // Kollar om djuret kan värpa och aktiverar knappen som kan räkna ut hurm ånga ägg som värps.
         private void KollaOmVärpning()
         {
-            Djur djur = djurlista[lviewRegister.SelectedIndex];
-            if (djur.Kön == KönTyp.Hona && (djur is ILäggÄgg))
+            if (lviewRegister.SelectedIndex > -1)
             {
-                btnLäggÄgg.IsEnabled = true;
+                Djur djur = djurlista[lviewRegister.SelectedIndex];
+                if (djur.Kön == KönTyp.Hona && (djur is ILäggÄgg))
+                {
+                    btnLäggÄgg.IsEnabled = true;
+                }
             }
             else btnLäggÄgg.IsEnabled = false;
         }
@@ -156,7 +162,7 @@ namespace Zoo
         // Skriver ut hur många ägg djuret värper
         private void AntalÄggVärpa()
         {
-            Djur djur = djurlista[lviewRegister.SelectedIndex];
+            Djur djur = (Djur)lviewRegister.Items[lviewRegister.SelectedIndex];
             if (djur is Fågel)
             {
                 tblÄggVärpning.Text = (djur as Fågel).LäggÄgg();
@@ -167,24 +173,35 @@ namespace Zoo
             }
         }
 
+        // Tar bort selekterade djuret
         private void TaBortDjur()
         {
-            Djur d = (Djur)lviewRegister.Items[lviewRegister.SelectedIndex];
-            djurlista.Remove(d);
+            if (lviewRegister.SelectedIndex > -1)
+            {
+                Djur djur = (Djur)lviewRegister.Items[lviewRegister.SelectedIndex];
+                djurlista.Remove(djur);
+                UppdateraLviewRegister();
+            }
         }
 
+        // Ploppar upp en dialogruta som man får ändra vissa egenskaper på valt djur, sedan sparas dessa på samma ID
         private void ÄndraDjurlista()
         {
-            int listindex = lviewRegister.SelectedIndex;
-            Djur djur = djurlista[listindex];
-            ÄndraDjur dialog = new ÄndraDjur(djur);
-            bool ändra = (bool)dialog.ShowDialog();
-
-            if (ändra)
+            if (lviewRegister.SelectedIndex > -1)
             {
-                Djur nyttdjur = dialog.SkapaDjur();
-                djurlista[listindex] = nyttdjur;
-                UppdateraLviewRegister();
+                Djur djur = (Djur)lviewRegister.Items[lviewRegister.SelectedIndex];
+                ÄndraDjur dialog = new ÄndraDjur(djur);
+                bool ändra = (bool)dialog.ShowDialog();
+
+
+                if (ändra)
+                {
+                    Djur nyttdjur = dialog.SkapaDjur();
+                    int index = djurlista.IndexOf(djur);
+                    djurlista.RemoveAt(index);
+                    djurlista.Insert(index, nyttdjur);
+                    UppdateraLviewRegister();
+                }
             }
         }
 
@@ -222,11 +239,13 @@ namespace Zoo
             AntalÄggVärpa();
         }
 
+        // Hänvisar till tabort djur metoden
         private void btnTaBortLview_Click(object sender, RoutedEventArgs e)
         {
             TaBortDjur();
         }
 
+        // Hänvisar till ändradjur metoden
         private void btnÄndraLview_Click(object sender, RoutedEventArgs e)
         {
             ÄndraDjurlista();
