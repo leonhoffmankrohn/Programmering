@@ -6,19 +6,27 @@
 header{
     background-color: black;
     color: white;
+    padding: 0% 15%;
 }
-
+main{
+    padding: 5% 15%;
+}
+.nav_menu{
+    padding: 10px;
+}
 .nav_item{
-    box-sizing: content-box;
-    display: inline;
+    display: inline-block;
     background-color: rgb(94, 94, 94);
     padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
 }
 
 .profile_picture{
     height: 200px;
     display: block;
     margin: 0 auto;
+    border-radius: 100px;
 }
 
 .action_item{
@@ -38,4 +46,41 @@ header{
 .about, .basic_info {
     width: 50%;
     display: inline;
+}
+.media_links{
+    text-align: center;
+    display: block;
+    padding: 20px;
+}
+.media_item{
+    box-sizing: content-box;
+    display: inline;
+    background-color: grey;
+    padding: 10px;
+    border-radius: 20px;
+}
+.about{
+    display: inline-block;
+    width: 49%;
+    padding: 5px;
+}
+.about_p{
+    overflow-y:scroll;
+    max-height: 250px;
+
+}
+.basic_info{
+    vertical-align: top;
+    padding: 5px;
+    width: 0 auto;
+    display: inline-block;
+}
+.basic_info_list_info{
+    list-style: none;
+    font-weight: bold;
+    padding: 10px 0px;
+}
+.about_h2, .basic_h2{
+    text-align: center;
+    padding: 20px;
 }
