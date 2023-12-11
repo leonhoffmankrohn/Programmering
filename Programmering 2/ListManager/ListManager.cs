@@ -2,14 +2,14 @@
 
 namespace ListManager
 {
-    abstract class ListManager : IListManager<Type>
+    public abstract class ListManager<Type> : IListManager<Type>
     {
         List<Type> lista;
-        
+
         public int Count { get { return lista.Count; } }
         public ListManager()
         {
-            lista = new List<Type> ();
+            lista = new List<Type>();
         }
 
         public virtual bool Add(Type aType)
@@ -60,5 +60,6 @@ namespace ListManager
             string[] stringArray = new string[Count];
             foreach (Type aType in lista) { stringArray.Append(aType.ToString()); }
             return stringArray;
+        }
     }
 }

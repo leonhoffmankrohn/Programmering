@@ -8,9 +8,6 @@ namespace Zoo
 {
     abstract class Djur
     {
-        // Denna kommer att öka för varje skapat djur
-        static int id = 0;
-
         // Egenskaperna
         public int Id { get; set; }
         public string Namn { get; }
@@ -21,7 +18,6 @@ namespace Zoo
         // Här kommer konstruktören för att skapa ett djur och här ökar den även "id"
         public Djur(string _namn, double _ålder, KönTyp _kön)
         {
-            Id = ++id;
             Namn = _namn;
             Ålder = _ålder;
             Kön = _kön;
