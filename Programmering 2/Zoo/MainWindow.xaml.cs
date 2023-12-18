@@ -1,24 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.DirectoryServices;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Zoo.Dialoger;
 using Zoo.Interfaces;
 using Zoo.Klasser.Fågelklasser;
+using ListManager;
 
 namespace Zoo
 {
@@ -27,7 +16,7 @@ namespace Zoo
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<Djur> djurlista = new List<Djur>();
+        Djurlista djurlista = new Djurlista();
         DjurFabrik djurskaparn = new DjurFabrik();
 
         public MainWindow()
@@ -57,7 +46,7 @@ namespace Zoo
 
             lbxGrupp.SelectedIndex = 0;
             tblSpc1.Text = "Nattaktivt?";
-            lviewRegister.ItemsSource = djurlista;
+            lviewRegister.ItemsSource = djurlista.HämtaKopia();
         }
 
         // Här skickas all data om djuret och hämtas data som handlar om vilket djur och
@@ -150,7 +139,7 @@ namespace Zoo
         {
             if (lviewRegister.SelectedIndex > -1)
             {
-                Djur djur = djurlista[lviewRegister.SelectedIndex];
+                Djur djur = djurlista.GetAt(djurlista.IndexOfDjur((Djur)lviewRegister.SelectedItem));
                 if (djur.Kön == KönTyp.Hona && (djur is ILäggÄgg))
                 {
                     btnLäggÄgg.IsEnabled = true;
@@ -162,7 +151,7 @@ namespace Zoo
         // Skriver ut hur många ägg djuret värper
         private void AntalÄggVärpa()
         {
-            Djur djur = (Djur)lviewRegister.Items[lviewRegister.SelectedIndex];
+            Djur djur = (Djur)lviewRegister.SelectedItem;
             if (djur is Fågel)
             {
                 tblÄggVärpning.Text = (djur as Fågel).LäggÄgg();
@@ -179,7 +168,7 @@ namespace Zoo
             if (lviewRegister.SelectedIndex > -1)
             {
                 Djur djur = (Djur)lviewRegister.Items[lviewRegister.SelectedIndex];
-                djurlista.Remove(djur);
+                djurlista.Delete(djurlista.IndexOfDjur(djur));
                 UppdateraLviewRegister();
             }
         }
@@ -189,7 +178,7 @@ namespace Zoo
         {
             if (lviewRegister.SelectedIndex > -1)
             {
-                Djur djur = (Djur)lviewRegister.Items[lviewRegister.SelectedIndex];
+                Djur djur = (Djur)lviewRegister.SelectedItem;
                 ÄndraDjur dialog = new ÄndraDjur(djur);
                 bool ändra = (bool)dialog.ShowDialog();
 
@@ -197,9 +186,8 @@ namespace Zoo
                 if (ändra)
                 {
                     Djur nyttdjur = dialog.SkapaDjur();
-                    int index = djurlista.IndexOf(djur);
-                    djurlista.RemoveAt(index);
-                    djurlista.Insert(index, nyttdjur);
+                    int index = djurlista.IndexOfDjur(djur);
+                    djurlista.ChangeAt(nyttdjur, index);
                     UppdateraLviewRegister();
                 }
             }

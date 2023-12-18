@@ -9,7 +9,14 @@ namespace Zoo
     abstract class Djur
     {
         // Egenskaperna
-        public int Id { get; set; }
+        int id = 0;
+
+        // Låter id tillsättas ifall inte den har blivit tillsatt förut.
+        public int Id 
+        {
+            get { return id; }
+            set { if (id == 0) id = value; }
+        }
         public string Namn { get; }
         public double Ålder { get; }
         public KönTyp Kön { get; }

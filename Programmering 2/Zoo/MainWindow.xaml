@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Zoo"
         mc:Ignorable="d"
-        Title="Mitt Zoo" Height="400" Width="662">
+        Title="Mitt Zoo" Height="442" Width="771">
     <Grid>
         <GroupBox Header="Nytt djur" Height="225" VerticalAlignment="Top" Margin="5">
             <WrapPanel>

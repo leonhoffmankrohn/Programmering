@@ -1,0 +1,32 @@
+.picture{
+    width: 100%;
+}
+article{
+    max-width: 700px;
+    margin:0 auto;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.authortime{
+    display: flex;
+    justify-content: space-between;
+}
+
+.author, .time{
+    margin : 0;
+}
+
+.location{
+    margin:0;
+    color:rgb(2, 2, 170);
+}
+.title{
+    font-size: 50px;
+    margin: 20px 0px;
+    text-shadow: 2px 2px grey;
+}
+p{
+    word-spacing: 2px;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+    color:rgba(0, 0, 0, 0.719)
+}

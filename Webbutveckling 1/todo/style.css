@@ -1,0 +1,26 @@
+.todo{
+    background-color: aqua;
+    width:500px;
+    height: auto;
+    margin: 0 auto;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.app_header{
+    text-align: center;
+    margin: 5px;
+}
+
+.add_todo{
+    text-align: center;
+    margin: 20px;
+}
+
+.task{
+    
+}
+
+li::marker{
+    content: '📝';
+}

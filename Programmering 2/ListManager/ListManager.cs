@@ -4,7 +4,7 @@ namespace ListManager
 {
     public abstract class ListManager<Type> : IListManager<Type>
     {
-        List<Type> lista;
+        protected List<Type> lista;
 
         public int Count { get { return lista.Count; } }
         public ListManager()
