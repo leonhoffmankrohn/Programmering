@@ -1,0 +1,21 @@
+.gallery-row {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.gallery-photo {
+    width: 23%;
+    display: inline-block;
+    transition: width 1s ease-in-out;
+}
+img {
+    width: 100%;
+    transition: opacity 1s ease-in-out;
+    border-radius: 2%;
+}
+img:hover {
+    opacity: 0.3;
+}
+.gallery-photo:hover {
+    width: 28%;
+}

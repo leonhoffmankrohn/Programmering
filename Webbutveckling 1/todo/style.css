@@ -1,15 +1,19 @@
 .todo{
-    background-color: aqua;
+    background-color: rgb(177, 255, 255);
     width:500px;
     height: auto;
     margin: 0 auto;
     padding: 10px;
     border-radius: 20px;
+    border-style: solid;
+    border-width: 1px;
+    vertical-align:middle;
 }
 
 .app_header{
     text-align: center;
     margin: 5px;
+    color: red;
 }
 
 .add_todo{
@@ -17,10 +21,15 @@
     margin: 20px;
 }
 
-.task{
-    
+.todo_task{
+    margin: 10px;
 }
 
 li::marker{
-    content: '📝';
+    content: '📝     ';
+}
+
+.button_todo_add{
+    background-color: green;
+    color: white;
 }

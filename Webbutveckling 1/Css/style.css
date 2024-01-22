@@ -1,4 +1,16 @@
-span{
-    display: block;
-    background-color: lightblue;
+.image-container{
+    width: 50%;
+}
+img{
+    /* will force the image to fit itself into the container */
+    border-style:solid;
+    border-color: greenyellow;
+    border-radius: 10px;
+    transition: opacity 1s ease-in-out;
+    width: 100%;
+    height: 100%; /* är optional */
+ }
+ img:hover{
+    opacity: 0.2;
    }
+
