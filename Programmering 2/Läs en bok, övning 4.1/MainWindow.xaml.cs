@@ -50,16 +50,6 @@ namespace Läs_en_bok__övning_4._1
             }
         }
 
-        private void miSpara_Click(object sender, RoutedEventArgs e)
-        {
-            if (dlgSparaFil.ShowDialog() == true)
-            {
-                dlgSparaFil.Filter = "Textfiler | *.txt";
-                FileStream utström = new FileStream(dlgSparaFil.FileName, FileMode.OpenOrCreate, FileAccess.Write);
-                
-            }
-        }
-
         private void miSparaSom_Click(object sender, RoutedEventArgs e)
         {
 
