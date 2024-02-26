@@ -1,0 +1,60 @@
+/* code css step by step and study result in the browser */
+/* initial settings */
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+.slumtext {
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 10%;
+    margin-bottom: 20px;
+}
+
+.lorem {
+    padding:15px;
+    padding-top: 0%;
+}
+
+h2 {
+    color: yellow;
+}
+
+nav {
+    height: 80px;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.7;
+}
+.navi {
+    text-align: center;
+}
+
+li {
+    display: inline-block;
+}
+a {
+    list-style: none;
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    margin: 10px;
+}
+
+html{
+    /* apply background */
+    background-image: url('nature.jpg');
+    background-repeat: no-repeat;
+    /* background image is centered vertically and horizontally at all the time */
+    background-position: center center;
+    /* background image is fixed in the viewport so that it does not move when the body's height is greater than the image's height */
+    background-attachment: fixed;
+    /* rescale background image based on the size of */
+    background-size: cover;
+    opacity: 0.7;
+}

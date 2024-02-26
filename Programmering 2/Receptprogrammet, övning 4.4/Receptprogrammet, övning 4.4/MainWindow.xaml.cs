@@ -20,9 +20,8 @@ namespace Receptprogrammet__övning_4._4
     public partial class MainWindow : Window
     {
         List<Ingridiens> ingridienser = new List<Ingridiens>();
-        string öppnadFil = "";
-        OpenFileDialog dlgÖppnaFil = new OpenFileDialog();
-        SaveFileDialog dlgSparaFil = new SaveFileDialog();
+        OpenFileDialog dlgÖppnaFil = new OpenFileDialog() { DefaultExt= ".rec", Filter="Recept filer | *.rec"};
+        SaveFileDialog dlgSparaFil = new SaveFileDialog() { DefaultExt = ".rec", Filter = "Recept filer | *.rec" };
 
         public MainWindow()
         {
@@ -51,7 +50,7 @@ namespace Receptprogrammet__övning_4._4
         {
             if (!(Tomhet(tbxNamn) && Tomhet(tbxMängd) && Tomhet(tbxMått)))
             {
-                int.TryParse(tbxMängd.Text, out int mängd);
+                float.TryParse(tbxMängd.Text, out float mängd);
                 ingridienser.Add(new Ingridiens(tbxNamn.Text, mängd, tbxMått.Text));
                 TömInput();
                 UppdateraDg();
@@ -65,36 +64,36 @@ namespace Receptprogrammet__övning_4._4
 
         private void miÖppna_Click(object sender, RoutedEventArgs e)
         {
-            ingridienser = new List<Ingridiens>();
+            dlgÖppnaFil.DefaultDirectory = "saves";
             if (dlgÖppnaFil.ShowDialog() == true)
             {
-                dlgÖppnaFil.Filter = "Textfiler | *.txt";
+                ingridienser = new List<Ingridiens>();
                 FileStream inström = new FileStream(dlgÖppnaFil.FileName, FileMode.Open, FileAccess.Read);
                 BinaryReader läsare = new BinaryReader(inström);
-                öppnadFil = dlgÖppnaFil.FileName;
-
-                string hämtadeIngridienser = läsare.ReadString();
-                while (hämtadeIngridienser != null || hämtadeIngridienser != "")
+                int antalIngridienser = läsare.ReadInt32();
+                for (int i = 0; i < antalIngridienser; i++)
                 {
-                    string[] strings = hämtadeIngridienser.Split(' ');
-                    int.TryParse(strings[1], out int mängd);
-                    ingridienser.Add(new Ingridiens(strings[0], mängd, strings[2]));
-                    hämtadeIngridienser = läsare.ReadString();
+                    Ingridiens nyIngridiens = new Ingridiens(läsare.ReadString(), läsare.ReadSingle(), läsare.ReadString());
+                    ingridienser.Add(nyIngridiens);
                 }
                 läsare.Dispose();
+                UppdateraDg();
             }
         }
 
         private void miSparaSom_Click(object sender, RoutedEventArgs e)
         {
+            dlgSparaFil.FileName = "recept";
             if (dlgSparaFil.ShowDialog() == true)
             {
-                dlgSparaFil.Filter = "Textfiler | *.txt";
                 FileStream utström = new FileStream(dlgSparaFil.FileName, FileMode.OpenOrCreate, FileAccess.Write);
                 BinaryWriter skrivare = new BinaryWriter(utström);
+                skrivare.Write((int)ingridienser.Count);
                 foreach (Ingridiens ingridiens in ingridienser)
                 {
-                    skrivare.Write(ingridiens.ToString());
+                    skrivare.Write(ingridiens.Namn);
+                    skrivare.Write(ingridiens.Mängd);
+                    skrivare.Write(ingridiens.Mått);
                 }
                 skrivare.Dispose();
             }
