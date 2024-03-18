@@ -5,12 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using ListManager;
+using Zoo.Klasser;
 
 namespace Zoo
 {
     internal class Djurlista : ListManager<Djur>
     {
         static int id = 0;
+
+        public SparObjekt SparaLista()
+        {
+            return new SparObjekt(id, lista);
+        }
+
+        public void Hämtalista(SparObjekt hämtadlista)
+        {
+            id = hämtadlista.ID;
+            lista = hämtadlista.Djurlista;
+        }
 
         /// <summary>
         /// Lägger till ett <djur> djuret i listan

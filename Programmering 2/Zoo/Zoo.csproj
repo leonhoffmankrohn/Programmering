@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ListManager\ListManager.csproj" />
+    <ProjectReference Include="..\ListManager\UtilitiesLib.csproj" />
   </ItemGroup>
 
 </Project>

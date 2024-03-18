@@ -1,0 +1,97 @@
+body{
+    background-color: #ebebeb;
+}
+
+img{
+    max-width: 100%;
+}
+
+button{
+    background-color: #1655a2;
+    color: white;
+}
+
+.home{
+    display: flex;
+    flex-direction: column;
+    justify-content:space-evenly;
+}
+
+.function-list{
+    display:flex;
+    list-style: none;
+}
+
+.function-list li {
+    padding-right: 10px;
+}
+
+.function-list a, .contact-item a{
+    color: black;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+.navigation-links{
+    display: flex;
+    background-color: #1655a2;
+    justify-content: space-evenly;
+    list-style: none;
+    padding:10px 100px;
+    color: white;
+}
+.top-part {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px;
+}
+.focus{
+    display: flex;
+    justify-content: center;
+}
+.focus img{
+    margin: 30px;
+    width: 80%;
+}
+.more-articles{
+    display:flex;
+    justify-content: space-evenly;
+    padding: 20px;
+}
+.articles{
+    background-color: white;
+    width: 30%;
+}
+.contact-us{
+    display: flex;
+    margin: 0 auto;
+    width: 80%;
+    height: 40px;
+    padding: 20px;
+    background-color: white;
+}
+
+.contact-item{
+    padding: 0px 20px;
+}
+footer{
+    height: 150px;
+    margin-top:20px;
+    background-color: #555555;
+    color: white;
+    display: flex;
+    justify-content: space-evenly;
+}
+footer ul {
+    list-style: none;
+}
+footer h1 {
+    font-size: larger   ;
+}
+footer div {
+    width: 200px;
+    padding: 20px;
+}

@@ -5,9 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Zoo"
         mc:Ignorable="d"
-        Title="Mitt Zoo" Height="442" Width="771">
+        Title="Mitt Zoo" Height="470" Width="771">
     <Grid>
-        <GroupBox Header="Nytt djur" Height="225" VerticalAlignment="Top" Margin="5">
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_File">
+                    <MenuItem Header="_New" />
+                    <MenuItem Header="_Open" />
+                    <MenuItem Header="_Save" />
+                    <Separator />
+                    <MenuItem Header="_Exit" />
+                </MenuItem>
+            </Menu>
+            <TextBox AcceptsReturn="True" />
+        </DockPanel>
+        <GroupBox Header="Nytt djur" Height="225" VerticalAlignment="Top" Margin="0 20 0 0">
             <WrapPanel>
                 <StackPanel>
                     <TextBlock Margin="5" MinWidth="50">Namn</TextBlock>
