@@ -9,12 +9,12 @@
     <Grid>
         <DockPanel>
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_File">
-                    <MenuItem Header="_New" />
-                    <MenuItem Header="_Open" />
-                    <MenuItem Header="_Save" />
+                <MenuItem Header="_Fil">
+                    <MenuItem x:Name="skapaNy" Header="_Ny" Click="skapaNy_Click" />
+                    <MenuItem x:Name="öppnaFil" Header="_Öppna" Click="öppnaFil_Click" />
+                    <MenuItem x:Name="sparaFil" Header="_Spara" Click="sparaFil_Click" />
                     <Separator />
-                    <MenuItem Header="_Exit" />
+                    <MenuItem x:Name="Stäng" Header="_Stäng" Click="Stäng_Click" />
                 </MenuItem>
             </Menu>
             <TextBox AcceptsReturn="True" />

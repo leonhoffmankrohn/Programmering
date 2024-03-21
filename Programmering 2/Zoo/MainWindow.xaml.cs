@@ -8,6 +8,10 @@ using Zoo.Dialoger;
 using Zoo.Interfaces;
 using Zoo.Klasser.Fågelklasser;
 using ListManager;
+using Microsoft.Win32;
+using System.IO;
+using Zoo.Klasser;
+using UtilitiesLib;
 
 namespace Zoo
 {
@@ -18,6 +22,9 @@ namespace Zoo
     {
         Djurlista djurlista = new Djurlista();
         DjurFabrik djurskaparn = new DjurFabrik();
+        OpenFileDialog dlgÖppnaFil = new OpenFileDialog() { DefaultExt = ".json", Filter = "Json filer | *.json" };
+        SaveFileDialog dlgSparaFil = new SaveFileDialog() { DefaultExt = ".json", Filter = "Json filer | *.json" };
+        string filnamn;
 
         public MainWindow()
         {
@@ -31,7 +38,7 @@ namespace Zoo
             string[] köntyper = Enum.GetNames(typeof(KönTyp));
 
             foreach (string kön in köntyper)
-            {
+            { 
                 lbxKön.Items.Add(kön);
             }
 
@@ -237,6 +244,46 @@ namespace Zoo
         private void btnÄndraLview_Click(object sender, RoutedEventArgs e)
         {
             ÄndraDjurlista();
+        }
+
+        private void skapaNy_Click(object sender, RoutedEventArgs e)
+        {
+            Djurlista djurlista = new Djurlista();
+            filnamn = "";
+        }
+
+        private void öppnaFil_Click(object sender, RoutedEventArgs e)
+        {
+            if (dlgÖppnaFil.ShowDialog() == true)
+            {
+                try
+                {
+                    filnamn = dlgÖppnaFil.FileName;
+                    Serializer<SparObjekt> serializer = new Serializer<SparObjekt>();
+                    SparObjekt obj = serializer.Deserialize(filnamn);
+                    djurlista.Hämtalista(obj);
+                }
+                catch { }
+            }
+        }
+
+        private void sparaFil_Click(object sender, RoutedEventArgs e)
+        {
+            dlgSparaFil.FileName = filnamn;
+            if (dlgSparaFil.ShowDialog() == true)
+            {
+                try
+                {
+                    Serializer<SparObjekt> serializer = new Serializer<SparObjekt>();
+                    serializer.Serialize(djurlista.SparaLista(), filnamn);
+                }
+                catch { }
+            }
+        }
+
+        private void Stäng_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }
