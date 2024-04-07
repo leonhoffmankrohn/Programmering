@@ -22,9 +22,7 @@ namespace Zoo
     {
         Djurlista djurlista = new Djurlista();
         DjurFabrik djurskaparn = new DjurFabrik();
-        OpenFileDialog dlgÖppnaFil = new OpenFileDialog() { DefaultExt = ".json", Filter = "Json filer | *.json" };
-        SaveFileDialog dlgSparaFil = new SaveFileDialog() { DefaultExt = ".json", Filter = "Json filer | *.json" };
-        string filnamn;
+        string filnamn = "";
 
         public MainWindow()
         {
@@ -82,6 +80,7 @@ namespace Zoo
         // Här uppdateras listview:en med korresponderande data
         void UppdateraLviewRegister()
         {
+            lviewRegister.ItemsSource = djurlista.HämtaKopia();
             lviewRegister.Items.Refresh();
             CollectionView vy = (CollectionView)CollectionViewSource.GetDefaultView(lviewRegister.ItemsSource);
             vy.SortDescriptions.Add(new SortDescription("Namn", ListSortDirection.Ascending));
@@ -248,20 +247,24 @@ namespace Zoo
 
         private void skapaNy_Click(object sender, RoutedEventArgs e)
         {
-            Djurlista djurlista = new Djurlista();
             filnamn = "";
+            djurlista = new Djurlista();
+            UppdateraLviewRegister();
         }
 
         private void öppnaFil_Click(object sender, RoutedEventArgs e)
         {
+            OpenFileDialog dlgÖppnaFil = new OpenFileDialog() { DefaultExt = ".json", Filter = "Json filer | *.json" };
             if (dlgÖppnaFil.ShowDialog() == true)
             {
                 try
                 {
                     filnamn = dlgÖppnaFil.FileName;
+
                     Serializer<SparObjekt> serializer = new Serializer<SparObjekt>();
                     SparObjekt obj = serializer.Deserialize(filnamn);
-                    djurlista.Hämtalista(obj);
+                    djurlista.Hämtalista(obj); 
+                    UppdateraLviewRegister();
                 }
                 catch { }
             }
@@ -269,13 +272,14 @@ namespace Zoo
 
         private void sparaFil_Click(object sender, RoutedEventArgs e)
         {
+            SaveFileDialog dlgSparaFil = new SaveFileDialog() { DefaultExt = ".json", Filter = "Json filer | *.json" };
             dlgSparaFil.FileName = filnamn;
             if (dlgSparaFil.ShowDialog() == true)
             {
                 try
                 {
                     Serializer<SparObjekt> serializer = new Serializer<SparObjekt>();
-                    serializer.Serialize(djurlista.SparaLista(), filnamn);
+                    serializer.Serialize(djurlista.SparaLista(), (dlgSparaFil.FileName == "") ? "Djurdata" : dlgSparaFil.FileName);
                 }
                 catch { }
             }
