@@ -8,8 +8,8 @@ namespace Zoo.Klasser
 {
     class SparObjekt
     {
-        public int ID { get; }
-        public List<Djur> Djurlista { get; }
+        public int ID { get; set; }
+        public List<Djur> Djurlista { get; set; }
 
         public SparObjekt(int _id, List<Djur> _djurlista)
         {

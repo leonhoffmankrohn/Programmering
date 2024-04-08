@@ -81,7 +81,7 @@ namespace Zoo
         void UppdateraLviewRegister()
         {
             lviewRegister.ItemsSource = djurlista.HämtaKopia();
-            lviewRegister.Items.Refresh();
+            //lviewRegister.Items.Refresh();
             CollectionView vy = (CollectionView)CollectionViewSource.GetDefaultView(lviewRegister.ItemsSource);
             vy.SortDescriptions.Add(new SortDescription("Namn", ListSortDirection.Ascending));
         }
