@@ -1,0 +1,21 @@
+﻿<Window x:Class="Kundtabellen.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Kundtabellen"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <StackPanel>
+            <WrapPanel>
+                <Label>Personnummer</Label>
+                <TextBox x:Name="tbxPersonnummer" MinWidth="200"></TextBox>
+                <Button Name="btnSök" Click="btnSök_Click">Sök</Button>
+            </WrapPanel>
+            <Label Margin="0,100,0,0">Sökresultat</Label>
+            <TextBox Name="tbxResultat" Height="250" ScrollViewer.CanContentScroll="True"></TextBox>
+            
+        </StackPanel>
+    </Grid>
+</Window>
