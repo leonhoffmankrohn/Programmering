@@ -10,7 +10,7 @@
         <StackPanel>
             <WrapPanel>
                 <Label>Personnummer</Label>
-                <TextBox x:Name="tbxPersonnummer" MinWidth="200"></TextBox>
+                <TextBox x:Name="tbxQuery" MinWidth="500"></TextBox>
                 <Button Name="btnSök" Click="btnSök_Click">Sök</Button>
             </WrapPanel>
             <Label Margin="0,100,0,0">Sökresultat</Label>

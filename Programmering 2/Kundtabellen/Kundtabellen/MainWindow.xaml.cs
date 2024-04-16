@@ -18,24 +18,28 @@ namespace Kundtabellen
         {
             // Använd connection string till output-filen i bin\debug\
             string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Programmering\Programmering 2\Kundtabellen\Kundtabellen\KundregisterDB.mdf;Integrated Security=True";
-            // Hårdkodad sökfråga
-            string personnummer = tbxPersonnummer.Text;
-            string query = "SELECT Förnamn, Efternamn FROM Kunder WHERE PersonNr=" + personnummer;
+
+            string query = tbxQuery.Text;
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    SqlDataReader reader = command.ExecuteReader();
-                    while (reader.Read())
+                    if (query.Substring(0,3) == "SEL")
                     {
-                        string fn = reader.GetString(0);
-                        string en = reader.GetString(1);
-
-                        tbxResultat.AppendText(fn + " " + en + "\r\n");
+                        SqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                tbxResultat.AppendText(reader.GetString(i) + " ");
+                            }
+                            tbxResultat.AppendText("\r\n");
+                        }
+                        reader.Close();
                     }
-                    reader.Close();
+                    else command.ExecuteNonQuery();
                 }
             }
         }
