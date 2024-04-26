@@ -5,16 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SänkaSkepp_Host"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Background="LightGreen">
     <Grid>
-        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <GroupBox Margin="10">
-                
-            </GroupBox>
-            <GroupBox Margin="10">
-                
-            </GroupBox>
-        </WrapPanel>
+        <StackPanel>
 
+            <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel>
+                    <Label>You</Label>
+                    <GroupBox Margin="10" Background="Gray">
+                        <StackPanel Name="stcPanelYouBoard">
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+                <StackPanel>
+                    <Label>Opponent</Label>
+                    <GroupBox Margin="10" Background="SlateGray" Height="300" Width="300">
+                        <Canvas></Canvas>
+                    </GroupBox>
+                </StackPanel>
+
+            </WrapPanel>
+            <CheckBox Name="chcBoxHorisontal">Horisontal</CheckBox>
+            <WrapPanel>
+                <Label>Skepplängd:</Label>
+                <Slider Name="sliShipLength" Width="500" Minimum="1" Maximum="10" Value="1" BorderThickness="5"></Slider>
+            </WrapPanel>
+        </StackPanel>
     </Grid>
 </Window>
