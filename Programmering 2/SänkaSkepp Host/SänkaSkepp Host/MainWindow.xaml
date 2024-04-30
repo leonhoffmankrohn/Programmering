@@ -13,14 +13,14 @@
                 <StackPanel>
                     <Label>You</Label>
                     <GroupBox Margin="10" Background="Gray">
-                        <StackPanel Name="stcPanelYouBoard">
+                        <StackPanel Name="stpPlayer">
                         </StackPanel>
                     </GroupBox>
                 </StackPanel>
                 <StackPanel>
                     <Label>Opponent</Label>
-                    <GroupBox Margin="10" Background="SlateGray" Height="300" Width="300">
-                        <Canvas></Canvas>
+                    <GroupBox Margin="10" Background="SlateGray">
+                        <StackPanel Name="stpEnemy"></StackPanel>
                     </GroupBox>
                 </StackPanel>
 
