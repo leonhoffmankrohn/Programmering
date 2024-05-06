@@ -28,7 +28,6 @@
             <CheckBox Name="chcBoxHorisontal">Horisontal</CheckBox>
             <WrapPanel HorizontalAlignment="Right" Margin="10">
                 <Label Name="lblStatus"></Label>
-                <Button Name="btnStart" Click="btnStart_Click">Start</Button>
             </WrapPanel>
         </StackPanel>
     </Grid>

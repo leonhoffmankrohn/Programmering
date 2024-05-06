@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Color = System.Windows.Media.Color;
 
 namespace SänkaSkepp_Host
 {
@@ -34,6 +35,7 @@ namespace SänkaSkepp_Host
         Button[,] enemyButtons = new Button[10, 10];
         PlayerBoard player = new PlayerBoard();
         EnemyBoard enemy = new EnemyBoard();
+        int selectedBoatLength = 0;
 
         List<Ship> ships = new List<Ship>() { new Battleship(), new Cruiser(), new Cruiser(), new Torpedo(), new Torpedo(), new Torpedo(), new Submarine(), new Submarine(), new Submarine(), new Submarine() };
 
@@ -43,23 +45,27 @@ namespace SänkaSkepp_Host
             Initialize();
         }
 
-        void Game()
+        async void Game()
         {
             while (true)
             {
-                PlaceAllBoats();
+                await Task.Delay(1000);
+                UpdateBoards();
             }
         }
 
         void PlaceAllBoats()
         {
-            StackPanel enemy = (stpEnemy.Parent as GroupBox).Parent as StackPanel;
-            enemy.Visibility = Visibility.Collapsed;
+            foreach (Ship boat in ships)
+            {
+                selectedBoatLength = boat.Length;
+            }
         }
 
         void Initialize()
         {
             UpdateBoards();
+            Game();
         }
 
         void UpdateBoards()
@@ -85,7 +91,13 @@ namespace SänkaSkepp_Host
                             break;
 
                         case CellStatus.Water:
-                            buttonArray[x, y] = new Button() { Background = Brushes.Aqua };
+                            Random random = new Random();
+                            int variable = Math.Abs(random.Next()*10) % 3;
+                            Debug.WriteLine(variable);
+                            if (variable == 0) buttonArray[x, y] = new Button() { Background = new SolidColorBrush(Color.FromArgb(180, (byte)0, (byte)10, (byte)245)) };
+                            else if (variable == 1) buttonArray[x, y] = new Button() { Background = new SolidColorBrush(Color.FromArgb(180, (byte)0, (byte)20, (byte)235)) };
+                            else if (variable == 2) buttonArray[x, y] = new Button() { Background = new SolidColorBrush(Color.FromArgb(180, (byte)0, (byte)30, (byte)225)) };
+                            else buttonArray[x, y] = new Button() { Background = Brushes.Red };
                             break;
 
                         case CellStatus.Boat:
@@ -99,6 +111,8 @@ namespace SänkaSkepp_Host
                     buttonArray[x, y].Height = 30;
                     buttonArray[x, y].Width = 30;
                     buttonArray[x, y].Click += clickevent;
+                    buttonArray[x, y].BorderThickness = new Thickness(0);
+
                     row.Children.Add(buttonArray[x,y]);
                 }
                 panel.Children.Add(row);
@@ -107,26 +121,26 @@ namespace SänkaSkepp_Host
 
         int[] FindIndex(object[,] array, object obj)
         {
-            for (int i = 0; i < array.GetLength(1); i++)
+            for (int x = 0; x < array.GetLength(1); x++)
             {
-                for (int j = 0; j < array.GetLength(0); j++)
+                for (int y = 0; y < array.GetLength(0); y++)
                 {
-                    if (array[i, j] == obj)
+                    if (array[x, y] == obj)
                     {
-                        return new int[] { i, j };
+                        return new int[] { x, y };
                     }
                 }
             }
             return new int[] { -1, -1 };
         }
 
-        void PlaceBoat(object sender, Board board, Button[,] buttons)
+        void PlaceBoat(object sender, Board board, Button[,] buttons, int length)
         {
             try
             {
                 int[] indecies = FindIndex(buttons, (sender as Button)); // något fel i metoden?
                 Debug.WriteLine(indecies[0] + " : " + indecies[1]);
-                int length = 3;
+                length = (length == 0) ? 3 : length;
                 if (chcBoxHorisontal.IsChecked == true && indecies[0] + length - 1 < 10 && indecies[0] > -1)
                 {
                     for (int i = 0; i < length; i++)
