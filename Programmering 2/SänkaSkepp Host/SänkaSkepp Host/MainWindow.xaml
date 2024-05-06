@@ -17,7 +17,7 @@
                         </StackPanel>
                     </GroupBox>
                 </StackPanel>
-                <StackPanel>
+                <StackPanel Visibility="Collapsed">
                     <Label>Opponent</Label>
                     <GroupBox Margin="10" Background="SlateGray">
                         <StackPanel Name="stpEnemy"></StackPanel>
@@ -26,9 +26,9 @@
 
             </WrapPanel>
             <CheckBox Name="chcBoxHorisontal">Horisontal</CheckBox>
-            <WrapPanel>
-                <Label>Skepplängd:</Label>
-                <Slider Name="sliShipLength" Width="500" Minimum="1" Maximum="10" Value="1" BorderThickness="5"></Slider>
+            <WrapPanel HorizontalAlignment="Right" Margin="10">
+                <Label Name="lblStatus"></Label>
+                <Button Name="btnStart" Click="btnStart_Click">Start</Button>
             </WrapPanel>
         </StackPanel>
     </Grid>

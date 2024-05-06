@@ -45,12 +45,16 @@ namespace SänkaSkepp_Host
 
         void Game()
         {
-            PlaceAllBoats();
+            while (true)
+            {
+                PlaceAllBoats();
+            }
         }
 
         void PlaceAllBoats()
         {
-            // stpPlayer.Margin = new Thickness { 3, 3, 3, 3 };
+            StackPanel enemy = (stpEnemy.Parent as GroupBox).Parent as StackPanel;
+            enemy.Visibility = Visibility.Collapsed;
         }
 
         void Initialize()
@@ -122,7 +126,7 @@ namespace SänkaSkepp_Host
             {
                 int[] indecies = FindIndex(buttons, (sender as Button)); // något fel i metoden?
                 Debug.WriteLine(indecies[0] + " : " + indecies[1]);
-                int length = (int)sliShipLength.Value;
+                int length = 3;
                 if (chcBoxHorisontal.IsChecked == true && indecies[0] + length - 1 < 10 && indecies[0] > -1)
                 {
                     for (int i = 0; i < length; i++)
@@ -155,5 +159,9 @@ namespace SänkaSkepp_Host
             PlaceBoat(sender, enemy, enemyButtons);
         }
 
+        private void btnStart_Click(object sender, RoutedEventArgs e)
+        {
+            Game();
+        }
     }
 }
