@@ -9,6 +9,9 @@ namespace SänkaSkepp_Host.Classes.Ships
     // 3 rutor, näst störst
     class Cruiser : Ship
     {
-
+        public Cruiser() 
+        { 
+            Length = 3;
+        }
     }
 }

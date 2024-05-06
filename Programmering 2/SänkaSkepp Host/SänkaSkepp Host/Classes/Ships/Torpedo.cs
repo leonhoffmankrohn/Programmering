@@ -14,7 +14,7 @@ namespace SänkaSkepp_Host.Classes.Ships
 
         public Torpedo()
         {
-            
+            Length = 2;
         }
     }
 }

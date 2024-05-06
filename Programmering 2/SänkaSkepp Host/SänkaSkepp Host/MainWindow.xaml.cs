@@ -1,4 +1,6 @@
 ﻿using SänkaSkepp_Host.Classes.Boards;
+using SänkaSkepp_Host.Classes.Ships;
+using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
 using System.Text;
@@ -29,12 +31,26 @@ namespace SänkaSkepp_Host
     public partial class MainWindow : Window
     {
         Button[,] playerButtons = new Button[10, 10];
+        Button[,] enemyButtons = new Button[10, 10];
         PlayerBoard player = new PlayerBoard();
         EnemyBoard enemy = new EnemyBoard();
+
+        List<Ship> ships = new List<Ship>() { new Battleship(), new Cruiser(), new Cruiser(), new Torpedo(), new Torpedo(), new Torpedo(), new Submarine(), new Submarine(), new Submarine(), new Submarine() };
+
         public MainWindow()
         {
             InitializeComponent();
             Initialize();
+        }
+
+        void Game()
+        {
+            PlaceAllBoats();
+        }
+
+        void PlaceAllBoats()
+        {
+            // stpPlayer.Margin = new Thickness { 3, 3, 3, 3 };
         }
 
         void Initialize()
@@ -46,40 +62,40 @@ namespace SänkaSkepp_Host
         {
             stpPlayer.Children.Clear();
             stpEnemy.Children.Clear();
-            PopulateBoard(player, stpPlayer);
-            PopulateBoard(enemy, stpEnemy);
+            PopulateBoard(player, stpPlayer, playerButtons, YouBoard_Click);
+            PopulateBoard(enemy, stpEnemy, enemyButtons, EnemyBoard_Click);
         }
 
-        void PopulateBoard(Board board, StackPanel panel) 
+        void PopulateBoard(Board board, StackPanel panel, Button[,] buttonArray, RoutedEventHandler clickevent)
         {
-            for (int i = 0; i < board.cells.GetLength(0); i++)
+            for (int y = 0; y < board.cells.GetLength(0); y++)
             {
                 WrapPanel row = new WrapPanel();
 
-                for (int j = 0; j < board.cells.GetLength(1); j++)
+                for (int x = 0; x < board.cells.GetLength(1); x++)
                 {
-                    switch (board.cells[i, j].Status)
+                    switch (board.cells[x, y].Status)
                     {
                         case CellStatus.Unknown:
-                            playerButtons[i,j] = new Button() { Background = Brushes.Gray};
+                            buttonArray[x, y] = new Button() { Background = Brushes.Gray};
                             break;
 
                         case CellStatus.Water:
-                            playerButtons[i, j] = new Button() { Background = Brushes.Aqua };
+                            buttonArray[x, y] = new Button() { Background = Brushes.Aqua };
                             break;
 
                         case CellStatus.Boat:
-                            playerButtons[i, j] = new Button() { Background = Brushes.SaddleBrown };
+                            buttonArray[x, y] = new Button() { Background = Brushes.SaddleBrown };
                             break;
 
                         case CellStatus.HitBoat:
-                            playerButtons[i, j] = new Button() { Background = Brushes.IndianRed };
+                            buttonArray[x, y] = new Button() { Background = Brushes.IndianRed };
                             break;
                     }
-                    playerButtons[i, j].Height = 30;
-                    playerButtons[i, j].Width = 30;
-                    playerButtons[i, j].Click += YouBoard_Click;
-                    row.Children.Add(playerButtons[i,j]);
+                    buttonArray[x, y].Height = 30;
+                    buttonArray[x, y].Width = 30;
+                    buttonArray[x, y].Click += clickevent;
+                    row.Children.Add(buttonArray[x,y]);
                 }
                 panel.Children.Add(row);
             }
@@ -87,9 +103,9 @@ namespace SänkaSkepp_Host
 
         int[] FindIndex(object[,] array, object obj)
         {
-            for (int i = 0; i < array.GetLength(0); i++)
+            for (int i = 0; i < array.GetLength(1); i++)
             {
-                for (int j = 0; j < array.GetLength(1); j++)
+                for (int j = 0; j < array.GetLength(0); j++)
                 {
                     if (array[i, j] == obj)
                     {
@@ -100,26 +116,26 @@ namespace SänkaSkepp_Host
             return new int[] { -1, -1 };
         }
 
-        void PlaceBoat(object sender)
+        void PlaceBoat(object sender, Board board, Button[,] buttons)
         {
             try
             {
-                int[] indecies = FindIndex(playerButtons, (sender as Button)); // något fel i metoden?
+                int[] indecies = FindIndex(buttons, (sender as Button)); // något fel i metoden?
+                Debug.WriteLine(indecies[0] + " : " + indecies[1]);
                 int length = (int)sliShipLength.Value;
                 if (chcBoxHorisontal.IsChecked == true && indecies[0] + length - 1 < 10 && indecies[0] > -1)
                 {
                     for (int i = 0; i < length; i++)
                     {
-                        // playerBoard[indecies[0] + i, indecies[1]].Background = Brushes.Black;
-                        player.cells[indecies[0] + i, indecies[1]].Status = CellStatus.Boat;
+                        board.ChangeCell(indecies[0] + i, indecies[1], CellStatus.Boat);
+
                     }
                 }
                 else if (chcBoxHorisontal.IsChecked == false && indecies[1] + length - 1 < 10 && indecies[0] > -1)
                 {
                     for (int i = 0; i < length; i++)
                     {
-                        // playerBoard[indecies[0], indecies[1] + i].Background = Brushes.Black;
-                        player.cells[indecies[0], indecies[1] + i].Status = CellStatus.Boat;
+                        board.ChangeCell(indecies[0], indecies[1]+i, CellStatus.Boat);
                     }
                 }
                 else MessageBox.Show("Try placing it somewhere else");
@@ -131,9 +147,13 @@ namespace SänkaSkepp_Host
 
         private void YouBoard_Click(object sender, RoutedEventArgs e)
         {
-            PlaceBoat(sender);
+            PlaceBoat(sender, player, playerButtons);
         }
 
+        private void EnemyBoard_Click(object sender, RoutedEventArgs e)
+        {
+            PlaceBoat(sender, enemy, enemyButtons);
+        }
 
     }
 }

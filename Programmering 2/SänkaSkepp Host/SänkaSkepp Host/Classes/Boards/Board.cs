@@ -22,5 +22,10 @@ namespace SänkaSkepp_Host
                 }
             }
         }
+
+        public void ChangeCell(int x, int y, CellStatus status)
+        {
+            cells[x, y].Status = status;
+        }
     }
 }
