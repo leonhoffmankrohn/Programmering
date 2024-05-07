@@ -35,9 +35,9 @@ namespace SänkaSkepp_Host
         Button[,] enemyButtons = new Button[10, 10];
         PlayerBoard player = new PlayerBoard();
         EnemyBoard enemy = new EnemyBoard();
-        int selectedBoatLength = 0;
 
         List<Ship> ships = new List<Ship>() { new Battleship(), new Cruiser(), new Cruiser(), new Torpedo(), new Torpedo(), new Torpedo(), new Submarine(), new Submarine(), new Submarine(), new Submarine() };
+        Ship SelectedShip;
 
         public MainWindow()
         {
@@ -54,16 +54,25 @@ namespace SänkaSkepp_Host
             }
         }
 
-        void PlaceAllBoats()
+        bool NextShip()
         {
-            foreach (Ship boat in ships)
+            SelectedShip = ships[0];
+            ships.RemoveAt(0);
+            if (ships.Count > 0)
             {
-                selectedBoatLength = boat.Length;
+                lblStatus.Text = "Placera ut en båt med längden " + SelectedShip.Length + "m";
+                return true;
+            }
+            else
+            {
+                lblStatus.Text = "Nu är det slut på båtar att placera";
+                return false;
             }
         }
 
         void Initialize()
         {
+            NextShip();
             UpdateBoards();
             Game();
         }
@@ -146,7 +155,6 @@ namespace SänkaSkepp_Host
                     for (int i = 0; i < length; i++)
                     {
                         board.ChangeCell(indecies[0] + i, indecies[1], CellStatus.Boat);
-
                     }
                 }
                 else if (chcBoxHorisontal.IsChecked == false && indecies[1] + length - 1 < 10 && indecies[0] > -1)
@@ -161,16 +169,18 @@ namespace SänkaSkepp_Host
 
             }
             catch (Exception e){ MessageBox.Show(e.Message); }
+            NextShip(); // Här kan man ändra gamestate om den returnerar false, alltså det finns inga fler kvar
+
         }
 
         private void YouBoard_Click(object sender, RoutedEventArgs e)
         {
-            PlaceBoat(sender, player, playerButtons);
+            PlaceBoat(sender, player, playerButtons, 3);
         }
 
         private void EnemyBoard_Click(object sender, RoutedEventArgs e)
         {
-            PlaceBoat(sender, enemy, enemyButtons);
+            PlaceBoat(sender, enemy, enemyButtons, 3);
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)

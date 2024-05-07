@@ -10,8 +10,6 @@ namespace SänkaSkepp_Host.Classes.Ships
     // 2 rutor, näst minst
     class Torpedo : Ship
     {
-        int Length { get; set; }
-
         public Torpedo()
         {
             Length = 2;
