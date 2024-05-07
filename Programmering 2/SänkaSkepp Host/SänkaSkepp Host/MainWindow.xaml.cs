@@ -60,19 +60,18 @@ namespace SänkaSkepp_Host
             ships.RemoveAt(0);
             if (ships.Count > 0)
             {
-                lblStatus.Text = "Placera ut en båt med längden " + SelectedShip.Length + "m";
+                lblStatus.Content = "Placera ut en båt med längden " + SelectedShip.Length + "m";
                 return true;
             }
             else
             {
-                lblStatus.Text = "Nu är det slut på båtar att placera";
+                lblStatus.Content = "Nu är det slut på båtar att placera";
                 return false;
             }
         }
 
         void Initialize()
         {
-            NextShip();
             UpdateBoards();
             Game();
         }
@@ -110,7 +109,7 @@ namespace SänkaSkepp_Host
                             break;
 
                         case CellStatus.Boat:
-                            buttonArray[x, y] = new Button() { Background = Brushes.SaddleBrown };
+                            buttonArray[x, y] = new Button() { Background = Brushes.DarkOrange };
                             break;
 
                         case CellStatus.HitBoat:
@@ -143,13 +142,14 @@ namespace SänkaSkepp_Host
             return new int[] { -1, -1 };
         }
 
-        void PlaceBoat(object sender, Board board, Button[,] buttons, int length)
+        void PlaceBoat(object sender, Board board, Button[,] buttons)
         {
+            NextShip(); // Här kan man ändra gamestate om den returnerar false, alltså det finns inga fler kvar
             try
             {
                 int[] indecies = FindIndex(buttons, (sender as Button)); // något fel i metoden?
                 Debug.WriteLine(indecies[0] + " : " + indecies[1]);
-                length = (length == 0) ? 3 : length;
+                int length = SelectedShip.Length;
                 if (chcBoxHorisontal.IsChecked == true && indecies[0] + length - 1 < 10 && indecies[0] > -1)
                 {
                     for (int i = 0; i < length; i++)
@@ -169,18 +169,16 @@ namespace SänkaSkepp_Host
 
             }
             catch (Exception e){ MessageBox.Show(e.Message); }
-            NextShip(); // Här kan man ändra gamestate om den returnerar false, alltså det finns inga fler kvar
-
         }
 
         private void YouBoard_Click(object sender, RoutedEventArgs e)
         {
-            PlaceBoat(sender, player, playerButtons, 3);
+            PlaceBoat(sender, player, playerButtons);
         }
 
         private void EnemyBoard_Click(object sender, RoutedEventArgs e)
         {
-            PlaceBoat(sender, enemy, enemyButtons, 3);
+            PlaceBoat(sender, enemy, enemyButtons);
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
