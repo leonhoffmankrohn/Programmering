@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SänkaSkepp Host", "SänkaS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SänkaSkeppKlasser", "..\SänkaSkeppKlasser\SänkaSkeppKlasser\SänkaSkeppKlasser.csproj", "{8A74F918-971C-40FD-AE9E-A547779D7946}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UtilitiesLib", "..\ListManager\UtilitiesLib.csproj", "{33152CFB-1D55-4A55-9569-A6C0DD742162}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{8A74F918-971C-40FD-AE9E-A547779D7946}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A74F918-971C-40FD-AE9E-A547779D7946}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A74F918-971C-40FD-AE9E-A547779D7946}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33152CFB-1D55-4A55-9569-A6C0DD742162}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33152CFB-1D55-4A55-9569-A6C0DD742162}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33152CFB-1D55-4A55-9569-A6C0DD742162}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33152CFB-1D55-4A55-9569-A6C0DD742162}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,7 +8,7 @@ namespace SänkaSkeppKlasser
 {
     public class Board
     {
-        public Cell[,] cells { get; }
+        public Cell[,] cells { set; get; }
 
         public Board(CellStatus setup)
         {

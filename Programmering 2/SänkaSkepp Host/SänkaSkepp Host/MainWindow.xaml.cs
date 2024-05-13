@@ -1,9 +1,19 @@
 ﻿using SänkaSkeppKlasser.Classes;
+using SänkaSkeppKlasser.Classes.Boards;
 using System.Diagnostics;
+using System.IO;
+using System.Net;
+using System.Net.Sockets;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents.Serialization;
 using System.Windows.Media;
+using System.Xml.Serialization;
 using Color = System.Windows.Media.Color;
+using UtilitiesLib;
 
 namespace SänkaSkeppKlasser
 {
@@ -44,7 +54,9 @@ namespace SänkaSkeppKlasser
             }
             else
             {
-                lblStatus.Content = "Nu är det slut på båtar att placera";
+                lblStatus.Content = "Nu är det dags att låta någon ansluta och spela med oss.";
+                stpPlayerBoard.Visibility = Visibility.Collapsed;
+                wplStartServer.Visibility = Visibility.Visible;
                 return false;
             }
         }
@@ -227,7 +239,31 @@ namespace SänkaSkeppKlasser
 
         private void EnemyBoard_Click(object sender, RoutedEventArgs e)
         {
-            PlaceBoat(sender, game.enemy, enemyButtons);
+
+        }
+
+        async private void btnStartServer_Click(object sender, RoutedEventArgs e)
+        {
+            btnStartServer.IsEnabled = false;
+            int.TryParse(tbxHostPort.Text, out int port);
+
+            TcpListener server = new TcpListener(IPAddress.Any, port);
+            server.Start();
+
+            TcpClient client = await server.AcceptTcpClientAsync();
+
+            NetworkStream stream = client.GetStream();
+
+            XmlSerializer serializer = new XmlSerializer(typeof(CommunicationObject));
+            CommunicationObject obj = (CommunicationObject)serializer.Deserialize(stream);
+
+            JaggedArray<Cell> converter = new JaggedArray<Cell>();
+            game.enemy.cells = converter.ConvertToTwoD(obj.cells);
+
+            stpPlayerBoard.Visibility = Visibility.Visible;
+            stpEnemyBoard.Visibility = Visibility.Visible;
+            UpdateBoards();
+            stream.Close();
         }
     }
 }

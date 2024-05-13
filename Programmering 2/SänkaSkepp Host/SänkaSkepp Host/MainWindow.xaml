@@ -5,42 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SänkaSkeppKlasser"
         mc:Ignorable="d"
-        Title="SänkaSkepp Host" MinHeight="450" Width="800" Background="LemonChiffon">
+        Title="SänkaSkepp Host" Height="500" Width="800" Background="LemonChiffon">
     <Grid>
         <StackPanel>
             <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <StackPanel>
+                <StackPanel Name="stpPlayerBoard">
                     <Label>You</Label>
                     <GroupBox Margin="10" Background="Gray">
                         <StackPanel x:Name="stpPlayer">
                         </StackPanel>
                     </GroupBox>
+                    <CheckBox Name="chcBoxHorisontal">Horisontal</CheckBox>
                 </StackPanel>
-                <StackPanel Visibility="Collapsed">
+                <StackPanel Visibility="Collapsed" Name="stpEnemyBoard">
                     <Label>Opponent</Label>
                     <GroupBox Margin="10" Background="SlateGray">
                         <StackPanel Name="stpEnemy"></StackPanel>
                     </GroupBox>
                 </StackPanel>
             </WrapPanel>
-            <CheckBox Name="chcBoxHorisontal">Horisontal</CheckBox>
-            <WrapPanel>
-                <StackPanel HorizontalAlignment="Left">
-                    <StackPanel>
-                        <WrapPanel>
-                            <Label>Host IP: </Label>
-                            <TextBox Name="tbxHostIp">172.0.0.1</TextBox>
-                        </WrapPanel>
-                        <WrapPanel>
-                            <Label>Host Port:</Label>
-                            <TextBox Name="tbxHostPort">12345</TextBox>
-                        </WrapPanel>
-                    </StackPanel>
-                </StackPanel>
-                <StackPanel HorizontalAlignment="Right" Margin="10">
-                    <Label Name="lblStatus"></Label>
+            <WrapPanel Name="wplStartServer" Visibility="Collapsed" HorizontalAlignment="Center" Margin="0 100 0 0">
+                <StackPanel>
+                    <WrapPanel Width="200">
+                        <Label>Host IP:</Label>
+                        <Label Name="lblHostIP" Width="100">127.0.0.1</Label>
+                    </WrapPanel>
+                    <WrapPanel>
+                        <Label>Host Port:</Label>
+                        <TextBox Name="tbxHostPort" Width="100">12345</TextBox>
+                    </WrapPanel>
+                    <Button Name="btnStartServer" Click="btnStartServer_Click">Start the server...</Button>
                 </StackPanel>
             </WrapPanel>
+            <Label Name="lblStatus" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Margin="10"/>
         </StackPanel>
     </Grid>
 </Window>

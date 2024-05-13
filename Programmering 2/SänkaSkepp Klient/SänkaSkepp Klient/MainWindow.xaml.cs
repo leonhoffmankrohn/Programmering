@@ -1,7 +1,11 @@
 ﻿using SänkaSkeppKlasser;
 using SänkaSkeppKlasser.Classes;
+using SänkaSkeppKlasser.Classes.Boards;
 using System.Diagnostics;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -11,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Serialization;
+using UtilitiesLib;
 
 namespace SänkaSkepp_Klient
 {
@@ -239,6 +245,22 @@ namespace SänkaSkepp_Klient
         private void EnemyBoard_Click(object sender, RoutedEventArgs e)
         {
             PlaceBoat(sender, game.enemy, enemyButtons);
+        }
+
+        async private void btnConnectToHost_Click(object sender, RoutedEventArgs e)
+        {
+            btnConnectToHost.IsEnabled = false;
+            TcpClient client = new TcpClient();
+            await client.ConnectAsync(IPAddress.Parse(tbxHostIP.Text), int.Parse(tbxHostPort.Text));
+
+            CommunicationObject obj = new CommunicationObject();
+            
+            JaggedArray<Cell> converter = new JaggedArray<Cell>();
+            obj.cells = converter.ConvertToJagged(game.player.cells);
+
+
+            XmlSerializer serializer = new XmlSerializer(typeof(CommunicationObject));
+            serializer.Serialize(client.GetStream(), obj);
         }
     }
 }
