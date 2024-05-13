@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SänkaSkeppKlasser
 {
-    class Board
+    public class Board
     {
-        public Cell[,] cells { set; get; }
+        public Cell[,] cells { get; }
 
         public Board(CellStatus setup)
         {

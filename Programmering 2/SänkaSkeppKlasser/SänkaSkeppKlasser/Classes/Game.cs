@@ -19,6 +19,7 @@ namespace SänkaSkeppKlasser.Classes
         public Game()
         {
             State = GameState.SetUp;
+            SelectedShip = ships[0];
         }
     }
 

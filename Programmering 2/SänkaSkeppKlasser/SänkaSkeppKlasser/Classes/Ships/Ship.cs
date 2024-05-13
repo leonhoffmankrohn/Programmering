@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SänkaSkeppKlasser.Classes.Ships
 {
-    abstract class Ship
+    public abstract class Ship
     {
         public int Length;
 

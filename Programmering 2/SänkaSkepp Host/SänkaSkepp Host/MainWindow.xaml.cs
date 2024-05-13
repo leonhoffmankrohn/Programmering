@@ -1,29 +1,12 @@
 ﻿using SänkaSkeppKlasser.Classes;
-using SänkaSkeppKlasser.Classes.Boards;
-using SänkaSkeppKlasser.Classes.Ships;
 using System.Diagnostics;
-using System.Drawing;
-using System.Reflection;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Color = System.Windows.Media.Color;
 
 namespace SänkaSkeppKlasser
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    /// 
-
     /*
      * Låta hosten göra sin spelplan
      * När klienten ansluter börjar hosten sitt första drag
@@ -44,20 +27,19 @@ namespace SänkaSkeppKlasser
 
         async void Game()
         {
+            ShipsStatus();
             while (true)
             {
                 await Task.Delay(1000);
                 UpdateBoards();
             }
         }
-
-        bool NextShip()
+        
+        bool ShipsStatus()
         {
-            game.SelectedShip = game.ships[0];
-            game.ships.RemoveAt(0);
             if (game.ships.Count > 0)
             {
-                lblStatus.Content = "Placera ut en båt med längden " + game.SelectedShip.Length + "m";
+                lblStatus.Content = "Placera ut en båt med längden " + game.ships[0].Length + "m";
                 return true;
             }
             else
@@ -65,6 +47,13 @@ namespace SänkaSkeppKlasser
                 lblStatus.Content = "Nu är det slut på båtar att placera";
                 return false;
             }
+        }
+        
+        bool PopNextShip()
+        {
+            game.SelectedShip = game.ships[0];
+            game.ships.RemoveAt(0);
+            return ShipsStatus();
         }
 
         void Initialize()
@@ -137,28 +126,73 @@ namespace SänkaSkeppKlasser
             }
             return new int[] { -1, -1 };
         }
+      
+        bool AllIsWater(int startX, int startY, int length, bool horisontal, Board board)
+        {
+            bool justwater = true;
+            if (horisontal)
+            {
+                for (int i = startX; i < startX + length; i++)
+                {
+                    if (board.cells[i, startY].Status != CellStatus.Water) { justwater = false; }
+                }
+            }
+            else
+            {
+                for (int i = startY; i < startY + length; i++)
+                {
+                    if (board.cells[startX, i].Status != CellStatus.Water) { justwater = false; }
+                }
+            }
+            return justwater;
+        }
+
+        bool FitInArea(int startX, int startY, int length, bool horisontal)
+        {
+            switch (horisontal)
+            {
+                case true:
+                    if (startX + length <= 10) return true;
+                    break;
+                case false:
+                    if (startY + length <= 10) return true;
+                    break;
+            }
+            return false;
+        }
+
+        void AddBoat(int startX, int startY, int length, bool horisontal, Board board)
+        {
+            switch (horisontal)
+            {
+                case true:
+                    for (int i = 0; i < length; i++)
+                    {
+                        board.ChangeCell(startX + i, startY, CellStatus.Boat);
+                    }
+                    break;
+                case false:
+                    for (int i = 0; i < length; i++)
+                    {
+                        board.ChangeCell(startX, startY + i, CellStatus.Boat);
+                    }
+                    break;
+            }
+        }
 
         void PlaceBoat(object sender, Board board, Button[,] buttons)
         {
-            bool boatsLeft = NextShip(); // Här kan man ändra gamestate om den returnerar false, alltså det finns inga fler kvar
+            bool boatsLeft = true; // Här kan man ändra gamestate om den returnerar false, alltså det finns inga fler kvar
             try
             {
-                int[] indecies = FindIndex(buttons, (sender as Button)); // något fel i metoden?
-                Debug.WriteLine(indecies[0] + " : " + indecies[1]);
-                int length = game.SelectedShip.Length;
-                if (chcBoxHorisontal.IsChecked == true && indecies[0] + length - 1 < 10 && indecies[0] > -1)
+                int[] indecies = FindIndex(buttons, (sender as Button)); 
+                int length = game.ships[0].Length;
+                bool horisontal = (bool)chcBoxHorisontal.IsChecked;
+
+                if (indecies[0] > -1 && FitInArea(indecies[0], indecies[1], length, horisontal) && AllIsWater(indecies[0], indecies[1], length, horisontal, board))
                 {
-                    for (int i = 0; i < length; i++)
-                    {
-                        board.ChangeCell(indecies[0] + i, indecies[1], CellStatus.Boat);
-                    }
-                }
-                else if (chcBoxHorisontal.IsChecked == false && indecies[1] + length - 1 < 10 && indecies[0] > -1)
-                {
-                    for (int i = 0; i < length; i++)
-                    {
-                        board.ChangeCell(indecies[0], indecies[1]+i, CellStatus.Boat);
-                    }
+                    boatsLeft = PopNextShip();
+                    AddBoat(indecies[0], indecies[1], length, horisontal, board);
                 }
                 else MessageBox.Show("Try placing it somewhere else");
                 UpdateBoards();
@@ -180,7 +214,6 @@ namespace SänkaSkeppKlasser
                     PlaceBoat(sender, game.player, playerButtons);
                     break;
                 case GameState.SetUpDone:
-                    Debug.WriteLine("Setup Done");
                     break;
                 default:
                     break;
@@ -195,11 +228,6 @@ namespace SänkaSkeppKlasser
         private void EnemyBoard_Click(object sender, RoutedEventArgs e)
         {
             PlaceBoat(sender, game.enemy, enemyButtons);
-        }
-
-        private void btnStart_Click(object sender, RoutedEventArgs e)
-        {
-            Game();
         }
     }
 }

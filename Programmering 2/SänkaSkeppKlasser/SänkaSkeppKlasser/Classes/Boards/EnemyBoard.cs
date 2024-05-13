@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SänkaSkeppKlasser.Classes.Boards
 {
-    class EnemyBoard : Board
+    public class EnemyBoard : Board
     {
         public EnemyBoard() : base(CellStatus.Unknown)
         {

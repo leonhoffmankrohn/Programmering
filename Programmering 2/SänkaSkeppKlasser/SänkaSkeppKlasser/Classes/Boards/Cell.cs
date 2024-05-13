@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SänkaSkeppKlasser
 {
-    class Cell
+    public class Cell
     {
         public CellStatus Status { get; set; }
         public Cell(CellStatus _status = CellStatus.Water) 
@@ -15,7 +15,7 @@ namespace SänkaSkeppKlasser
         }
     }
 
-    enum CellStatus
+    public enum CellStatus
     {
         Unknown = 0,
         Water = 1,

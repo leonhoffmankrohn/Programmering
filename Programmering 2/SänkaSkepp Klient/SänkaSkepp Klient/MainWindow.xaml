@@ -5,8 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SänkaSkepp_Klient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="SänkaSkepp Klient" Height="450" Width="800" Background="LemonChiffon">
     <Grid>
+        <StackPanel>
+            <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel>
+                    <Label>You</Label>
+                    <GroupBox Margin="10" Background="Gray">
+                        <StackPanel x:Name="stpPlayer">
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+                <StackPanel Visibility="Collapsed">
+                    <Label>Opponent</Label>
+                    <GroupBox Margin="10" Background="SlateGray">
+                        <StackPanel Name="stpEnemy"></StackPanel>
+                    </GroupBox>
+                </StackPanel>
 
+            </WrapPanel>
+            <CheckBox Name="chcBoxHorisontal">Horisontal</CheckBox>
+            <WrapPanel HorizontalAlignment="Right" Margin="10">
+                <Label Name="lblStatus"></Label>
+            </WrapPanel>
+        </StackPanel>
     </Grid>
 </Window>

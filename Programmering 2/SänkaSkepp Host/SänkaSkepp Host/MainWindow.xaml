@@ -5,10 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SänkaSkeppKlasser"
         mc:Ignorable="d"
-        Title="SänkaSkepp Host" Height="450" Width="800" Background="LemonChiffon">
+        Title="SänkaSkepp Host" MinHeight="450" Width="800" Background="LemonChiffon">
     <Grid>
         <StackPanel>
-
             <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <StackPanel>
                     <Label>You</Label>
@@ -23,11 +22,24 @@
                         <StackPanel Name="stpEnemy"></StackPanel>
                     </GroupBox>
                 </StackPanel>
-
             </WrapPanel>
             <CheckBox Name="chcBoxHorisontal">Horisontal</CheckBox>
-            <WrapPanel HorizontalAlignment="Right" Margin="10">
-                <Label Name="lblStatus"></Label>
+            <WrapPanel>
+                <StackPanel HorizontalAlignment="Left">
+                    <StackPanel>
+                        <WrapPanel>
+                            <Label>Host IP: </Label>
+                            <TextBox Name="tbxHostIp">172.0.0.1</TextBox>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label>Host Port:</Label>
+                            <TextBox Name="tbxHostPort">12345</TextBox>
+                        </WrapPanel>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right" Margin="10">
+                    <Label Name="lblStatus"></Label>
+                </StackPanel>
             </WrapPanel>
         </StackPanel>
     </Grid>
