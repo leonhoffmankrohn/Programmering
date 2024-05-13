@@ -1,9 +1,9 @@
-﻿<Window x:Class="SänkaSkepp_Host.MainWindow"
+﻿<Window x:Class="SänkaSkeppKlasser.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SänkaSkepp_Host"
+        xmlns:local="clr-namespace:SänkaSkeppKlasser"
         mc:Ignorable="d"
         Title="SänkaSkepp Host" Height="450" Width="800" Background="LemonChiffon">
     <Grid>
@@ -13,7 +13,7 @@
                 <StackPanel>
                     <Label>You</Label>
                     <GroupBox Margin="10" Background="Gray">
-                        <StackPanel Name="stpPlayer">
+                        <StackPanel x:Name="stpPlayer">
                         </StackPanel>
                     </GroupBox>
                 </StackPanel>

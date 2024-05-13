@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SänkaSkepp_Host.Classes.Ships
+namespace SänkaSkeppKlasser.Classes.Ships
 {
-    // 2 rutor, näst minst
-    class Torpedo : Ship
+    // 4 rutor, störst
+    class Battleship : Ship
     {
-        public Torpedo()
+        public Battleship()
         {
-            Length = 2;
+            Length = 4;
         }
     }
 }

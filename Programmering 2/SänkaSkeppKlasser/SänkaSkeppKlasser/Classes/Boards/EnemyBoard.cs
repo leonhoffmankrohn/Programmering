@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SänkaSkepp_Host.Classes.Boards
+namespace SänkaSkeppKlasser.Classes.Boards
 {
     class EnemyBoard : Board
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SänkaSkepp_Host.Classes.Ships
+namespace SänkaSkeppKlasser.Classes.Ships
 {
     // 3 rutor, näst störst
     class Cruiser : Ship

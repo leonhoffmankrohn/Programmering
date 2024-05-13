@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace SänkaSkepp_Host
+namespace SänkaSkeppKlasser
 {
     /// <summary>
     /// Interaction logic for App.xaml

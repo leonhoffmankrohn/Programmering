@@ -1,5 +1,6 @@
-﻿using SänkaSkepp_Host.Classes.Boards;
-using SänkaSkepp_Host.Classes.Ships;
+﻿using SänkaSkeppKlasser.Classes;
+using SänkaSkeppKlasser.Classes.Boards;
+using SänkaSkeppKlasser.Classes.Ships;
 using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
@@ -16,7 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Color = System.Windows.Media.Color;
 
-namespace SänkaSkepp_Host
+namespace SänkaSkeppKlasser
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -33,11 +34,7 @@ namespace SänkaSkepp_Host
     {
         Button[,] playerButtons = new Button[10, 10];
         Button[,] enemyButtons = new Button[10, 10];
-        PlayerBoard player = new PlayerBoard();
-        EnemyBoard enemy = new EnemyBoard();
-
-        List<Ship> ships = new List<Ship>() { new Battleship(), new Cruiser(), new Cruiser(), new Torpedo(), new Torpedo(), new Torpedo(), new Submarine(), new Submarine(), new Submarine(), new Submarine() };
-        Ship SelectedShip;
+        Game game = new Game();
 
         public MainWindow()
         {
@@ -56,11 +53,11 @@ namespace SänkaSkepp_Host
 
         bool NextShip()
         {
-            SelectedShip = ships[0];
-            ships.RemoveAt(0);
-            if (ships.Count > 0)
+            game.SelectedShip = game.ships[0];
+            game.ships.RemoveAt(0);
+            if (game.ships.Count > 0)
             {
-                lblStatus.Content = "Placera ut en båt med längden " + SelectedShip.Length + "m";
+                lblStatus.Content = "Placera ut en båt med längden " + game.SelectedShip.Length + "m";
                 return true;
             }
             else
@@ -80,10 +77,10 @@ namespace SänkaSkepp_Host
         {
             stpPlayer.Children.Clear();
             stpEnemy.Children.Clear();
-            PopulateBoard(player, stpPlayer, playerButtons, YouBoard_Click);
-            PopulateBoard(enemy, stpEnemy, enemyButtons, EnemyBoard_Click);
+            PopulateBoard(game.player, stpPlayer, playerButtons, YouBoard_Click);
+            PopulateBoard(game.enemy, stpEnemy, enemyButtons, EnemyBoard_Click);
         }
-
+        
         void PopulateBoard(Board board, StackPanel panel, Button[,] buttonArray, RoutedEventHandler clickevent)
         {
             for (int y = 0; y < board.cells.GetLength(0); y++)
@@ -101,7 +98,6 @@ namespace SänkaSkepp_Host
                         case CellStatus.Water:
                             Random random = new Random();
                             int variable = Math.Abs(random.Next()*10) % 3;
-                            Debug.WriteLine(variable);
                             if (variable == 0) buttonArray[x, y] = new Button() { Background = new SolidColorBrush(Color.FromArgb(180, (byte)0, (byte)10, (byte)245)) };
                             else if (variable == 1) buttonArray[x, y] = new Button() { Background = new SolidColorBrush(Color.FromArgb(180, (byte)0, (byte)20, (byte)235)) };
                             else if (variable == 2) buttonArray[x, y] = new Button() { Background = new SolidColorBrush(Color.FromArgb(180, (byte)0, (byte)30, (byte)225)) };
@@ -144,12 +140,12 @@ namespace SänkaSkepp_Host
 
         void PlaceBoat(object sender, Board board, Button[,] buttons)
         {
-            NextShip(); // Här kan man ändra gamestate om den returnerar false, alltså det finns inga fler kvar
+            bool boatsLeft = NextShip(); // Här kan man ändra gamestate om den returnerar false, alltså det finns inga fler kvar
             try
             {
                 int[] indecies = FindIndex(buttons, (sender as Button)); // något fel i metoden?
                 Debug.WriteLine(indecies[0] + " : " + indecies[1]);
-                int length = SelectedShip.Length;
+                int length = game.SelectedShip.Length;
                 if (chcBoxHorisontal.IsChecked == true && indecies[0] + length - 1 < 10 && indecies[0] > -1)
                 {
                     for (int i = 0; i < length; i++)
@@ -169,16 +165,36 @@ namespace SänkaSkepp_Host
 
             }
             catch (Exception e){ MessageBox.Show(e.Message); }
+
+            if (!boatsLeft)
+            {
+                game.State = GameState.SetUpDone;
+            }
+        }
+
+        void PlayerAction(object sender) 
+        { 
+            switch (game.State)
+            {
+                case GameState.SetUp:
+                    PlaceBoat(sender, game.player, playerButtons);
+                    break;
+                case GameState.SetUpDone:
+                    Debug.WriteLine("Setup Done");
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void YouBoard_Click(object sender, RoutedEventArgs e)
         {
-            PlaceBoat(sender, player, playerButtons);
+            PlayerAction(sender);
         }
 
         private void EnemyBoard_Click(object sender, RoutedEventArgs e)
         {
-            PlaceBoat(sender, enemy, enemyButtons);
+            PlaceBoat(sender, game.enemy, enemyButtons);
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
