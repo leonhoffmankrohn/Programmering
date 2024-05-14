@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1 class=".header">The Dice Game</h2>
+    <div class="setup">
+        <p class="instruction">Enter a number 6 through 9</p>
+        <input type="text"class="game-number">
+        <button id="btnPlay" onclick="Play()">Play</button>
+    </div>
+    <div class="dice-roll">
+        <h1 class="dice1">0</h1>
+        <h1 class="dice2">0</h1>
+    </div>
+    <div class="roller">
+        <button id="btnRoll" onclick="Roll()">Roll</button>
+    </div>
+    <p class="info-text"></p>
+    <div class="game-over-div">
+        <header class="game-over-header">Game over</header>
+        <button type="button" id="btnPlayAgain" onclick="PlayAgain()">Play again</button>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
