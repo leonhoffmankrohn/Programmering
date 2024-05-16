@@ -259,9 +259,10 @@ namespace SänkaSkepp_Klient
             MultiArrayConverter<Cell> converter = new MultiArrayConverter<Cell>();
             obj.cells = converter.ConvertToArray(game.player.cells);
 
-            string jsonString = JsonConvert.SerializeObject(item, SetSettings());
+            string jsonString = JsonConvert.SerializeObject(game.player.cells);
 
-            client.GetStream().Write;
+            byte[] message = Encoding.Unicode.GetBytes(jsonString);
+            client.GetStream().WriteAsync(message);
         }
     }
 }

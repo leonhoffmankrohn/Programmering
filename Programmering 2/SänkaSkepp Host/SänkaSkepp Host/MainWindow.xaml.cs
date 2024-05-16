@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Xml.Serialization;
 using Color = System.Windows.Media.Color;
 using UtilitiesLib;
+using Newtonsoft.Json;
 
 namespace SänkaSkeppKlasser
 {
@@ -252,18 +253,15 @@ namespace SänkaSkeppKlasser
 
             TcpClient client = await server.AcceptTcpClientAsync();
 
-            NetworkStream stream = client.GetStream();
+            byte[] indata = new byte[128];
+            int antalbyte = await client.GetStream().ReadAsync(indata, 0, indata.Length);
+            string data = Encoding.Unicode.GetString(indata, 0, antalbyte);
 
-            XmlSerializer serializer = new XmlSerializer(typeof(CommunicationObject));
-            CommunicationObject obj = (CommunicationObject)serializer.Deserialize(stream);
-
-            MultiArrayConverter<Cell> converter = new MultiArrayConverter<Cell>();
-            game.enemy.cells = converter.ConvertToTwoD(obj.cells);
+            game.enemy.cells = JsonConvert.DeserializeObject<Cell[,]>(data);
 
             stpPlayerBoard.Visibility = Visibility.Visible;
             stpEnemyBoard.Visibility = Visibility.Visible;
             UpdateBoards();
-            stream.Close();
         }
     }
 }
