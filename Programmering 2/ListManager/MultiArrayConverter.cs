@@ -8,7 +8,7 @@ namespace UtilitiesLib
 {
     public class MultiArrayConverter<Type>
     {
-        public Type[][] ConvertToArray(Type[,] twoDArray)
+        public Type[] ConvertToArray(Type[,] twoDArray)
         {
             Type[] singleArray = new Type[twoDArray.GetLength(0) * twoDArray.GetLength(1)];
 
@@ -16,21 +16,21 @@ namespace UtilitiesLib
             {
                 for (int j = 0; j < twoDArray.GetLength(1); j++)
                 {
-                    singleArray;
+                    singleArray.Append(twoDArray[i, j]);
                 }
-                jagged[i] = array;
             }
 
-            return jagged;
+            return singleArray;
         }
-        public Type[,] ConvertToTwoD(Type[][] jaggedArray)
+        public Type[,] ConvertToTwoD(Type[] singleArray)
         {
-            Type[,] twoDArray = new Type[jaggedArray.GetLength(0), jaggedArray.GetLength(1)];
-            for (int i = 0; i < jaggedArray.GetLength(0); i++)
+            int dim = (int)Math.Sqrt(singleArray.Length);
+            Type[,] twoDArray = new Type[dim, dim];
+            for (int i = 0; i < dim; i++)
             {
-                for (int j = 0; j < jaggedArray.GetLength(1); j++)
+                for (int j = 0; j < dim; j++)
                 {
-                    twoDArray[i, j] = jaggedArray[i][j];
+                    twoDArray[i, j] = singleArray[10*i+j];
                 }
             }
             return twoDArray;

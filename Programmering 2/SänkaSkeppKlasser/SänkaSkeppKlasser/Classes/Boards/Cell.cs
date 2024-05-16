@@ -9,6 +9,7 @@ namespace SänkaSkeppKlasser
     public class Cell
     {
         public CellStatus Status { get; set; }
+        public Cell() { }
         public Cell(CellStatus _status = CellStatus.Water) 
         { 
             Status = _status;

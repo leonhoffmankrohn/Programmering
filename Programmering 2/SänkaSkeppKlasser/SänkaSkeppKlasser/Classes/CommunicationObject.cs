@@ -9,6 +9,6 @@ namespace SänkaSkeppKlasser.Classes
     public class CommunicationObject
     {
         public CommunicationObject() { }
-        public Cell[][] cells { get; set; }
+        public Cell[] cells { get; set; }
     }
 }

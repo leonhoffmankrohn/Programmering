@@ -257,7 +257,7 @@ namespace SänkaSkeppKlasser
             XmlSerializer serializer = new XmlSerializer(typeof(CommunicationObject));
             CommunicationObject obj = (CommunicationObject)serializer.Deserialize(stream);
 
-            JaggedArray<Cell> converter = new JaggedArray<Cell>();
+            MultiArrayConverter<Cell> converter = new MultiArrayConverter<Cell>();
             game.enemy.cells = converter.ConvertToTwoD(obj.cells);
 
             stpPlayerBoard.Visibility = Visibility.Visible;

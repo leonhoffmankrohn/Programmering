@@ -1,4 +1,5 @@
-﻿using SänkaSkeppKlasser;
+﻿using Newtonsoft.Json;
+using SänkaSkeppKlasser;
 using SänkaSkeppKlasser.Classes;
 using SänkaSkeppKlasser.Classes.Boards;
 using System.Diagnostics;
@@ -255,12 +256,12 @@ namespace SänkaSkepp_Klient
 
             CommunicationObject obj = new CommunicationObject();
             
-            JaggedArray<Cell> converter = new JaggedArray<Cell>();
-            obj.cells = converter.ConvertToJagged(game.player.cells);
+            MultiArrayConverter<Cell> converter = new MultiArrayConverter<Cell>();
+            obj.cells = converter.ConvertToArray(game.player.cells);
 
+            string jsonString = JsonConvert.SerializeObject(item, SetSettings());
 
-            XmlSerializer serializer = new XmlSerializer(typeof(CommunicationObject));
-            serializer.Serialize(client.GetStream(), obj);
+            client.GetStream().Write;
         }
     }
 }
