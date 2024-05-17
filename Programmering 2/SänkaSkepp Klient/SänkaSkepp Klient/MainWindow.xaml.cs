@@ -62,11 +62,18 @@ namespace SänkaSkepp_Klient
             }
             else
             {
-                lblStatus.Content = "Nu är det slut på båtar att placera";
+                lblStatus.Content = "Nu ska du ansluta till hosten";
+                ServerSetup();
                 return false;
             }
         }
-        
+
+        void ServerSetup()
+        {
+            stpPlayerBoard.Visibility = Visibility.Collapsed;
+            wplStartServer.Visibility = Visibility.Visible;
+        }
+
         bool PopNextShip()
         {
             game.SelectedShip = game.ships[0];
@@ -245,12 +252,10 @@ namespace SänkaSkepp_Klient
 
         private void EnemyBoard_Click(object sender, RoutedEventArgs e)
         {
-            PlaceBoat(sender, game.enemy, enemyButtons);
-        }
 
-        async private void btnConnectToHost_Click(object sender, RoutedEventArgs e)
+        }
+        async void ServerSet()
         {
-            btnConnectToHost.IsEnabled = false;
             TcpClient client = new TcpClient();
             await client.ConnectAsync(IPAddress.Parse(tbxHostIP.Text), int.Parse(tbxHostPort.Text));
 
@@ -258,6 +263,11 @@ namespace SänkaSkepp_Klient
 
             byte[] message = Encoding.Unicode.GetBytes(jsonString);
             client.GetStream().WriteAsync(message);
+        }
+        private void btnConnectToHost_Click(object sender, RoutedEventArgs e)
+        {
+            btnConnectToHost.IsEnabled = false;
+            ServerSet();
         }
     }
 }

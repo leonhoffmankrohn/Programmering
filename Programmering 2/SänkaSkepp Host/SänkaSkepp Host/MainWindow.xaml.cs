@@ -29,6 +29,7 @@ namespace SänkaSkeppKlasser
         Button[,] playerButtons = new Button[10, 10];
         Button[,] enemyButtons = new Button[10, 10];
         Game game = new Game();
+        Board actualEnemy = new Board(CellStatus.Unknown);
 
         public MainWindow()
         {
@@ -38,7 +39,6 @@ namespace SänkaSkeppKlasser
 
         async void Game()
         {
-            ShipsStatus();
             while (true)
             {
                 await Task.Delay(1000);
@@ -55,9 +55,7 @@ namespace SänkaSkeppKlasser
             }
             else
             {
-                lblStatus.Content = "Nu är det dags att låta någon ansluta och spela med oss.";
-                stpPlayerBoard.Visibility = Visibility.Collapsed;
-                wplStartServer.Visibility = Visibility.Visible;
+                lblStatus.Content = "Inväntar spelare";
                 return false;
             }
         }
@@ -107,11 +105,11 @@ namespace SänkaSkeppKlasser
                             break;
 
                         case CellStatus.Boat:
-                            buttonArray[x, y] = new Button() { Background = Brushes.DarkOrange };
+                            buttonArray[x, y] = new Button() { Background = Brushes.SaddleBrown };
                             break;
 
                         case CellStatus.HitBoat:
-                            buttonArray[x, y] = new Button() { Background = Brushes.IndianRed };
+                            buttonArray[x, y] = new Button() { Background = Brushes.Red };
                             break;
                     }
                     buttonArray[x, y].Height = 30;
@@ -227,9 +225,30 @@ namespace SänkaSkeppKlasser
                     PlaceBoat(sender, game.player, playerButtons);
                     break;
                 case GameState.SetUpDone:
+                    int[] indecies = FindIndex(enemyButtons, sender);
+                    if (indecies[0] != -1)
+                    {
+                        Fire(indecies[0], indecies[1]);
+                    }
                     break;
                 default:
                     break;
+            }
+        }
+
+        void Fire(int x, int y)
+        {
+            CellStatus whatsBeenHit = actualEnemy.cells[x, y].Status;
+            switch (whatsBeenHit)
+            {
+                case CellStatus.Water:
+                    game.enemy.cells[x, y].Status = whatsBeenHit;
+                    break;
+
+                case CellStatus.Boat:
+                    game.enemy.cells[x, y].Status = CellStatus.HitBoat;
+                    break;
+
             }
         }
 
@@ -240,28 +259,43 @@ namespace SänkaSkeppKlasser
 
         private void EnemyBoard_Click(object sender, RoutedEventArgs e)
         {
-
+            PlayerAction(sender);
         }
 
-        async private void btnStartServer_Click(object sender, RoutedEventArgs e)
+        async void ServerSet(int port)
         {
-            btnStartServer.IsEnabled = false;
-            int.TryParse(tbxHostPort.Text, out int port);
+            bool connected = false;
+            lblStatus.Content = "Waiting for opponent...";
+            while (!connected)
+            {
+                try
+                {
+                    TcpListener server = new TcpListener(IPAddress.Any, port);
+                    server.Start();
 
-            TcpListener server = new TcpListener(IPAddress.Any, port);
-            server.Start();
+                    TcpClient client = await server.AcceptTcpClientAsync();
+                    if (client.Connected) lblStatus.Content = "Opponent has connected!";
 
-            TcpClient client = await server.AcceptTcpClientAsync();
+                    byte[] indata = new byte[9999999];
+                    int antalbyte = await client.GetStream().ReadAsync(indata, 0, indata.Length);
+                    string data = Encoding.Unicode.GetString(indata, 0, antalbyte);
 
-            byte[] indata = new byte[9999999];
-            int antalbyte = await client.GetStream().ReadAsync(indata, 0, indata.Length);
-            string data = Encoding.Unicode.GetString(indata, 0, antalbyte);
+                    actualEnemy.cells = JsonConvert.DeserializeObject<Cell[,]>(data);
+                    }
+                catch (Exception ex) { }
+            }
 
-            game.enemy.cells = JsonConvert.DeserializeObject<Cell[,]>(data);
-
-            stpPlayerBoard.Visibility = Visibility.Visible;
-            stpEnemyBoard.Visibility = Visibility.Visible;
             UpdateBoards();
+        }
+
+        private void btnStartServer_Click(object sender, RoutedEventArgs e)
+        {
+            lblStatus.Content = "Server started at port " + tbxHostPort.Text;
+            stpPlayerBoard.Visibility = Visibility.Visible;
+            wplStartServer.Visibility = Visibility.Collapsed;
+
+            int.TryParse(tbxHostPort.Text, out int port);
+            ServerSet(port);
         }
     }
 }

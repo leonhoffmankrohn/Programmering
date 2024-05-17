@@ -24,7 +24,7 @@
                     </GroupBox>
                 </StackPanel>
             </WrapPanel>
-            <WrapPanel Name="wplStartServer" Visibility="Visible" HorizontalAlignment="Center" Margin="0 100 0 0">
+            <WrapPanel Name="wplStartServer" Visibility="Collapsed" HorizontalAlignment="Center" Margin="0 100 0 0">
                 <StackPanel>
                     <WrapPanel Width="200">
                         <Label>Host IP:</Label>
@@ -37,7 +37,7 @@
                     <Button Name="btnConnectToHost" Click="btnConnectToHost_Click">Connect to host...</Button>
                 </StackPanel>
             </WrapPanel>
-            <Label Name="lblStatus" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Margin="10"/>
+            <Label Name="lblStatus" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"/>
         </StackPanel>
     </Grid>
 </Window>

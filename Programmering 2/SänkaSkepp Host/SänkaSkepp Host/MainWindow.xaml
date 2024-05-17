@@ -9,7 +9,7 @@
     <Grid>
         <StackPanel>
             <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <StackPanel Name="stpPlayerBoard">
+                <StackPanel Name="stpPlayerBoard" Visibility="Collapsed">
                     <Label>You</Label>
                     <GroupBox Margin="10" Background="Gray">
                         <StackPanel x:Name="stpPlayer">
@@ -24,7 +24,7 @@
                     </GroupBox>
                 </StackPanel>
             </WrapPanel>
-            <WrapPanel Name="wplStartServer" Visibility="Collapsed" HorizontalAlignment="Center" Margin="0 100 0 0">
+            <WrapPanel Name="wplStartServer" Visibility="Visible" HorizontalAlignment="Center" Margin="0 100 0 0">
                 <StackPanel>
                     <WrapPanel Width="200">
                         <Label>Host IP:</Label>
@@ -37,7 +37,7 @@
                     <Button Name="btnStartServer" Click="btnStartServer_Click">Start the server...</Button>
                 </StackPanel>
             </WrapPanel>
-            <Label Name="lblStatus" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Margin="10"/>
+            <Label Name="lblStatus" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"/>
         </StackPanel>
     </Grid>
 </Window>
