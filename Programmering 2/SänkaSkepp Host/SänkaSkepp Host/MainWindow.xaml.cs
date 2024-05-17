@@ -253,7 +253,7 @@ namespace SänkaSkeppKlasser
 
             TcpClient client = await server.AcceptTcpClientAsync();
 
-            byte[] indata = new byte[128];
+            byte[] indata = new byte[9999999];
             int antalbyte = await client.GetStream().ReadAsync(indata, 0, indata.Length);
             string data = Encoding.Unicode.GetString(indata, 0, antalbyte);
 

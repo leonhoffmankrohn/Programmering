@@ -254,11 +254,6 @@ namespace SänkaSkepp_Klient
             TcpClient client = new TcpClient();
             await client.ConnectAsync(IPAddress.Parse(tbxHostIP.Text), int.Parse(tbxHostPort.Text));
 
-            CommunicationObject obj = new CommunicationObject();
-            
-            MultiArrayConverter<Cell> converter = new MultiArrayConverter<Cell>();
-            obj.cells = converter.ConvertToArray(game.player.cells);
-
             string jsonString = JsonConvert.SerializeObject(game.player.cells);
 
             byte[] message = Encoding.Unicode.GetBytes(jsonString);
