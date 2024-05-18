@@ -238,7 +238,8 @@ namespace SänkaSkepp_Klient
                 case GameState.SetUp:
                     PlaceBoat(sender, game.player, playerButtons);
                     break;
-                case GameState.SetUpDone:
+                case GameState.Running:
+
                     break;
                 default:
                     break;
@@ -252,8 +253,14 @@ namespace SänkaSkepp_Klient
 
         private void EnemyBoard_Click(object sender, RoutedEventArgs e)
         {
+            PlayerAction(sender);
+        }
+
+        void InterperateShot(Shot shot)
+        {
 
         }
+
         async void ServerSet()
         {
             TcpClient client = new TcpClient();
@@ -262,7 +269,7 @@ namespace SänkaSkepp_Klient
             string jsonString = JsonConvert.SerializeObject(game.player.cells);
 
             byte[] message = Encoding.Unicode.GetBytes(jsonString);
-            client.GetStream().WriteAsync(message);
+            await client.GetStream().WriteAsync(message);
         }
         private void btnConnectToHost_Click(object sender, RoutedEventArgs e)
         {

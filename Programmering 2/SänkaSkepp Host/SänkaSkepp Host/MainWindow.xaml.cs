@@ -15,6 +15,7 @@ using System.Xml.Serialization;
 using Color = System.Windows.Media.Color;
 using UtilitiesLib;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace SänkaSkeppKlasser
 {
@@ -30,6 +31,7 @@ namespace SänkaSkeppKlasser
         Button[,] enemyButtons = new Button[10, 10];
         Game game = new Game();
         Board actualEnemy = new Board(CellStatus.Unknown);
+        TcpClient client = new TcpClient();
 
         public MainWindow()
         {
@@ -37,7 +39,7 @@ namespace SänkaSkeppKlasser
             Initialize();
         }
 
-        async void Game()
+        async void AutoBoardUpdate()
         {
             while (true)
             {
@@ -45,7 +47,13 @@ namespace SänkaSkeppKlasser
                 UpdateBoards();
             }
         }
-        
+
+        void Initialize()
+        {
+            UpdateBoards();
+            AutoBoardUpdate();
+        }
+
         bool ShipsStatus()
         {
             if (game.ships.Count > 0)
@@ -56,21 +64,16 @@ namespace SänkaSkeppKlasser
             else
             {
                 lblStatus.Content = "Inväntar spelare";
+                game.State = GameState.Running;
                 return false;
             }
         }
-        
+
         bool PopNextShip()
         {
             game.SelectedShip = game.ships[0];
             game.ships.RemoveAt(0);
             return ShipsStatus();
-        }
-
-        void Initialize()
-        {
-            UpdateBoards();
-            Game();
         }
 
         void UpdateBoards()
@@ -80,7 +83,7 @@ namespace SänkaSkeppKlasser
             PopulateBoard(game.player, stpPlayer, playerButtons, YouBoard_Click);
             PopulateBoard(game.enemy, stpEnemy, enemyButtons, EnemyBoard_Click);
         }
-        
+
         void PopulateBoard(Board board, StackPanel panel, Button[,] buttonArray, RoutedEventHandler clickevent)
         {
             for (int y = 0; y < board.cells.GetLength(0); y++)
@@ -92,12 +95,12 @@ namespace SänkaSkeppKlasser
                     switch (board.cells[x, y].Status)
                     {
                         case CellStatus.Unknown:
-                            buttonArray[x, y] = new Button() { Background = Brushes.Gray};
+                            buttonArray[x, y] = new Button() { Background = Brushes.Gray };
                             break;
 
                         case CellStatus.Water:
                             Random random = new Random();
-                            int variable = Math.Abs(random.Next()*10) % 3;
+                            int variable = Math.Abs(random.Next() * 10) % 3;
                             if (variable == 0) buttonArray[x, y] = new Button() { Background = new SolidColorBrush(Color.FromArgb(180, (byte)0, (byte)10, (byte)245)) };
                             else if (variable == 1) buttonArray[x, y] = new Button() { Background = new SolidColorBrush(Color.FromArgb(180, (byte)0, (byte)20, (byte)235)) };
                             else if (variable == 2) buttonArray[x, y] = new Button() { Background = new SolidColorBrush(Color.FromArgb(180, (byte)0, (byte)30, (byte)225)) };
@@ -117,7 +120,7 @@ namespace SänkaSkeppKlasser
                     buttonArray[x, y].Click += clickevent;
                     buttonArray[x, y].BorderThickness = new Thickness(0);
 
-                    row.Children.Add(buttonArray[x,y]);
+                    row.Children.Add(buttonArray[x, y]);
                 }
                 panel.Children.Add(row);
             }
@@ -137,7 +140,7 @@ namespace SänkaSkeppKlasser
             }
             return new int[] { -1, -1 };
         }
-      
+
         bool AllIsWater(int startX, int startY, int length, bool horisontal, Board board)
         {
             bool justwater = true;
@@ -196,7 +199,7 @@ namespace SänkaSkeppKlasser
             bool boatsLeft = true; // Här kan man ändra gamestate om den returnerar false, alltså det finns inga fler kvar
             try
             {
-                int[] indecies = FindIndex(buttons, (sender as Button)); 
+                int[] indecies = FindIndex(buttons, (sender as Button));
                 int length = game.ships[0].Length;
                 bool horisontal = (bool)chcBoxHorisontal.IsChecked;
 
@@ -209,7 +212,7 @@ namespace SänkaSkeppKlasser
                 UpdateBoards();
 
             }
-            catch (Exception e){ MessageBox.Show(e.Message); }
+            catch (Exception e) { MessageBox.Show(e.Message); }
 
             if (!boatsLeft)
             {
@@ -217,14 +220,14 @@ namespace SänkaSkeppKlasser
             }
         }
 
-        void PlayerAction(object sender) 
-        { 
+        void PlayerAction(object sender)
+        {
             switch (game.State)
             {
                 case GameState.SetUp:
                     PlaceBoat(sender, game.player, playerButtons);
                     break;
-                case GameState.SetUpDone:
+                case GameState.Running:
                     int[] indecies = FindIndex(enemyButtons, sender);
                     if (indecies[0] != -1)
                     {
@@ -243,6 +246,7 @@ namespace SänkaSkeppKlasser
             {
                 case CellStatus.Water:
                     game.enemy.cells[x, y].Status = whatsBeenHit;
+                    SendShot(new Shot(x, y, Consequence.ShotMissed));
                     break;
 
                 case CellStatus.Boat:
@@ -251,6 +255,53 @@ namespace SänkaSkeppKlasser
 
             }
         }
+
+        async void SendShot(Shot shot)
+        {
+            try
+            {
+                string jsonString = JsonConvert.SerializeObject(shot);
+                byte[] message = Encoding.Unicode.GetBytes(jsonString);
+
+                await client.GetStream().WriteAsync(message);
+            }
+            catch (Exception ex) { }
+        }
+
+        async void ShotListener()
+        {
+            while (game.State == GameState.Running)
+            {
+                try
+                {
+                    byte[] indata = new byte[9999999];
+                    int antalbyte = await client.GetStream().ReadAsync(indata, 0, indata.Length);
+                    string data = Encoding.Unicode.GetString(indata, 0, antalbyte);
+                    Shot shot = JsonConvert.DeserializeObject<Shot>(data);
+                    InterperateShot(shot);
+                }
+                catch (Exception ex) { }
+            }
+        }
+
+        void InterperateShot(Shot shot)
+        {
+            int x = shot.XY[0];
+            int y = shot.XY[1];
+            if (game.player.cells[x, y].Status == CellStatus.Boat)
+            {
+                shot.Action = Consequence.ShotHit;
+                game.player.cells[x, y].Status = CellStatus.HitBoat;
+            }
+            else
+            {
+                shot.Action = Consequence.ShotMissed;
+                game.player.cells[x, y].Status = CellStatus.MissedBoat;
+            }
+
+            SendShot(shot);
+        }
+
 
         private void YouBoard_Click(object sender, RoutedEventArgs e)
         {
@@ -266,25 +317,21 @@ namespace SänkaSkeppKlasser
         {
             bool connected = false;
             lblStatus.Content = "Waiting for opponent...";
-            while (!connected)
+            try
             {
-                try
-                {
-                    TcpListener server = new TcpListener(IPAddress.Any, port);
-                    server.Start();
+                TcpListener server = new TcpListener(IPAddress.Any, port);
+                server.Start();
 
-                    TcpClient client = await server.AcceptTcpClientAsync();
-                    if (client.Connected) lblStatus.Content = "Opponent has connected!";
+                client = await server.AcceptTcpClientAsync();
+                if (client.Connected) lblStatus.Content = "Opponent has connected!";
 
-                    byte[] indata = new byte[9999999];
-                    int antalbyte = await client.GetStream().ReadAsync(indata, 0, indata.Length);
-                    string data = Encoding.Unicode.GetString(indata, 0, antalbyte);
+                byte[] indata = new byte[9999999];
+                int antalbyte = await client.GetStream().ReadAsync(indata, 0, indata.Length);
+                string data = Encoding.Unicode.GetString(indata, 0, antalbyte);
 
-                    actualEnemy.cells = JsonConvert.DeserializeObject<Cell[,]>(data);
-                    }
-                catch (Exception ex) { }
-            }
-
+                actualEnemy.cells = JsonConvert.DeserializeObject<Cell[,]>(data);
+                }
+            catch (Exception ex) { }
             UpdateBoards();
         }
 

@@ -22,5 +22,6 @@ namespace SänkaSkeppKlasser
         Water = 1,
         Boat = 2,
         HitBoat = 3,
+        MissedBoat = 4,
     }
 }

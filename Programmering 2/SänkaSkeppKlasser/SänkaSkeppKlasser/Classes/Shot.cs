@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SänkaSkeppKlasser.Classes
 {
-    internal class Shot
+    public class Shot
     {
         public int[] XY { get; }
         public Consequence Action {  get; set; }
@@ -20,7 +20,7 @@ namespace SänkaSkeppKlasser.Classes
             Action = _action;
         }
     }
-    enum Consequence
+    public enum Consequence
     {
         None,
         ShotMissed,
