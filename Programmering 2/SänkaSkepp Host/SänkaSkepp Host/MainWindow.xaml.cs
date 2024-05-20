@@ -63,8 +63,8 @@ namespace SänkaSkeppKlasser
             }
             else
             {
-                lblStatus.Content = "Inväntar spelare";
-                game.State = GameState.Running;
+                lblStatus.Content = "Initiering klar";
+                ShotListener();
                 return false;
             }
         }
@@ -109,6 +109,10 @@ namespace SänkaSkeppKlasser
 
                         case CellStatus.Boat:
                             buttonArray[x, y] = new Button() { Background = Brushes.SaddleBrown };
+                            break;
+
+                        case CellStatus.MissedBoat:
+                            buttonArray[x, y] = new Button() { Background = Brushes.White };
                             break;
 
                         case CellStatus.HitBoat:
@@ -216,27 +220,15 @@ namespace SänkaSkeppKlasser
 
             if (!boatsLeft)
             {
-                game.State = GameState.SetUpDone;
+                game.State = GameState.Running;
+                GameStarted();
             }
         }
 
-        void PlayerAction(object sender)
+        void GameStarted()
         {
-            switch (game.State)
-            {
-                case GameState.SetUp:
-                    PlaceBoat(sender, game.player, playerButtons);
-                    break;
-                case GameState.Running:
-                    int[] indecies = FindIndex(enemyButtons, sender);
-                    if (indecies[0] != -1)
-                    {
-                        Fire(indecies[0], indecies[1]);
-                    }
-                    break;
-                default:
-                    break;
-            }
+            stpEnemyBoard.Visibility = Visibility.Visible;
+            stpPlayerBoard.Visibility = Visibility.Visible;
         }
 
         void Fire(int x, int y)
@@ -245,7 +237,7 @@ namespace SänkaSkeppKlasser
             switch (whatsBeenHit)
             {
                 case CellStatus.Water:
-                    game.enemy.cells[x, y].Status = whatsBeenHit;
+                    game.enemy.cells[x, y].Status = CellStatus.MissedBoat;
                     SendShot(new Shot(x, y, Consequence.ShotMissed));
                     break;
 
@@ -262,7 +254,6 @@ namespace SänkaSkeppKlasser
             {
                 string jsonString = JsonConvert.SerializeObject(shot);
                 byte[] message = Encoding.Unicode.GetBytes(jsonString);
-
                 await client.GetStream().WriteAsync(message);
             }
             catch (Exception ex) { }
@@ -278,6 +269,7 @@ namespace SänkaSkeppKlasser
                     int antalbyte = await client.GetStream().ReadAsync(indata, 0, indata.Length);
                     string data = Encoding.Unicode.GetString(indata, 0, antalbyte);
                     Shot shot = JsonConvert.DeserializeObject<Shot>(data);
+                    Debug.WriteLine(shot);
                     InterperateShot(shot);
                 }
                 catch (Exception ex) { }
@@ -302,6 +294,25 @@ namespace SänkaSkeppKlasser
             SendShot(shot);
         }
 
+        void PlayerAction(object sender)
+        {
+            switch (game.State)
+            {
+                case GameState.SetUp:
+                    PlaceBoat(sender, game.player, playerButtons);
+                    break;
+                case GameState.Running:
+                    int[] indecies = FindIndex(enemyButtons, sender);
+                    if (indecies[0] != -1)
+                    {
+                        Fire(indecies[0], indecies[1]);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            UpdateBoards();
+        }
 
         private void YouBoard_Click(object sender, RoutedEventArgs e)
         {
@@ -330,7 +341,7 @@ namespace SänkaSkeppKlasser
                 string data = Encoding.Unicode.GetString(indata, 0, antalbyte);
 
                 actualEnemy.cells = JsonConvert.DeserializeObject<Cell[,]>(data);
-                }
+            }
             catch (Exception ex) { }
             UpdateBoards();
         }

@@ -36,6 +36,7 @@ namespace SänkaSkepp_Klient
         Button[,] playerButtons = new Button[10, 10];
         Button[,] enemyButtons = new Button[10, 10];
         Game game = new Game();
+        TcpClient client = new TcpClient();
 
         public MainWindow()
         {
@@ -45,6 +46,7 @@ namespace SänkaSkepp_Klient
 
         async void Game()
         {
+            stpEnemyBoard.Visibility = Visibility.Collapsed;
             ShipsStatus();
             while (true)
             {
@@ -119,11 +121,15 @@ namespace SänkaSkepp_Klient
                             break;
 
                         case CellStatus.Boat:
-                            buttonArray[x, y] = new Button() { Background = Brushes.DarkOrange };
+                            buttonArray[x, y] = new Button() { Background = Brushes.SaddleBrown };
                             break;
 
                         case CellStatus.HitBoat:
-                            buttonArray[x, y] = new Button() { Background = Brushes.IndianRed };
+                            buttonArray[x, y] = new Button() { Background = Brushes.Red };
+                            break;
+
+                        case CellStatus.MissedBoat:
+                            buttonArray[x, y] = new Button() { Background = Brushes.White };
                             break;
                     }
                     buttonArray[x, y].Height = 30;
@@ -227,8 +233,19 @@ namespace SänkaSkepp_Klient
 
             if (!boatsLeft)
             {
-                game.State = GameState.SetUpDone;
+                game.State = GameState.Running;
             }
+        }
+
+        async void SendShot(Shot shot)
+        {
+            try
+            {
+                string jsonString = JsonConvert.SerializeObject(shot);
+                byte[] message = Encoding.Unicode.GetBytes(jsonString);
+                await client.GetStream().WriteAsync(message);
+            }
+            catch (Exception ex) { }
         }
 
         void PlayerAction(object sender)
@@ -239,7 +256,11 @@ namespace SänkaSkepp_Klient
                     PlaceBoat(sender, game.player, playerButtons);
                     break;
                 case GameState.Running:
-
+                    int[] indecies = FindIndex(enemyButtons, sender);
+                    if (indecies[0] != -1)
+                    {
+                        SendShot(new Shot(indecies[0], indecies[1]));
+                    }
                     break;
                 default:
                     break;
@@ -256,20 +277,56 @@ namespace SänkaSkepp_Klient
             PlayerAction(sender);
         }
 
+        async void ShotListener()
+        {
+            //while (game.State == GameState.Running)
+            //{
+            //    if (client != null)
+            //    {
+            //        try
+            //        {
+            //            byte[] indata = new byte[9999999];
+            //            int antalbyte = await client.GetStream().ReadAsync(indata, 0, indata.Length);
+            //            string data = Encoding.Unicode.GetString(indata, 0, antalbyte);
+            //            Shot shot = JsonConvert.DeserializeObject<Shot>(data);
+            //            InterperateShot(shot);
+            //        }
+            //        catch (Exception ex) { }
+            //    }
+            //}
+        }
+
         void InterperateShot(Shot shot)
         {
-
+            int x = shot.XY[0];
+            int y = shot.XY[1];
+            switch (shot.Action)
+            {
+                case Consequence.ShotMissed:
+                    game.player.cells[x, y].Status = CellStatus.MissedBoat;
+                    break;
+                    
+                case Consequence.ShotHit:
+                    game.player.cells[x,y].Status = CellStatus.HitBoat;
+                    break;
+            }
         }
 
         async void ServerSet()
         {
-            TcpClient client = new TcpClient();
+            client = new TcpClient();
             await client.ConnectAsync(IPAddress.Parse(tbxHostIP.Text), int.Parse(tbxHostPort.Text));
 
             string jsonString = JsonConvert.SerializeObject(game.player.cells);
 
             byte[] message = Encoding.Unicode.GetBytes(jsonString);
             await client.GetStream().WriteAsync(message);
+
+            stpPlayerBoard.Visibility = Visibility.Visible;
+            stpEnemyBoard.Visibility = Visibility.Visible;
+            wplStartServer.Visibility = Visibility.Collapsed;
+
+            ShotListener();
         }
         private void btnConnectToHost_Click(object sender, RoutedEventArgs e)
         {
