@@ -14,5 +14,10 @@ namespace SänkaSkeppKlasser.Classes.Ships
         {
             Length = 1;
         }
+
+        public override string ToString()
+        {
+            return "submarine";
+        }
     }
 }

@@ -236,7 +236,6 @@ namespace SänkaSkepp_Klient
             if (!boatsLeft)
             {
                 game.State = GameState.Running;
-                GameStarted();
             }
         }
 
@@ -304,14 +303,14 @@ namespace SänkaSkepp_Klient
                     int antalbyte = await client.GetStream().ReadAsync(indata, 0, indata.Length);
                     string data = Encoding.Unicode.GetString(indata, 0, antalbyte);
                     Shot shot = JsonConvert.DeserializeObject<Shot>(data);
+                    InterperateShot(shot, game.player);
                         
                     byte[] gamestateinfo = new byte[2];
                     await client.GetStream().ReadAsync(gamestateinfo, 0, gamestateinfo.Length);
                         
-                    InterperateShot(shot, game.player);
-                    InterperateGameState(gamestateinfo);
                     yourturn = true;
                     lblStatus.Content = "Your turn to shot at the enemy!";
+                    InterperateGameState(gamestateinfo);
                 }
                 catch (Exception ex) { }
             }
@@ -319,6 +318,7 @@ namespace SänkaSkepp_Klient
 
         void GameOver(bool tie)
         {
+            Debug.WriteLine("Game over");
             lblStatus.Content = "GameOver!";
             GetFacit();
         }
@@ -330,8 +330,7 @@ namespace SänkaSkepp_Klient
             string data = Encoding.Unicode.GetString(indata, 0, antalbyte);
 
             game.enemy.cells = JsonConvert.DeserializeObject<Cell[,]>(data);
-
-            lblStatus.Content = "Here is the opponents board";
+            MessageTimer("Here is the opponents board", 5000);
         }
 
         void InterperateGameState(byte[] data)
@@ -361,7 +360,16 @@ namespace SänkaSkepp_Klient
         async void ServerSet()
         {
             client = new TcpClient();
-            await client.ConnectAsync(IPAddress.Parse(tbxHostIP.Text), int.Parse(tbxHostPort.Text));
+
+            while (!client.Connected)
+            {
+                try
+                {
+                await client.ConnectAsync(IPAddress.Parse(tbxHostIP.Text), int.Parse(tbxHostPort.Text));
+                }
+                catch { }
+            }
+
 
             string jsonString = JsonConvert.SerializeObject(game.player.cells);
 
@@ -373,11 +381,19 @@ namespace SänkaSkepp_Klient
             wplStartServer.Visibility = Visibility.Collapsed;
 
             ShotListener();
+            GameStarted();
         }
         private void btnConnectToHost_Click(object sender, RoutedEventArgs e)
         {
             btnConnectToHost.IsEnabled = false;
             ServerSet();
+        }
+        async void MessageTimer(string message, int timeinm)
+        {
+            string before = lblStatus.Content.ToString();
+            lblStatus.Content = message;
+            await Task.Delay(timeinm);
+            lblStatus.Content = (lblStatus.Content == message) ? before : lblStatus.Content;
         }
     }
 }

@@ -13,5 +13,9 @@ namespace SänkaSkeppKlasser.Classes.Ships
         { 
             Length = 3;
         }
+        public override string ToString()
+        {
+            return "cruiser";
+        }
     }
 }

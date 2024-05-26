@@ -14,5 +14,9 @@ namespace SänkaSkeppKlasser.Classes.Ships
         {
             Length = 2;
         }
+        public override string ToString()
+        {
+            return "torpedo";
+        }
     }
 }

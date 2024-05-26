@@ -210,10 +210,11 @@ namespace SänkaSkeppKlasser
 
                 if (indecies[0] > -1 && FitInArea(indecies[0], indecies[1], length, horisontal) && AllIsWater(indecies[0], indecies[1], length, horisontal, board))
                 {
+                    MessageTimer("Placed a " + game.ships[0].ToString(), 2000);
                     boatsLeft = PopNextShip();
                     AddBoat(indecies[0], indecies[1], length, horisontal, board);
                 }
-                else MessageBox.Show("Try placing it somewhere else");
+                else MessageTimer("Try placing it somewhere else", 5000);
                 UpdateBoards();
 
             }
@@ -258,9 +259,14 @@ namespace SänkaSkeppKlasser
                 string jsonString = JsonConvert.SerializeObject(shot);
                 byte[] message = Encoding.Unicode.GetBytes(jsonString);
                 await client.GetStream().WriteAsync(message);
-                Shot fired = JsonConvert.DeserializeObject<Shot>(jsonString);
+
+                if (CheckIfGameOver(out bool gameTie))
+                {
+                    game.State = GameState.GameOver;
+                    SendGamestate(gameTie);
+                }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { MessageBox.Show("Client disconnected"); }
         }
 
         async void ShotListener()
@@ -275,8 +281,8 @@ namespace SänkaSkeppKlasser
                 yourturn = true;
                 lblStatus.Content = "Your turn to shot at the enemy!";
             }
-            catch (Exception ex) { }
-            
+            catch (Exception ex) { MessageBox.Show("Client disconnected"); }
+
         }
 
         void InterperateShot(Shot shot)
@@ -337,10 +343,9 @@ namespace SänkaSkeppKlasser
                     if (indecies[0] != -1 && yourturn)
                     {
                         Fire(indecies[0], indecies[1]);
-                        game.State = (CheckIfGameOver(out bool gameTie)) ? GameState.GameOver : GameState.Running;
+                        
                         lblStatus.Content = "Waiting for opponent to attack...";
                         ShotListener();
-                        SendGamestate(gameTie);
                         yourturn = false;
                     }
                     break;
@@ -352,7 +357,22 @@ namespace SänkaSkeppKlasser
 
         void GameOver(bool tie)
         {
+            Debug.WriteLine("Game over");
             lblStatus.Content = "GameOver!";
+            game.enemy.cells = actualEnemy.cells;
+            MessageTimer("Here is the opponents board", 5000);
+            SendFacit();
+        }
+
+        async void SendFacit()
+        {
+            try
+            {
+                string jsonString = JsonConvert.SerializeObject(game.player.cells);
+                byte[] message = Encoding.Unicode.GetBytes(jsonString);
+                await client.GetStream().WriteAsync(message);
+            }
+            catch (Exception ex) { MessageBox.Show("Client disconnected"); }
         }
 
         async void SendGamestate(bool gameTie)
@@ -363,7 +383,11 @@ namespace SänkaSkeppKlasser
                 data[0] = 1;
                 GameOver(gameTie);
             }
-            await client.GetStream().WriteAsync(data);
+            try
+            {
+                await client.GetStream().WriteAsync(data);
+            }
+            catch (Exception ex) { MessageBox.Show("Client disconnected"); }
         }
 
         private void YouBoard_Click(object sender, RoutedEventArgs e)
@@ -378,14 +402,15 @@ namespace SänkaSkeppKlasser
 
         async void ServerSet(int port)
         {
-            lblStatus.Content = "Waiting for opponent...";
+            MessageTimer("Server started at " + port + ", waiting for opponent...", 2500);
             try
             {
                 TcpListener server = new TcpListener(IPAddress.Any, port);
                 server.Start();
 
+                await Task.Delay(3000);
                 client = await server.AcceptTcpClientAsync();
-                if (client.Connected) lblStatus.Content = "Opponent has connected!";
+                if (client.Connected) MessageTimer("Opponent has connected!", 5000);
 
                 byte[] indata = new byte[9999999];
                 int antalbyte = await client.GetStream().ReadAsync(indata, 0, indata.Length);
@@ -393,18 +418,27 @@ namespace SänkaSkeppKlasser
 
                 actualEnemy.cells = JsonConvert.DeserializeObject<Cell[,]>(data);
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { MessageBox.Show("Client disconnected"); }
             UpdateBoards();
         }
 
         private void btnStartServer_Click(object sender, RoutedEventArgs e)
         {
-            lblStatus.Content = "Server started at port " + tbxHostPort.Text;
+            ShipsStatus();
             stpPlayerBoard.Visibility = Visibility.Visible;
             wplStartServer.Visibility = Visibility.Collapsed;
 
             int.TryParse(tbxHostPort.Text, out int port);
             ServerSet(port);
         }
+
+        async void MessageTimer(string message, int timeinm)
+        {
+            string before = lblStatus.Content.ToString();
+            lblStatus.Content = message;
+            await Task.Delay(timeinm);
+            lblStatus.Content = (lblStatus.Content == message) ? before : lblStatus.Content;
+        }
+
     }
 }

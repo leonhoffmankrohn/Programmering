@@ -13,7 +13,8 @@ namespace SänkaSkeppKlasser.Classes
         public GameState State {  get; set; }
         public PlayerBoard player = new PlayerBoard();
         public EnemyBoard enemy = new EnemyBoard();
-        public List<Ship> ships = new List<Ship>() { new Battleship(), new Cruiser(), new Cruiser(), new Torpedo(), new Torpedo(), new Torpedo(), new Submarine(), new Submarine(), new Submarine(), new Submarine() };
+        // public List<Ship> ships = new List<Ship>() { new Battleship(), new Cruiser(), new Cruiser(), new Torpedo(), new Torpedo(), new Torpedo(), new Submarine(), new Submarine(), new Submarine(), new Submarine() };
+        public List<Ship> ships = new List<Ship>() { new Battleship()};
         public Ship SelectedShip;
 
         public Game()
