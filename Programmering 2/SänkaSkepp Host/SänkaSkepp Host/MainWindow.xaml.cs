@@ -241,11 +241,13 @@ namespace SänkaSkeppKlasser
             {
                 case CellStatus.Water:
                     game.enemy.cells[x, y].Status = CellStatus.MissedBoat;
+                    actualEnemy.cells[x, y].Status = CellStatus.MissedBoat;
                     SendShot(new Shot(x, y, Consequence.ShotMissed));
                     break;
 
                 case CellStatus.Boat:
                     game.enemy.cells[x, y].Status = CellStatus.HitBoat;
+                    actualEnemy.cells[x, y].Status = CellStatus.HitBoat;
                     SendShot(new Shot(x, y, Consequence.ShotHit));
                     break;
 
@@ -256,14 +258,20 @@ namespace SänkaSkeppKlasser
         {
             try
             {
-                string jsonString = JsonConvert.SerializeObject(shot);
-                byte[] message = Encoding.Unicode.GetBytes(jsonString);
-                await client.GetStream().WriteAsync(message);
-
                 if (CheckIfGameOver(out bool gameTie))
                 {
                     game.State = GameState.GameOver;
-                    SendGamestate(gameTie);
+                    shot.GOandTie = [true, gameTie];
+                    string jsonString = JsonConvert.SerializeObject(shot);
+                    byte[] message = Encoding.Unicode.GetBytes(jsonString);
+                    await client.GetStream().WriteAsync(message);
+                    GameOver(gameTie);
+                }
+                else
+                {
+                    string jsonString = JsonConvert.SerializeObject(shot);
+                    byte[] message = Encoding.Unicode.GetBytes(jsonString);
+                    await client.GetStream().WriteAsync(message);
                 }
             }
             catch (Exception ex) { MessageBox.Show("Client disconnected"); }
@@ -277,9 +285,9 @@ namespace SänkaSkeppKlasser
                 int antalbyte = await client.GetStream().ReadAsync(indata, 0, indata.Length);
                 string data = Encoding.Unicode.GetString(indata, 0, antalbyte);
                 Shot shot = JsonConvert.DeserializeObject<Shot>(data);
-                InterperateShot(shot);
                 yourturn = true;
                 lblStatus.Content = "Your turn to shot at the enemy!";
+                InterperateShot(shot);
             }
             catch (Exception ex) { MessageBox.Show("Client disconnected"); }
 
@@ -301,7 +309,7 @@ namespace SänkaSkeppKlasser
                     game.player.cells[x, y].Status = CellStatus.HitBoat;
                     break;
             }
-
+            shot.Responseshot = true;
             SendShot(shot);
         }
 
@@ -339,15 +347,19 @@ namespace SänkaSkeppKlasser
                     PlaceBoat(sender, game.player, playerButtons);
                     break;
                 case GameState.Running:
-                    int[] indecies = FindIndex(enemyButtons, sender);
-                    if (indecies[0] != -1 && yourturn)
+                    if (client.Connected)
                     {
-                        Fire(indecies[0], indecies[1]);
-                        
-                        lblStatus.Content = "Waiting for opponent to attack...";
-                        ShotListener();
-                        yourturn = false;
+                        int[] indecies = FindIndex(enemyButtons, sender);
+                        if (indecies[0] != -1 && yourturn)
+                        {
+                            Fire(indecies[0], indecies[1]);
+
+                            lblStatus.Content = "Waiting for opponent to attack...";
+                            ShotListener();
+                            yourturn = false;
+                        }
                     }
+                    else MessageTimer("Waiting for client to connect...", 1000);
                     break;
                 default:
                     break;
@@ -360,7 +372,6 @@ namespace SänkaSkeppKlasser
             Debug.WriteLine("Game over");
             lblStatus.Content = "GameOver!";
             game.enemy.cells = actualEnemy.cells;
-            MessageTimer("Here is the opponents board", 5000);
             SendFacit();
         }
 
@@ -371,21 +382,6 @@ namespace SänkaSkeppKlasser
                 string jsonString = JsonConvert.SerializeObject(game.player.cells);
                 byte[] message = Encoding.Unicode.GetBytes(jsonString);
                 await client.GetStream().WriteAsync(message);
-            }
-            catch (Exception ex) { MessageBox.Show("Client disconnected"); }
-        }
-
-        async void SendGamestate(bool gameTie)
-        {
-            byte[] data = {0,0};
-            if (game.State == GameState.GameOver)
-            {
-                data[0] = 1;
-                GameOver(gameTie);
-            }
-            try
-            {
-                await client.GetStream().WriteAsync(data);
             }
             catch (Exception ex) { MessageBox.Show("Client disconnected"); }
         }

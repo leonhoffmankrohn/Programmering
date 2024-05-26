@@ -37,7 +37,7 @@
                     <Button Name="btnStartServer" Click="btnStartServer_Click">Start the server...</Button>
                 </StackPanel>
             </WrapPanel>
-            <Label Name="lblStatus" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"/>
+            <Label Name="lblStatus" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Content=""/>
         </StackPanel>
     </Grid>
 </Window>

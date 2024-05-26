@@ -46,6 +46,7 @@ namespace SänkaSkepp_Klient
             Initialize();
         }
 
+        // Intitieras i början och har en loop som gör att vattnet "rör" på sig
         async void Game()
         {
             stpEnemyBoard.Visibility = Visibility.Collapsed;
@@ -57,6 +58,7 @@ namespace SänkaSkepp_Klient
             }
         }
         
+        // Skriver ut nästa steg
         bool ShipsStatus()
         {
             if (game.ships.Count > 0)
@@ -72,12 +74,14 @@ namespace SänkaSkepp_Klient
             }
         }
 
+        // Sätter synligheten på servergrejen
         void ServerSetup()
         {
             stpPlayerBoard.Visibility = Visibility.Collapsed;
             wplStartServer.Visibility = Visibility.Visible;
         }
 
+        // "poppar" nästa skepp
         bool PopNextShip()
         {
             game.SelectedShip = game.ships[0];
@@ -85,12 +89,14 @@ namespace SänkaSkepp_Klient
             return ShipsStatus();
         }
 
+        // Uppdaterar brädet och startar själva spelet
         void Initialize()
         {
             UpdateBoards();
             Game();
         }
 
+        // Uppdaterar båda brädena
         void UpdateBoards()
         {
             stpPlayer.Children.Clear();
@@ -99,6 +105,7 @@ namespace SänkaSkepp_Klient
             PopulateBoard(game.enemy, stpEnemy, enemyButtons, EnemyBoard_Click);
         }
 
+        // Populerar brädorna med färgade knappar motsvaranade olika cellstatus, har också en random på vatten
         void PopulateBoard(Board board, StackPanel panel, Button[,] buttonArray, RoutedEventHandler clickevent)
         {
             for (int y = 0; y < board.cells.GetLength(0); y++)
@@ -145,6 +152,7 @@ namespace SänkaSkepp_Klient
             }
         }
 
+        // Returnerar en xy-array på kordinater varpå den hittar knappen som blev tryckt i en multiarray av knappar, returnerar [-1, -1] ifall den inte hittade / fel spelbräde
         int[] FindIndex(object[,] array, object obj)
         {
             for (int x = 0; x < array.GetLength(1); x++)
@@ -160,6 +168,7 @@ namespace SänkaSkepp_Klient
             return new int[] { -1, -1 };
         }
        
+        // Kollar ifall en båt kan placeras, om det bara är vatten
         bool AllIsWater(int startX, int startY, int length, bool horisontal, Board board)
         {
             bool justwater = true;
@@ -180,6 +189,7 @@ namespace SänkaSkepp_Klient
             return justwater;
         }
 
+        // Kollar ifall båten kan placeras innanför spelbrädet
         bool FitInArea(int startX, int startY, int length, bool horisontal)
         {
             switch (horisontal)
@@ -194,6 +204,7 @@ namespace SänkaSkepp_Klient
             return false;
         }
 
+        // Lägger båten i spelplanen
         void AddBoat(int startX, int startY, int length, bool horisontal, Board board)
         {
             switch (horisontal)
@@ -213,9 +224,10 @@ namespace SänkaSkepp_Klient
             }
         }
 
+        // Placerar båten i spelplanen
         void PlaceBoat(object sender, Board board, Button[,] buttons)
         {
-            bool boatsLeft = true; // Här kan man ändra gamestate om den returnerar false, alltså det finns inga fler kvar
+            bool boatsLeft = true;
             try
             {
                 int[] indecies = FindIndex(buttons, (sender as Button));
@@ -243,7 +255,6 @@ namespace SänkaSkepp_Klient
         {
             lblStatus.Content = "Waiting for the opponent to attack...";
         }
-
         async void SendShot(Shot shot)
         {
             try
@@ -251,17 +262,12 @@ namespace SänkaSkepp_Klient
                 string jsonString = JsonConvert.SerializeObject(shot);
                 byte[] message = Encoding.Unicode.GetBytes(jsonString);
                 await client.GetStream().WriteAsync(message);
-
-                byte[] indata = new byte[999];
-                int antalbyte = await client.GetStream().ReadAsync(indata, 0, indata.Length);
-                string data = Encoding.Unicode.GetString(indata, 0, antalbyte);
-                shot = JsonConvert.DeserializeObject<Shot>(data);
-                InterperateShot(shot, game.enemy);
+                ShotListener();
             }
             catch (Exception ex) { }
         }
 
-        void PlayerAction(object sender)
+        async void PlayerAction(object sender)
         {
             switch (game.State)
             {
@@ -273,8 +279,8 @@ namespace SänkaSkepp_Klient
                     if (indecies[0] != -1 && yourturn)
                     {
                         yourturn = false;
-                        lblStatus.Content = "Waitting for opponent to attack...";
                         SendShot(new Shot(indecies[0], indecies[1]));
+                        lblStatus.Content = "Waiting for opponent to attack...";
                         ShotListener();
                     }
                     break;
@@ -299,18 +305,25 @@ namespace SänkaSkepp_Klient
             {
                 try
                 {
+                    Debug.WriteLine("Shotlistener");
                     byte[] indata = new byte[999];
                     int antalbyte = await client.GetStream().ReadAsync(indata, 0, indata.Length);
                     string data = Encoding.Unicode.GetString(indata, 0, antalbyte);
                     Shot shot = JsonConvert.DeserializeObject<Shot>(data);
-                    InterperateShot(shot, game.player);
-                        
-                    byte[] gamestateinfo = new byte[2];
-                    await client.GetStream().ReadAsync(gamestateinfo, 0, gamestateinfo.Length);
-                        
+
+                    switch (shot.Responseshot)
+                    {
+                        case true:
+                            InterperateShot(shot, game.enemy);
+                            break;
+                        case false:
+                            InterperateShot(shot, game.player);
+                            lblStatus.Content = "Your turn to shot at the enemy!";
+                            break;
+                    }
+
                     yourturn = true;
-                    lblStatus.Content = "Your turn to shot at the enemy!";
-                    InterperateGameState(gamestateinfo);
+                    if (!InterperateGameState(shot.GOandTie)) GameOver(shot.GOandTie[1]);
                 }
                 catch (Exception ex) { }
             }
@@ -333,14 +346,17 @@ namespace SänkaSkepp_Klient
             MessageTimer("Here is the opponents board", 5000);
         }
 
-        void InterperateGameState(byte[] data)
+        bool InterperateGameState(bool[] data)
         {
-            if (data[0] == 1)
+            if (data[0])
             {
                 game.State = GameState.GameOver;
-                GameOver((data[1] == 1));
+                GameOver((data[1]));
+                return false;
             }
+            return true;
         }
+
         void InterperateShot(Shot shot, Board board)
         {
             int x = shot.XY[0];
@@ -383,11 +399,13 @@ namespace SänkaSkepp_Klient
             ShotListener();
             GameStarted();
         }
+
         private void btnConnectToHost_Click(object sender, RoutedEventArgs e)
         {
             btnConnectToHost.IsEnabled = false;
             ServerSet();
         }
+
         async void MessageTimer(string message, int timeinm)
         {
             string before = lblStatus.Content.ToString();
