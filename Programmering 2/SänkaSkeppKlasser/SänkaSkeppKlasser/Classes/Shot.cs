@@ -8,13 +8,10 @@ namespace SänkaSkeppKlasser.Classes
 {
     public class Shot
     {
-        public int[] XY { get; }
+        public int[] XY = new int[2];
         public Consequence Action {  get; set; }
-        public Shot() { }
-
         public Shot(int _x, int _y, Consequence _action = Consequence.None)
         {
-            XY = new int[2];
             XY[0] = _x;
             XY[1] = _y;
             Action = _action;

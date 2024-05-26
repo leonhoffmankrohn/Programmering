@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SänkaSkeppKlasser;
 using SänkaSkeppKlasser.Classes;
 using SänkaSkeppKlasser.Classes.Boards;
@@ -37,6 +38,7 @@ namespace SänkaSkepp_Klient
         Button[,] enemyButtons = new Button[10, 10];
         Game game = new Game();
         TcpClient client = new TcpClient();
+        bool yourturn = false;
 
         public MainWindow()
         {
@@ -234,7 +236,13 @@ namespace SänkaSkepp_Klient
             if (!boatsLeft)
             {
                 game.State = GameState.Running;
+                GameStarted();
             }
+        }
+
+        void GameStarted()
+        {
+            lblStatus.Content = "Waiting for the opponent to attack...";
         }
 
         async void SendShot(Shot shot)
@@ -244,6 +252,12 @@ namespace SänkaSkepp_Klient
                 string jsonString = JsonConvert.SerializeObject(shot);
                 byte[] message = Encoding.Unicode.GetBytes(jsonString);
                 await client.GetStream().WriteAsync(message);
+
+                byte[] indata = new byte[999];
+                int antalbyte = await client.GetStream().ReadAsync(indata, 0, indata.Length);
+                string data = Encoding.Unicode.GetString(indata, 0, antalbyte);
+                shot = JsonConvert.DeserializeObject<Shot>(data);
+                InterperateShot(shot, game.enemy);
             }
             catch (Exception ex) { }
         }
@@ -257,9 +271,12 @@ namespace SänkaSkepp_Klient
                     break;
                 case GameState.Running:
                     int[] indecies = FindIndex(enemyButtons, sender);
-                    if (indecies[0] != -1)
+                    if (indecies[0] != -1 && yourturn)
                     {
+                        yourturn = false;
+                        lblStatus.Content = "Waitting for opponent to attack...";
                         SendShot(new Shot(indecies[0], indecies[1]));
+                        ShotListener();
                     }
                     break;
                 default:
@@ -279,35 +296,64 @@ namespace SänkaSkepp_Klient
 
         async void ShotListener()
         {
-            //while (game.State == GameState.Running)
-            //{
-            //    if (client != null)
-            //    {
-            //        try
-            //        {
-            //            byte[] indata = new byte[9999999];
-            //            int antalbyte = await client.GetStream().ReadAsync(indata, 0, indata.Length);
-            //            string data = Encoding.Unicode.GetString(indata, 0, antalbyte);
-            //            Shot shot = JsonConvert.DeserializeObject<Shot>(data);
-            //            InterperateShot(shot);
-            //        }
-            //        catch (Exception ex) { }
-            //    }
-            //}
+            if (client != null)
+            {
+                try
+                {
+                    byte[] indata = new byte[999];
+                    int antalbyte = await client.GetStream().ReadAsync(indata, 0, indata.Length);
+                    string data = Encoding.Unicode.GetString(indata, 0, antalbyte);
+                    Shot shot = JsonConvert.DeserializeObject<Shot>(data);
+                        
+                    byte[] gamestateinfo = new byte[2];
+                    await client.GetStream().ReadAsync(gamestateinfo, 0, gamestateinfo.Length);
+                        
+                    InterperateShot(shot, game.player);
+                    InterperateGameState(gamestateinfo);
+                    yourturn = true;
+                    lblStatus.Content = "Your turn to shot at the enemy!";
+                }
+                catch (Exception ex) { }
+            }
         }
 
-        void InterperateShot(Shot shot)
+        void GameOver(bool tie)
+        {
+            lblStatus.Content = "GameOver!";
+            GetFacit();
+        }
+
+        async void GetFacit()
+        {
+            byte[] indata = new byte[9999999];
+            int antalbyte = await client.GetStream().ReadAsync(indata, 0, indata.Length);
+            string data = Encoding.Unicode.GetString(indata, 0, antalbyte);
+
+            game.enemy.cells = JsonConvert.DeserializeObject<Cell[,]>(data);
+
+            lblStatus.Content = "Here is the opponents board";
+        }
+
+        void InterperateGameState(byte[] data)
+        {
+            if (data[0] == 1)
+            {
+                game.State = GameState.GameOver;
+                GameOver((data[1] == 1));
+            }
+        }
+        void InterperateShot(Shot shot, Board board)
         {
             int x = shot.XY[0];
             int y = shot.XY[1];
             switch (shot.Action)
             {
                 case Consequence.ShotMissed:
-                    game.player.cells[x, y].Status = CellStatus.MissedBoat;
+                    board.cells[x, y].Status = CellStatus.MissedBoat;
                     break;
                     
                 case Consequence.ShotHit:
-                    game.player.cells[x,y].Status = CellStatus.HitBoat;
+                    board.cells[x,y].Status = CellStatus.HitBoat;
                     break;
             }
         }

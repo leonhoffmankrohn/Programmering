@@ -16,6 +16,7 @@ using Color = System.Windows.Media.Color;
 using UtilitiesLib;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System.Windows.Documents;
 
 namespace SänkaSkeppKlasser
 {
@@ -32,6 +33,7 @@ namespace SänkaSkeppKlasser
         Game game = new Game();
         Board actualEnemy = new Board(CellStatus.Unknown);
         TcpClient client = new TcpClient();
+        bool yourturn = true;
 
         public MainWindow()
         {
@@ -64,7 +66,6 @@ namespace SänkaSkeppKlasser
             else
             {
                 lblStatus.Content = "Initiering klar";
-                ShotListener();
                 return false;
             }
         }
@@ -229,6 +230,7 @@ namespace SänkaSkeppKlasser
         {
             stpEnemyBoard.Visibility = Visibility.Visible;
             stpPlayerBoard.Visibility = Visibility.Visible;
+            lblStatus.Content = "Your turn to shot at the enemy!";
         }
 
         void Fire(int x, int y)
@@ -243,6 +245,7 @@ namespace SänkaSkeppKlasser
 
                 case CellStatus.Boat:
                     game.enemy.cells[x, y].Status = CellStatus.HitBoat;
+                    SendShot(new Shot(x, y, Consequence.ShotHit));
                     break;
 
             }
@@ -255,43 +258,71 @@ namespace SänkaSkeppKlasser
                 string jsonString = JsonConvert.SerializeObject(shot);
                 byte[] message = Encoding.Unicode.GetBytes(jsonString);
                 await client.GetStream().WriteAsync(message);
+                Shot fired = JsonConvert.DeserializeObject<Shot>(jsonString);
             }
             catch (Exception ex) { }
         }
 
         async void ShotListener()
         {
-            while (game.State == GameState.Running)
+            try
             {
-                try
-                {
-                    byte[] indata = new byte[9999999];
-                    int antalbyte = await client.GetStream().ReadAsync(indata, 0, indata.Length);
-                    string data = Encoding.Unicode.GetString(indata, 0, antalbyte);
-                    Shot shot = JsonConvert.DeserializeObject<Shot>(data);
-                    Debug.WriteLine(shot);
-                    InterperateShot(shot);
-                }
-                catch (Exception ex) { }
+                byte[] indata = new byte[999];
+                int antalbyte = await client.GetStream().ReadAsync(indata, 0, indata.Length);
+                string data = Encoding.Unicode.GetString(indata, 0, antalbyte);
+                Shot shot = JsonConvert.DeserializeObject<Shot>(data);
+                InterperateShot(shot);
+                yourturn = true;
+                lblStatus.Content = "Your turn to shot at the enemy!";
             }
+            catch (Exception ex) { }
+            
         }
 
         void InterperateShot(Shot shot)
         {
             int x = shot.XY[0];
             int y = shot.XY[1];
-            if (game.player.cells[x, y].Status == CellStatus.Boat)
+            if (game.player.cells[x, y].Status == CellStatus.Water) shot.Action = Consequence.ShotMissed;
+            else if (game.player.cells[x, y].Status == CellStatus.Boat) shot.Action = Consequence.ShotHit;
+            switch (shot.Action)
             {
-                shot.Action = Consequence.ShotHit;
-                game.player.cells[x, y].Status = CellStatus.HitBoat;
-            }
-            else
-            {
-                shot.Action = Consequence.ShotMissed;
-                game.player.cells[x, y].Status = CellStatus.MissedBoat;
+                case Consequence.ShotMissed:
+                    game.player.cells[x, y].Status = CellStatus.MissedBoat;
+                    break;
+
+                case Consequence.ShotHit:
+                    game.player.cells[x, y].Status = CellStatus.HitBoat;
+                    break;
             }
 
             SendShot(shot);
+        }
+
+        bool CheckIfGameOver(out bool gameTie)
+        {
+            bool gameOver = true;
+            bool gm1 = true;
+            bool gm2 = true;
+            Board board = game.player;
+            for (int x = 0; x < board.cells.GetLength(0); x++)
+            {
+                for (int y = 0; y < board.cells.GetLength(1); y++)
+                {
+                    if (board.cells[x, y].Status == CellStatus.Boat) gm1 = false;
+                }
+            }
+            board = actualEnemy;
+            for (int x = 0; x < board.cells.GetLength(0); x++)
+            {
+                for (int y = 0; y < board.cells.GetLength(1); y++)
+                {
+                    if (board.cells[x, y].Status == CellStatus.Boat) gm2 = false;
+                }
+            }
+            gameOver = (gm1 != gm2);
+            gameTie = (gm1 == gm2 && gm1 == true) ? true : false;
+            return gameOver;
         }
 
         void PlayerAction(object sender)
@@ -303,15 +334,36 @@ namespace SänkaSkeppKlasser
                     break;
                 case GameState.Running:
                     int[] indecies = FindIndex(enemyButtons, sender);
-                    if (indecies[0] != -1)
+                    if (indecies[0] != -1 && yourturn)
                     {
                         Fire(indecies[0], indecies[1]);
+                        game.State = (CheckIfGameOver(out bool gameTie)) ? GameState.GameOver : GameState.Running;
+                        lblStatus.Content = "Waiting for opponent to attack...";
+                        ShotListener();
+                        SendGamestate(gameTie);
+                        yourturn = false;
                     }
                     break;
                 default:
                     break;
             }
             UpdateBoards();
+        }
+
+        void GameOver(bool tie)
+        {
+            lblStatus.Content = "GameOver!";
+        }
+
+        async void SendGamestate(bool gameTie)
+        {
+            byte[] data = {0,0};
+            if (game.State == GameState.GameOver)
+            {
+                data[0] = 1;
+                GameOver(gameTie);
+            }
+            await client.GetStream().WriteAsync(data);
         }
 
         private void YouBoard_Click(object sender, RoutedEventArgs e)
@@ -326,7 +378,6 @@ namespace SänkaSkeppKlasser
 
         async void ServerSet(int port)
         {
-            bool connected = false;
             lblStatus.Content = "Waiting for opponent...";
             try
             {
