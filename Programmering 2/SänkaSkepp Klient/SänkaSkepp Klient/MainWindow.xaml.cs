@@ -279,8 +279,8 @@ namespace SänkaSkepp_Klient
                     if (indecies[0] != -1 && yourturn)
                     {
                         yourturn = false;
-                        SendShot(new Shot(indecies[0], indecies[1]));
                         lblStatus.Content = "Waiting for opponent to attack...";
+                        SendShot(new Shot(indecies[0], indecies[1]));
                         ShotListener();
                     }
                     break;
@@ -323,16 +323,16 @@ namespace SänkaSkepp_Klient
                     }
 
                     yourturn = true;
-                    if (!InterperateGameState(shot.GOandTie)) GameOver(shot.GOandTie[1]);
+                    InterperateGameState(shot.GOandWinner);
                 }
                 catch (Exception ex) { }
             }
         }
 
-        void GameOver(bool tie)
+        void GameOver(bool whowon)
         {
             Debug.WriteLine("Game over");
-            lblStatus.Content = "GameOver!";
+            lblStatus.Content = (whowon) ? "GameOver, you lost..." : "GameOver, You won!";
             GetFacit();
         }
 
@@ -346,15 +346,13 @@ namespace SänkaSkepp_Klient
             MessageTimer("Here is the opponents board", 5000);
         }
 
-        bool InterperateGameState(bool[] data)
+        void InterperateGameState(bool[] data)
         {
             if (data[0])
             {
                 game.State = GameState.GameOver;
                 GameOver((data[1]));
-                return false;
             }
-            return true;
         }
 
         void InterperateShot(Shot shot, Board board)

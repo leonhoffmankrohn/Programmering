@@ -258,14 +258,14 @@ namespace SänkaSkeppKlasser
         {
             try
             {
-                if (CheckIfGameOver(out bool gameTie))
+                if (CheckIfGameOver(out bool youWon))
                 {
                     game.State = GameState.GameOver;
-                    shot.GOandTie = [true, gameTie];
+                    shot.GOandWinner = [true, youWon];
                     string jsonString = JsonConvert.SerializeObject(shot);
                     byte[] message = Encoding.Unicode.GetBytes(jsonString);
                     await client.GetStream().WriteAsync(message);
-                    GameOver(gameTie);
+                    GameOver(youWon);
                 }
                 else
                 {
@@ -313,7 +313,7 @@ namespace SänkaSkeppKlasser
             SendShot(shot);
         }
 
-        bool CheckIfGameOver(out bool gameTie)
+        bool CheckIfGameOver(out bool youWon)
         {
             bool gameOver = true;
             bool gm1 = true;
@@ -335,12 +335,13 @@ namespace SänkaSkeppKlasser
                 }
             }
             gameOver = (gm1 != gm2);
-            gameTie = (gm1 == gm2 && gm1 == true) ? true : false;
+            youWon = (gm1 == false) ? true : false;
             return gameOver;
         }
 
         void PlayerAction(object sender)
         {
+            
             switch (game.State)
             {
                 case GameState.SetUp:
@@ -352,9 +353,8 @@ namespace SänkaSkeppKlasser
                         int[] indecies = FindIndex(enemyButtons, sender);
                         if (indecies[0] != -1 && yourturn)
                         {
-                            Fire(indecies[0], indecies[1]);
-
                             lblStatus.Content = "Waiting for opponent to attack...";
+                            Fire(indecies[0], indecies[1]);
                             ShotListener();
                             yourturn = false;
                         }
@@ -367,10 +367,10 @@ namespace SänkaSkeppKlasser
             UpdateBoards();
         }
 
-        void GameOver(bool tie)
+        void GameOver(bool youWon)
         {
             Debug.WriteLine("Game over");
-            lblStatus.Content = "GameOver!";
+            lblStatus.Content = (youWon) ? "GameOver! You Won!" : "GameOver, you lost...";
             game.enemy.cells = actualEnemy.cells;
             SendFacit();
         }
