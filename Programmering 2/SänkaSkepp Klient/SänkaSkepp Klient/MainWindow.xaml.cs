@@ -264,7 +264,7 @@ namespace SänkaSkepp_Klient
                 await client.GetStream().WriteAsync(message);
                 ShotListener();
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { MessageBox.Show("Host not found"); }
         }
 
         async void PlayerAction(object sender)
@@ -325,7 +325,7 @@ namespace SänkaSkepp_Klient
                     yourturn = true;
                     InterperateGameState(shot.GOandWinner);
                 }
-                catch (Exception ex) { }
+                catch (Exception ex) { MessageBox.Show("Host not found"); }
             }
         }
 
@@ -338,12 +338,16 @@ namespace SänkaSkepp_Klient
 
         async void GetFacit()
         {
-            byte[] indata = new byte[9999999];
-            int antalbyte = await client.GetStream().ReadAsync(indata, 0, indata.Length);
-            string data = Encoding.Unicode.GetString(indata, 0, antalbyte);
+            try
+            {
+                byte[] indata = new byte[9999999];
+                int antalbyte = await client.GetStream().ReadAsync(indata, 0, indata.Length);
+                string data = Encoding.Unicode.GetString(indata, 0, antalbyte);
 
-            game.enemy.cells = JsonConvert.DeserializeObject<Cell[,]>(data);
-            MessageTimer("Here is the opponents board", 5000);
+                game.enemy.cells = JsonConvert.DeserializeObject<Cell[,]>(data);
+                MessageTimer("Here is the opponents board", 5000);
+            }
+            catch (Exception ex) { MessageBox.Show("Host not found"); }
         }
 
         void InterperateGameState(bool[] data)
