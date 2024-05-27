@@ -12,13 +12,13 @@ namespace SänkaSkeppKlasser.Classes
         public Consequence Action {  get; set; }
         public bool Responseshot { get; set; }
         public bool[] GOandWinner { get; set; }
-        public Shot(int _x, int _y, Consequence _action = Consequence.None, bool _responseshot = false, bool _gameOver = false, bool _tie = false)
+        public Shot(int _x, int _y, Consequence _action = Consequence.None, bool _responseshot = false, bool _gameOver = false, bool _hostwon = false)
         {
             XY[0] = _x;
             XY[1] = _y;
             Action = _action;
             Responseshot = _responseshot;
-            GOandWinner = [_gameOver, _tie];
+            GOandWinner = [_gameOver, _hostwon];
         }
     }
     public enum Consequence

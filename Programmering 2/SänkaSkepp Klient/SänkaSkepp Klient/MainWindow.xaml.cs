@@ -243,7 +243,7 @@ namespace SänkaSkepp_Klient
             }
         }
 
-        // Placerar båten i spelplanen
+        // Placerar båten i spelplanen överläggande
         void PlaceBoat(object sender, Board board, Button[,] buttons)
         {
             bool boatsLeft = true;
