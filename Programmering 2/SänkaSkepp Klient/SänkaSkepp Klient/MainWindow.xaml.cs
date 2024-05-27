@@ -167,7 +167,7 @@ namespace SänkaSkepp_Klient
             }
             return new int[] { -1, -1 };
         }
-       
+
         // Kollar ifall en båt kan placeras, om det bara är vatten
         bool AllIsWater(int startX, int startY, int length, bool horisontal, Board board)
         {
@@ -176,17 +176,36 @@ namespace SänkaSkepp_Klient
             {
                 for (int i = startX; i < startX + length; i++)
                 {
-                    if (board.cells[i, startY].Status != CellStatus.Water) { justwater = false; }
+                    if ((Surrounded(i, startY, board)) || (board.cells[i, startY].Status != CellStatus.Water)) { justwater = false; }
                 }
             }
             else
             {
                 for (int i = startY; i < startY + length; i++)
                 {
-                    if (board.cells[startX, i].Status != CellStatus.Water) { justwater = false; }
+                    if ((Surrounded(startX, i, board)) || (board.cells[startX, i].Status != CellStatus.Water)) { justwater = false; }
                 }
             }
             return justwater;
+        }
+
+        // Kollar ifall alla rutor har en båt runt dem
+        bool Surrounded(int stx, int sty, Board board)
+        {
+            bool surrounded = false;
+
+            for (int x = stx - 1; x <= stx + 1; x++)
+            {
+                for (int y = sty - 1; y <= sty + 1; y++)
+                {
+                    if (((x < 10) && (x > -1)) && ((y < 10) && (y > -1)))
+                    {
+                        if (board.cells[x, y].Status == CellStatus.Boat) surrounded = true;
+                    }
+                }
+            }
+
+            return surrounded;
         }
 
         // Kollar ifall båten kan placeras innanför spelbrädet
@@ -239,7 +258,7 @@ namespace SänkaSkepp_Klient
                     boatsLeft = PopNextShip();
                     AddBoat(indecies[0], indecies[1], length, horisontal, board);
                 }
-                else MessageBox.Show("Try placing it somewhere else");
+                else MessageTimer("Try placing it somewhere else", 2000);
                 UpdateBoards();
 
             }
@@ -251,10 +270,13 @@ namespace SänkaSkepp_Klient
             }
         }
 
+        // Körs när spelet sätts igång
         void GameStarted()
         {
             lblStatus.Content = "Waiting for the opponent to attack...";
         }
+
+        // Skickar skottet till hosten för att sedan lyssna på vart den träffade
         async void SendShot(Shot shot)
         {
             try
@@ -267,6 +289,7 @@ namespace SänkaSkepp_Klient
             catch (Exception ex) { MessageBox.Show("Host not found"); }
         }
 
+        // Körs varje gång ett knapptryck sker och avgör om det är för att placera båt eller skuta
         async void PlayerAction(object sender)
         {
             switch (game.State)
@@ -289,16 +312,19 @@ namespace SänkaSkepp_Klient
             }
         }
 
+        // Ett klick på egen bräda
         private void YouBoard_Click(object sender, RoutedEventArgs e)
         {
             PlayerAction(sender);
         }
 
+        // Ett klick på motståndarens bräda
         private void EnemyBoard_Click(object sender, RoutedEventArgs e)
         {
             PlayerAction(sender);
         }
 
+        // Lyssnar på skott, skott är anting skott mot egen bräda eller info om var den träffade på motståndarens bräde
         async void ShotListener()
         {
             if (client != null)
@@ -329,6 +355,7 @@ namespace SänkaSkepp_Klient
             }
         }
 
+        // Körs när speler är över
         void GameOver(bool whowon)
         {
             Debug.WriteLine("Game over");
@@ -336,6 +363,7 @@ namespace SänkaSkepp_Klient
             GetFacit();
         }
 
+        // Lyssnar efter ett facit, hur motståndarens spelplan såg ut
         async void GetFacit()
         {
             try
@@ -350,6 +378,7 @@ namespace SänkaSkepp_Klient
             catch (Exception ex) { MessageBox.Show("Host not found"); }
         }
 
+        // Kollar om spelet är över
         void InterperateGameState(bool[] data)
         {
             if (data[0])
@@ -359,6 +388,7 @@ namespace SänkaSkepp_Klient
             }
         }
 
+        // Placerar ut vart skotten träffade beroende på bräde
         void InterperateShot(Shot shot, Board board)
         {
             int x = shot.XY[0];
@@ -375,6 +405,7 @@ namespace SänkaSkepp_Klient
             }
         }
 
+        // Körs för att koppla till hosten
         async void ServerSet()
         {
             client = new TcpClient();
@@ -392,7 +423,12 @@ namespace SänkaSkepp_Klient
             string jsonString = JsonConvert.SerializeObject(game.player.cells);
 
             byte[] message = Encoding.Unicode.GetBytes(jsonString);
-            await client.GetStream().WriteAsync(message);
+
+            try
+            {
+                await client.GetStream().WriteAsync(message);
+            }
+            catch (Exception ex) { MessageBox.Show("Host not found"); }
 
             stpPlayerBoard.Visibility = Visibility.Visible;
             stpEnemyBoard.Visibility = Visibility.Visible;
@@ -402,12 +438,14 @@ namespace SänkaSkepp_Klient
             GameStarted();
         }
 
+        // Klick för att koppla samman hosten och klienten
         private void btnConnectToHost_Click(object sender, RoutedEventArgs e)
         {
             btnConnectToHost.IsEnabled = false;
             ServerSet();
         }
 
+        // Visar ett temporärt meddelande
         async void MessageTimer(string message, int timeinm)
         {
             string before = lblStatus.Content.ToString();

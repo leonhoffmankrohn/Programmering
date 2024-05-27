@@ -22,6 +22,7 @@ namespace SänkaSkeppKlasser
             }
         }
 
+        // Ändrar cellens status
         public void ChangeCell(int x, int y, CellStatus status)
         {
             cells[x, y].Status = status;

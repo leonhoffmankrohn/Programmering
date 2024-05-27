@@ -41,6 +41,7 @@ namespace SänkaSkeppKlasser
             Initialize();
         }
 
+        // Körs i början och är en loop, ger upphov till att havet rör på sig
         async void AutoBoardUpdate()
         {
             while (true)
@@ -50,12 +51,14 @@ namespace SänkaSkeppKlasser
             }
         }
 
+        // Kör några nödvändiga funktioner för början
         void Initialize()
         {
             UpdateBoards();
             AutoBoardUpdate();
         }
 
+        // Visar vad nästa steg är
         bool ShipsStatus()
         {
             if (game.ships.Count > 0)
@@ -70,6 +73,7 @@ namespace SänkaSkeppKlasser
             }
         }
 
+        // "Poppar" nästa skepp i listan
         bool PopNextShip()
         {
             game.SelectedShip = game.ships[0];
@@ -77,6 +81,7 @@ namespace SänkaSkeppKlasser
             return ShipsStatus();
         }
 
+        // Tar bort och lägger till knappar i brädena
         void UpdateBoards()
         {
             stpPlayer.Children.Clear();
@@ -85,6 +90,7 @@ namespace SänkaSkeppKlasser
             PopulateBoard(game.enemy, stpEnemy, enemyButtons, EnemyBoard_Click);
         }
 
+        // Populerar de "fysiska" brädena med datan och celler
         void PopulateBoard(Board board, StackPanel panel, Button[,] buttonArray, RoutedEventHandler clickevent)
         {
             for (int y = 0; y < board.cells.GetLength(0); y++)
@@ -131,6 +137,7 @@ namespace SänkaSkeppKlasser
             }
         }
 
+        // Returnerar vilken kordinat man hittar obj i den multidimensionella listan
         int[] FindIndex(object[,] array, object obj)
         {
             for (int x = 0; x < array.GetLength(1); x++)
@@ -146,6 +153,7 @@ namespace SänkaSkeppKlasser
             return new int[] { -1, -1 };
         }
 
+        // Kollar ifall allt verkligen är vatten där båten ska placeras
         bool AllIsWater(int startX, int startY, int length, bool horisontal, Board board)
         {
             bool justwater = true;
@@ -153,19 +161,39 @@ namespace SänkaSkeppKlasser
             {
                 for (int i = startX; i < startX + length; i++)
                 {
-                    if (board.cells[i, startY].Status != CellStatus.Water) { justwater = false; }
+                    if ((Surrounded(i, startY, board)) || (board.cells[i, startY].Status != CellStatus.Water)) { justwater = false; }
                 }
             }
             else
             {
                 for (int i = startY; i < startY + length; i++)
                 {
-                    if (board.cells[startX, i].Status != CellStatus.Water) { justwater = false; }
+                    if ((Surrounded(startX, i, board)) || (board.cells[startX, i].Status != CellStatus.Water)) { justwater = false; }
                 }
             }
             return justwater;
         }
 
+        // Kollar ifall det finns båtar i närheten
+        bool Surrounded(int stx, int sty, Board board)
+        {
+            bool surrounded = false;
+
+            for (int x = stx-1; x <= stx+1; x++)
+            {
+                for (int y = sty-1; y <= sty+1; y++)
+                {
+                    if(((x < 10) && (x > -1)) && ((y < 10) && (y > -1)))
+                    {
+                        if (board.cells[x, y].Status == CellStatus.Boat) surrounded = true;
+                    }
+                }
+            }
+
+            return surrounded;
+        }
+
+        // Kollar ifall båten är innanför ramen av brädet
         bool FitInArea(int startX, int startY, int length, bool horisontal)
         {
             switch (horisontal)
@@ -180,6 +208,7 @@ namespace SänkaSkeppKlasser
             return false;
         }
 
+        // Lägger till en båt på brädet
         void AddBoat(int startX, int startY, int length, bool horisontal, Board board)
         {
             switch (horisontal)
@@ -199,6 +228,7 @@ namespace SänkaSkeppKlasser
             }
         }
 
+        // Överläggande logik innan båt läggs till, kollar också om det är slut på båtar
         void PlaceBoat(object sender, Board board, Button[,] buttons)
         {
             bool boatsLeft = true; // Här kan man ändra gamestate om den returnerar false, alltså det finns inga fler kvar
@@ -227,6 +257,7 @@ namespace SänkaSkeppKlasser
             }
         }
 
+        // Kärs när spelet ska startas (när det är slut på båtar)
         void GameStarted()
         {
             stpEnemyBoard.Visibility = Visibility.Visible;
@@ -234,6 +265,7 @@ namespace SänkaSkeppKlasser
             lblStatus.Content = "Your turn to shot at the enemy!";
         }
 
+        // Generar ett skott från kordinat
         void Fire(int x, int y)
         {
             CellStatus whatsBeenHit = actualEnemy.cells[x, y].Status;
@@ -254,6 +286,7 @@ namespace SänkaSkeppKlasser
             }
         }
 
+        // Skickar skottet till motståndaren, och kollar ifall spelet är slut
         async void SendShot(Shot shot)
         {
             try
@@ -277,6 +310,7 @@ namespace SänkaSkeppKlasser
             catch (Exception ex) { MessageBox.Show("Client disconnected"); }
         }
 
+        // Lyssnar på skott från motståndaren
         async void ShotListener()
         {
             try
@@ -293,6 +327,7 @@ namespace SänkaSkeppKlasser
 
         }
 
+        // Tyder vad motståndarens kordinater på skott ger för skada och skickar tillbaka informationen till motståndaren
         void InterperateShot(Shot shot)
         {
             int x = shot.XY[0];
@@ -313,6 +348,7 @@ namespace SänkaSkeppKlasser
             SendShot(shot);
         }
 
+        // Kollar ifall brädena har några levande båtar kvar, annars är spelet över
         bool CheckIfGameOver(out bool youWon)
         {
             bool gameOver = true;
@@ -339,6 +375,7 @@ namespace SänkaSkeppKlasser
             return gameOver;
         }
 
+        // Körs varje knapptryckbrädtryck och beroende på bräde och spelstadje, placerar båt eller skjuter
         void PlayerAction(object sender)
         {
             
@@ -367,6 +404,7 @@ namespace SänkaSkeppKlasser
             UpdateBoards();
         }
 
+        // Kärs när spelet är slutspelat
         void GameOver(bool youWon)
         {
             Debug.WriteLine("Game over");
@@ -375,6 +413,7 @@ namespace SänkaSkeppKlasser
             SendFacit();
         }
 
+        // Skickar facit på spelplanen till motståndaren
         async void SendFacit()
         {
             try
@@ -386,16 +425,19 @@ namespace SänkaSkeppKlasser
             catch (Exception ex) { MessageBox.Show("Client disconnected"); }
         }
 
+        // När eget spelbräde blir klickat
         private void YouBoard_Click(object sender, RoutedEventArgs e)
         {
             PlayerAction(sender);
         }
 
+        // När själv trycker på motståndarens bräde
         private void EnemyBoard_Click(object sender, RoutedEventArgs e)
         {
             PlayerAction(sender);
         }
 
+        // Initierar en server i början och väntar på att opponent ansluter
         async void ServerSet(int port)
         {
             MessageTimer("Server started at " + port + ", waiting for opponent...", 2500);
@@ -418,6 +460,7 @@ namespace SänkaSkeppKlasser
             UpdateBoards();
         }
 
+        // Startar igång servern
         private void btnStartServer_Click(object sender, RoutedEventArgs e)
         {
             ShipsStatus();
@@ -428,6 +471,7 @@ namespace SänkaSkeppKlasser
             ServerSet(port);
         }
 
+        // Visar ett temporärt meddelande
         async void MessageTimer(string message, int timeinm)
         {
             string before = lblStatus.Content.ToString();
